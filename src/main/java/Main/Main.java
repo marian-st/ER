@@ -1,9 +1,9 @@
 package Main;
 
 import State.State;
-import State.Runner;
+import State.Captor;
 import State.Command;
-import State.ReducerString;
+import State.CaptorString;
 import State.Store;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.Subject;
@@ -20,7 +20,9 @@ public class Main {
     Main() {
         this.id = UUID.randomUUID();
 
-        Runner<State, MyString> reducer = new ReducerString().with(new MyString("DEC", id), s -> new State(s.numberOfLikes+1, s.name));
+        Captor<State, MyString> reducer = new CaptorString()
+                .with(new MyString("INC", id), s -> new State(s.numberOfLikes+1, s.name))
+                .with(new MyString("DEC", id), s -> new State(s.numberOfLikes-3, s.name));
         Subject<State> subscription;
         Store sm = new Store<State, MyString>(new State(), reducer);
         subscription = sm.getState();
@@ -31,10 +33,17 @@ public class Main {
         });
 
         while(true) {
-            sm.update(new MyString("DEC", id));
+            sm.update(new MyString("INC", id));
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {}
+            if (c%4==0) {
+                sm.update(new MyString("DEC", id));
+                c--;
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {}
+            }
         }
 
     }

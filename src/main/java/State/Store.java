@@ -11,17 +11,17 @@ import java.util.function.Function;
  */
 public class Store<S extends State, C extends Command> {
     private S state;
-    private Runner<S, C> reducer;
+    private Captor<S, C> captor;
 
     //hot observable to which state updates are pushed
     private Subject<S> state$ = BehaviorSubject.create();
 
-    public Store(S state, Runner<S, C> reducer, Tuple<C, Function<S,S>>...args) {
+    public Store(S state, Captor<S, C> reducer, Tuple<C, Function<S,S>>...args) {
 
         this.state = state;
         this.state$.onNext(state);
-        this.reducer = reducer;
-        if (args.length != 0) this.reducer = this.reducer.with(args);
+        this.captor = reducer;
+        if (args.length != 0) this.captor = this.captor.with(args);
 
     }
 
@@ -49,9 +49,9 @@ public class Store<S extends State, C extends Command> {
         return state$;
     }
 
-    //transmute the state based on the reducer
+    //transmute the state based on the captor
     private void transmute(C command) {
-        this.state = this.reducer.run(state, command);
+        this.state = this.captor.run(state, command);
     }
 
 }
