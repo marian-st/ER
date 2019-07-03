@@ -25,7 +25,7 @@ public class Main {
                 .with(new MyString("DEC", id), s -> new State(s.numberOfLikes-3, s.name));
         Subject<State> subscription;
         Store sm = new Store<State, MyString>(new State(), reducer);
-        subscription = sm.getState();
+        subscription = sm.getStateStream();
 
         Disposable dis = subscription.subscribe(s -> {
              System.out.println( s.numberOfLikes);

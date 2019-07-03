@@ -45,7 +45,7 @@ public class Store<S extends State, C extends Command> {
         this.state$.onNext(state);
     }
 
-    public Subject<S> getState() {
+    public Subject<S> getStateStream() {
         return state$;
     }
 

@@ -14,8 +14,7 @@ public class State implements Serializable {
         this.numberOfLikes = 0;
     }
 
-    /***
-     *
+    /**
      * @todo
      */
     public State initial() {
