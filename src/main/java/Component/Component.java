@@ -3,16 +3,24 @@ package Component;
 import State.State;
 import State.Store;
 import State.Command;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.disposables.Disposable;
+
+import javax.swing.*;
 
 public abstract class Component<S extends State, C extends Command> {
     private final Store<S,C> store;
-    private final Disposable subscription;
+    private Disposable subscription;
 
     public Component(Store<S, C> store) {
         this.store = store;
         initialization(this.store.poll());
-        this.subscription = this.store.getStateStream().subscribe(this::eventHook);
+        this.subscription = this.store.getStateStream()
+                .onErrorResumeNext(Observable.empty())
+                .subscribe(
+                    s -> eventHook(s) ,
+                    throwable -> System.out.println(throwable)  );
     }
 
     void clean() {
@@ -22,6 +30,6 @@ public abstract class Component<S extends State, C extends Command> {
     abstract void eventHook(State state);
     abstract State getState();
     abstract void initialization(State state);
-    abstract void draw();
+    abstract void draw(State state);
 
 }
