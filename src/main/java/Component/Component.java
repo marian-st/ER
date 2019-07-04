@@ -27,6 +27,9 @@ public abstract class Component<S extends State, C extends Command> {
         this.subscription.dispose();
     }
 
+    void sendCommand(C c) {
+        this.store.update(c);
+    }
     abstract void eventHook(State state);
     abstract State getState();
     abstract void initialization(State state);

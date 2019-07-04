@@ -1,9 +1,10 @@
 package Component;
 
-import Main.Main;
+
 import State.Command;
 import State.State;
 import State.Store;
+import State.MyString;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class Clicker extends Component<State, Command> {
     private UUID id = UUID.randomUUID();
     private JFrame view;
-    private JLabel lab;
+
     public Clicker(Store store) {
         super(store);
     }
@@ -36,7 +37,7 @@ public class Clicker extends Component<State, Command> {
         Container frmContentPane = view.getContentPane();
         // Usa frmContentPane per aggiungere elementi grafici
         JButton button = new JButton("Click me");
-        button.addActionListener();
+        button.addActionListener(new ButtonActionListener());
         frmContentPane.add(button);
         view.setVisible(true);
 
@@ -51,7 +52,7 @@ public class Clicker extends Component<State, Command> {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            store.update(new Main.MyString("INC", id));
+            sendCommand(new MyString("INC", id));
         }
     }
 }
