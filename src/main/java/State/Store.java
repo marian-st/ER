@@ -9,18 +9,18 @@ import java.util.function.Function;
 /**
  *
  */
-public class Store<S extends State, C extends Command> {
-    private S state;
-    private Captor<S, C> captor;
+public class Store<State, C extends Command> {
+    private State state;
+    private Captor<State, C> captor;
 
     //hot observable to which state updates are pushed
-    private Subject<S> state$ = BehaviorSubject.create();
+    private BehaviorSubject<State> state$ = BehaviorSubject.create();
 
-    public Store(S state, Captor<S, C> reducer, Tuple<C, Function<S,S>>...args) {
+    public Store(State state, Captor<State, C> captor, Tuple<C, Function<State,State>>...args) {
 
         this.state = state;
         this.state$.onNext(state);
-        this.captor = reducer;
+        this.captor = captor;
         if (args.length != 0) this.captor = this.captor.with(args);
 
     }
@@ -45,7 +45,7 @@ public class Store<S extends State, C extends Command> {
         this.state$.onNext(state);
     }
 
-    public Subject<S> getStateStream() {
+    public Subject<State> getStateStream() {
         return state$;
     }
 
