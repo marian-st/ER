@@ -4,3 +4,4 @@ target
 docs/*
 idea/*
 *.iml
+.DS_Store
