@@ -11,12 +11,12 @@ import java.util.function.Function;
  */
 public class Store<C extends Command> {
     private State state;
-    private Captor<State, C> captor;
+    private Captor<C> captor;
 
     //hot observable to which state updates are pushed
     private BehaviorSubject<State> state$ = BehaviorSubject.createDefault(new State());
 
-    public Store(State state, Captor<State, C> captor, Tuple<C, Function<State,State>>...args) {
+    public Store(State state, Captor<C> captor, Tuple<C, Function<State,State>>...args) {
 
         this.state = state;
         this.state$.onNext(state);

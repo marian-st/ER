@@ -6,7 +6,7 @@ import Main.Tuple;
 import java.util.HashMap;
 import java.util.function.Function;
 
-public class CaptorString implements Captor<State, MyString> {
+public class CaptorString implements Captor<MyString> {
     private HashMap<String, Function<State, State>> commands = new HashMap<String, Function<State, State>>();
 
     public CaptorString() {

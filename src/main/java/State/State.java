@@ -14,9 +14,9 @@ public class State implements Serializable {
         this.counter = 0;
     }
 
-    /**
-     * To keep track of the initial state
-     */
+    /*
+    ** To keep track of the initial state
+    */
     public State initial() {
         this.counter = 0;
         this.name = "Edo";

@@ -24,7 +24,7 @@ public class Main {
     Main() {
         this.id = UUID.randomUUID();
 
-        Captor<State, MyString> reducer = new CaptorString()
+        Captor<MyString> reducer = new CaptorString()
                 .with(new MyString("INC", id), s -> new State(s.getCounter()+1, s.getName()))
                 .with(new MyString("DEC", id), s -> new State(s.getCounter()-3, s.getName()));
         Subject<State> subscription;
@@ -35,7 +35,7 @@ public class Main {
              System.out.println( s.getCounter());
              c++;
         });
-        Statistics.generate_values(30,490,50);
+        Statistics.generate_values(30,49,50);
         Viewer viewer = new Viewer(store);
         Clicker clicker = new Clicker(store);
 
