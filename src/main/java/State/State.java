@@ -2,25 +2,48 @@ package State;
 import java.io.Serializable;
 
 public class State implements Serializable {
-    public int numberOfLikes;
-    public String name;
+    private int counter;
+    private String name;
 
     public State(int nl, String name) {
-        this.numberOfLikes = nl;
+        this.counter = nl;
         this.name = name;
     }
     public State() {
         this.name = "Edo";
-        this.numberOfLikes = 0;
+        this.counter = 0;
     }
 
     /**
-     * @todo
+     * To keep track of the initial state
      */
     public State initial() {
-        this.numberOfLikes = 0; this.name = "Edo"; return this;
+        this.counter = 0;
+        this.name = "Edo";
+        return this;
     }
+
     public String toString() {
-        return this.name + " " + this.numberOfLikes;
+        return this.name + " " + this.counter;
+    }
+
+    /**
+     * Getters and setters
+     */
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

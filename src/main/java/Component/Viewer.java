@@ -7,7 +7,7 @@ import State.Command;
 import javax.swing.*;
 import java.awt.*;
 
-public class Viewer extends Component<State, Command> {
+public class Viewer extends Component<Command> {
     private JFrame view;
     private JLabel lab;
     public Viewer(Store store) {
@@ -16,7 +16,7 @@ public class Viewer extends Component<State, Command> {
     @Override
     void eventHook(State state) {
         view.remove(lab);
-        lab = new JLabel(String.format("%d", state.numberOfLikes));
+        lab = new JLabel(String.format("%d", state.getCounter()));
         view.add(lab);
         view.repaint();
         view.revalidate();
@@ -34,7 +34,7 @@ public class Viewer extends Component<State, Command> {
         // Ottieni il riferimento al Content Pane
         Container frmContentPane = view.getContentPane();
         // Usa frmContentPane per aggiungere elementi grafici
-        int nlikes = state.numberOfLikes;
+        int nlikes = state.getCounter();
         lab = new JLabel(String.format("%d", nlikes));
         frmContentPane.add(lab);
         view.setVisible(true);

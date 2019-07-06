@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.UUID;
 
-public class Clicker extends Component<State, Command> {
+public class Clicker extends Component<Command> {
     private UUID id = UUID.randomUUID();
     private JFrame view;
 

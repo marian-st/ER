@@ -9,11 +9,11 @@ import io.reactivex.disposables.Disposable;
 
 import javax.swing.*;
 
-public abstract class Component<S extends State, C extends Command> {
-    private final Store<S,C> store;
+public abstract class Component<C extends Command> {
+    private final Store <C> store;
     private Disposable subscription;
 
-    public Component(Store<S, C> store) {
+    public Component(Store <C> store) {
         this.store = store;
         initialization(this.store.poll());
         this.subscription = this.store.getStateStream()
