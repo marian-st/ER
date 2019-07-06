@@ -3,6 +3,7 @@ package Component;
 import State.State;
 import State.Store;
 import State.StateEvent;
+import State.StateChange;
 import State.Command;
 
 import javax.swing.*;
@@ -16,11 +17,13 @@ public class Viewer extends Component<Command> {
     }
     @Override
     void eventHook(StateEvent se) {
-        view.remove(lab);
-        lab = new JLabel(String.format("%d", se.state().getCounter()));
-        view.add(lab);
-        view.repaint();
-        view.revalidate();
+        if (se.stateChange() == StateChange.COUNTER) {
+            view.remove(lab);
+            lab = new JLabel(String.format("%d", se.state().getCounter()));
+            view.add(lab);
+            view.repaint();
+            view.revalidate();
+        }
     }
 
     @Override

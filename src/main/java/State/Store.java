@@ -49,7 +49,7 @@ public class Store<C extends Command> {
         this.state$.onNext(new StateEvent(sc, this.state));
     }
 
-    public Subject<StateEvent> getStateStream() {
+    public Subject<StateEvent> getEventStream() {
         return state$;
     }
 

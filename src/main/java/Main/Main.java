@@ -2,14 +2,16 @@ package Main;
 
 import Component.Clicker;
 import Component.Viewer;
+
 import State.State;
 import State.StateChange;
 import State.MyString;
-
+import State.StateEvent;
 import State.CaptorString;
 import State.Store;
 import State.Captor;
 import Stats.Statistics;
+
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.Subject;
 
@@ -25,39 +27,36 @@ public class Main {
     Main() {
         this.id = UUID.randomUUID();
 
-        Captor<MyString> reducer = new CaptorString()
-                      /* command               |     associated function                   */
+        Captor<MyString> captor = new CaptorString()
+                      /* command             |       associated function                    | state change enum  */
                 .with(new MyString("INC", id), s -> new State(s.getCounter()+1, s.getName()), StateChange.COUNTER)
-                .with(new MyString("DEC", id), s -> new State(s.getCounter()-3, s.getName()), StateChange.COUNTER);
-        Subject<State> subscription;
-        Store store = new Store<MyString>(new State(), reducer);
-        subscription = store.getStateStream();
+                .with(new MyString("DEC", id), s -> new State(s.getCounter()-10, s.getName()), StateChange.COUNTER);
 
+        Store store = new Store<MyString>(new State(), captor);
 
-        Statistics.generate_values(30,49,50);
+        Statistics.generate_values(30,4,15);
         Viewer viewer = new Viewer(store);
         Clicker clicker = new Clicker(store);
 
         /*
-        Disposable dis = subscription.subscribe(s -> {
-             System.out.println( s.getCounter());
-             c++;
-        });
+        Subject<StateEvent> subscription = store.getEventStream();
 
         while(true) {
             store.update(new MyString("INC", id));
+            c++;
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {}
-            if (c%4==0) {
+            if (c%5==0) {
                 store.update(new MyString("DEC", id));
-                c--;
+                c=0;
                 try {
                     Thread.sleep(1000);
                 } catch (Exception e) {}
             }
-        }*/
+        }
+
+    }*/
 
     }
-
 }
