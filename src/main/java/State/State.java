@@ -9,6 +9,7 @@ public class State implements Serializable {
         this.counter = nl;
         this.name = name;
     }
+    // Must be the initial state
     public State() {
         this.name = "Edo";
         this.counter = 0;
@@ -18,18 +19,18 @@ public class State implements Serializable {
     ** To keep track of the initial state
     */
     public State initial() {
-        this.counter = 0;
-        this.name = "Edo";
-        return this;
+        return new State();
     }
 
     public String toString() {
         return this.name + " " + this.counter;
     }
 
-    /**
-     * Getters and setters
-     */
+    /*
+    *****************************************************
+    *               Getters and setters                 *
+    *****************************************************
+    */
 
     public int getCounter() {
         return counter;

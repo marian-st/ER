@@ -3,6 +3,7 @@ package Main;
 import Component.Clicker;
 import Component.Viewer;
 import State.State;
+import State.StateChange;
 import State.MyString;
 
 import State.CaptorString;
@@ -25,21 +26,25 @@ public class Main {
         this.id = UUID.randomUUID();
 
         Captor<MyString> reducer = new CaptorString()
-                .with(new MyString("INC", id), s -> new State(s.getCounter()+1, s.getName()))
-                .with(new MyString("DEC", id), s -> new State(s.getCounter()-3, s.getName()));
+                      /* command               |     associated function                   */
+                .with(new MyString("INC", id), s -> new State(s.getCounter()+1, s.getName()), StateChange.COUNTER)
+                .with(new MyString("DEC", id), s -> new State(s.getCounter()-3, s.getName()), StateChange.COUNTER);
         Subject<State> subscription;
         Store store = new Store<MyString>(new State(), reducer);
         subscription = store.getStateStream();
 
-        Disposable dis = subscription.subscribe(s -> {
-             System.out.println( s.getCounter());
-             c++;
-        });
+
         Statistics.generate_values(30,49,50);
         Viewer viewer = new Viewer(store);
         Clicker clicker = new Clicker(store);
 
-        /*while(true) {
+        /*
+        Disposable dis = subscription.subscribe(s -> {
+             System.out.println( s.getCounter());
+             c++;
+        });
+
+        while(true) {
             store.update(new MyString("INC", id));
             try {
                 Thread.sleep(1000);

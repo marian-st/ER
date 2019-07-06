@@ -1,12 +1,13 @@
 package Main;
 
-public class Tuple<T,W> {
+public class Triple<T,W,S> {
     private T first;
     private W second;
-
-    public Tuple (T fst, W snd) {
+    private S third;
+    Triple (T fst, W snd ,S trd) {
         first=fst;
         second=snd;
+        third=trd;
     }
 
     public T fst() {
@@ -15,8 +16,10 @@ public class Tuple<T,W> {
     public W snd() {
         return this.second;
     }
-
+    public S trd() {
+        return this.third;
+    }
     public String toString() {
-        return "<" + first + ", " + second + ">";
+        return "<" + first + ", " + second + ", " + third + ">";
     }
 }

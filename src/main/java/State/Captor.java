@@ -1,10 +1,11 @@
 package State;
 
+import Main.Triple;
 import Main.Tuple;
 import java.util.function.Function;
 
 public interface Captor<C extends Command> {
-    State run(State s, C c);
-    Captor with(C c, Function<State, State> fun);
-    Captor with(Tuple<C, Function<State, State>>... args);
+    Tuple<StateChange, State> run(State s, C c);
+    Captor with(MyString s, Function<State, State> fun, StateChange stateChange);
+    Captor with(Triple<C, Function<State, State>, StateChange>... args);
 }

@@ -1,6 +1,7 @@
 package Component;
 
 import State.State;
+import State.StateEvent;
 import State.Store;
 import State.Command;
 import io.reactivex.Observable;
@@ -30,7 +31,7 @@ public abstract class Component<C extends Command> {
     void sendCommand(C c) {
         this.store.update(c);
     }
-    abstract void eventHook(State state);
+    abstract void eventHook(StateEvent se);
     abstract State getState();
     abstract void initialization(State state);
     abstract void draw(State state);

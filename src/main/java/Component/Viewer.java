@@ -2,6 +2,7 @@ package Component;
 
 import State.State;
 import State.Store;
+import State.StateEvent;
 import State.Command;
 
 import javax.swing.*;
@@ -14,9 +15,9 @@ public class Viewer extends Component<Command> {
         super(store);
     }
     @Override
-    void eventHook(State state) {
+    void eventHook(StateEvent se) {
         view.remove(lab);
-        lab = new JLabel(String.format("%d", state.getCounter()));
+        lab = new JLabel(String.format("%d", se.state().getCounter()));
         view.add(lab);
         view.repaint();
         view.revalidate();
@@ -30,7 +31,7 @@ public class Viewer extends Component<Command> {
     @Override
     void draw(State state) {
         view = new JFrame("Button value");
-        view.setSize(20, 80); view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        view.setSize(80, 80); view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Ottieni il riferimento al Content Pane
         Container frmContentPane = view.getContentPane();
         // Usa frmContentPane per aggiungere elementi grafici
