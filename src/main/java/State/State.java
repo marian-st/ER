@@ -23,7 +23,7 @@ public class State implements Serializable {
     }
 
     public String toString() {
-        return this.name + " " + this.counter;
+        return String.format("{ name = %s, counter = %d }", this.name, this.counter);
     }
 
     /*
