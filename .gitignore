@@ -5,3 +5,4 @@ docs/*
 idea/*
 *.iml
 .DS_Store
+lib/
