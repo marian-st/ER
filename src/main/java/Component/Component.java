@@ -5,10 +5,7 @@ import State.StateEvent;
 import State.Store;
 import State.Command;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.disposables.Disposable;
-
-import javax.swing.*;
 
 public abstract class Component<C extends Command> {
     private final Store <C> store;
@@ -17,7 +14,7 @@ public abstract class Component<C extends Command> {
     public Component(Store <C> store) {
         this.store = store;
         initialization(this.store.poll());
-        this.subscription = this.store.getStateStream()
+        this.subscription = this.store.getEventStream()
                 .onErrorResumeNext(Observable.empty())
                 .subscribe(
                     s -> eventHook(s) ,
