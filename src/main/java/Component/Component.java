@@ -8,8 +8,10 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 
 public abstract class Component<C extends Command> {
-    private final Store <C> store;
-    private Disposable subscription;
+    protected Store <C> store;
+    protected Disposable subscription;
+
+    public Component() {}
 
     public Component(Store <C> store) {
         this.store = store;
@@ -21,16 +23,16 @@ public abstract class Component<C extends Command> {
                     throwable -> System.out.println(throwable)  );
     }
 
-    void clean() {
+    protected void clean() {
         this.subscription.dispose();
     }
 
-    void sendCommand(C c) {
+    protected final void sendCommand(C c) {
         this.store.update(c);
     }
-    abstract void eventHook(StateEvent se);
-    abstract State getState();
-    abstract void initialization(State state);
-    abstract void draw(State state);
+    protected abstract void eventHook(StateEvent se);
+    protected abstract State getState();
+    protected abstract void initialization(State state);
+    protected abstract void draw(State state);
 
 }

@@ -16,7 +16,7 @@ public class Viewer extends Component<Command> {
         super(store);
     }
     @Override
-    void eventHook(StateEvent se) {
+    protected void eventHook(StateEvent se) {
         if (se.stateChange() == StateChange.COUNTER) {
             view.remove(lab);
             lab = new JLabel(String.format("%d", se.state().getCounter()));
@@ -27,12 +27,12 @@ public class Viewer extends Component<Command> {
     }
 
     @Override
-    State getState() {
+    protected State getState() {
         return null;
     }
 
     @Override
-    void draw(State state) {
+    protected void draw(State state) {
         view = new JFrame("Button value");
         view.setSize(80, 80); view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Ottieni il riferimento al Content Pane
@@ -46,7 +46,7 @@ public class Viewer extends Component<Command> {
     }
 
     @Override
-    void initialization(State state) {
+    protected void initialization(State state) {
         draw(state);
     }
 }

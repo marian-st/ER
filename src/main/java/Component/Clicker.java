@@ -21,17 +21,17 @@ public class Clicker extends Component<Command> {
         super(store);
     }
     @Override
-    void eventHook(StateEvent se) {
+    protected void eventHook(StateEvent se) {
 
     }
 
     @Override
-    State getState() {
+    protected State getState() {
         return null;
     }
 
     @Override
-    void draw(State state) {
+    protected void draw(State state) {
         JFrame view = new JFrame("Button value");
         view.setSize(400, 300); view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Ottieni il riferimento al Content Pane
@@ -45,7 +45,7 @@ public class Clicker extends Component<Command> {
     }
 
     @Override
-    void initialization(State state) {
+    protected void initialization(State state) {
         draw(state);
     }
 

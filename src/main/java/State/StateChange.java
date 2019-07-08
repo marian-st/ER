@@ -4,4 +4,5 @@ public enum StateChange {
     INITIAL,
     COUNTER,
     NAME,
+    LOGIN
 }

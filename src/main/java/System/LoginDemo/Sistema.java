@@ -1,10 +1,18 @@
 package System.LoginDemo;
 
-import java.util.ArrayList;
+import State.Captor;
+import State.CaptorString;
+import State.MyString;
+import State.State;
+import State.StateChange;
+import State.Store;
+
+import java.util.UUID;
 
 public class Sistema {
     private static Sistema s = new Sistema();
-    private static ArrayList<Triple<String, String, Role>> users;
+    private static UUID id;
+    private static Store store;
 
     public static Sistema getInstance() {
         return s;
@@ -13,21 +21,27 @@ public class Sistema {
     public static void systemSetUp() {
         System.out.println("System Setup initialized");
         //other setup stuff
+        id = UUID.randomUUID();
+
+        Captor<MyString> captor = new CaptorString()
+                /* command             |       associated function                    | state change enum  */
+                .with(new MyString("LOG", id), (c, s) -> {
+                            User x = (User) c.getArg();
+                            if(x.equals(s.getUserCheck()))
+                                s.setUser(s.getUserCheck());
+                            return s;
+                }, StateChange.LOGIN);
+
+        store = new Store<MyString>(new State(), captor);
     }
 
     //will have all the information into the state and iterate over them
     //NB. This is just demo environment
     private Sistema() {
-        users = new ArrayList<>();
-        Triple<String, String, Role> t = new Triple<>("med", "pass", Role.DOCTOR);
-        users.add(t);
     }
 
-    //it will check on the information loaded in state
-    public static Role checkUser(Tuple<String, String> t) {
-        for(Triple<String, String, Role> x : users)
-            if(x.fst().equals(t.fst()) && x.snd().equals(t.snd()))
-                return x.trd();
-        throw new IllegalArgumentException();
+    public static Store getStore() {
+        return store;
     }
+
 }

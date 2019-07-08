@@ -29,6 +29,6 @@ public class MyString implements Command {
 
     @Override
     public Object getArg() {
-        return null;
+        return obj;
     }
 }

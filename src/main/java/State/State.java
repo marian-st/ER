@@ -1,9 +1,14 @@
 package State;
+import System.LoginDemo.Role;
+import System.LoginDemo.User;
+
 import java.io.Serializable;
 
 public class State implements Serializable {
     private int counter;
     private String name;
+    private User userCheck;
+    private User user;
 
     public State(int nl, String name) {
         this.counter = nl;
@@ -13,6 +18,8 @@ public class State implements Serializable {
     public State() {
         this.name = "Edo";
         this.counter = 0;
+        this.user = new User();
+        this.userCheck = new User(1, "eme", "password", Role.HEAD_PHYSICIAN, true);
     }
 
     /*
@@ -23,7 +30,7 @@ public class State implements Serializable {
     }
 
     public String toString() {
-        return String.format("{ name = %s, counter = %d }", this.name, this.counter);
+        return String.format("{ name = %s, counter = %d , user = %s}", this.name, this.counter, user);
     }
 
     /*
@@ -47,4 +54,21 @@ public class State implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public User getUserCheck() {
+        return userCheck;
+    }
+
+    public void setUserCheck(User userCheck) {
+        this.userCheck = userCheck;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
