@@ -3,6 +3,7 @@ package State;
 import Main.Triple;
 import Main.Tuple;
 import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 import java.util.function.BiFunction;
@@ -16,8 +17,7 @@ public class Store<C extends Command> {
     private Captor<C> captor;
     private int counter = 0;
     //hot observable to which state updates are pushed
-    private BehaviorSubject<StateEvent> state$ =
-            BehaviorSubject.createDefault(new StateEvent(StateChange.INITIAL, new State()));
+    private PublishSubject<StateEvent> state$ = PublishSubject.create();
 
     public Store(State state, Captor<C> captor, Triple<C, BiFunction<C, State,State>, StateChange>...args) {
         //logging
