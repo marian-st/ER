@@ -48,16 +48,16 @@ public class LoginUI {
                 @Override
                 public Void call() {
                     //send and handle response from state
-                    Disposable sub = stream.subscribe(se -> {
-                        if(se.stateChange() == StateChange.LOGIN) {
-                            User u = se.state().getUser();
-                            if(!u.isValid())
-                                updateMessage("Invalid username and password!");
-                            else updateMessage(u.toString());
-
-                        }
+                    stream.filter(se -> se.stateChange() == StateChange.LOGIN)
+                            .take(1)
+                            .subscribe(se -> {
+                                System.out.println("CALLED");
+                                    User u = se.state().getUser();
+                                    if(!u.isValid())
+                                        updateMessage("Invalid username and password!");
+                                    else updateMessage(u.getName() + "\n" + u.getPassword() + "\n" + u.getRole());
                     });
-                    store.update(new MyString("LOG_UNCHECKED", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
+                    store.update(new MyString("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
                     return null;
                 }
             };
