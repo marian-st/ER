@@ -1,5 +1,11 @@
 package System.LoginDemo;
 
+import State.StateEvent;
+import State.StateChange;
+import State.Store;
+import State.MyString;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.Subject;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,11 +15,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 
-public class LoginUI {
-    private static LoginUI loginUI = new LoginUI();
-    private static VBox root;
+import java.util.UUID;
 
-    private LoginUI() {
+public class LoginUI {
+    private VBox root;
+    private final Subject<StateEvent> stream;
+
+    public LoginUI(Store store, Subject<StateEvent> stream) {
+        this.stream = stream;
+
         Label userLabel;
         Label passLabel;
         TextField userField;
@@ -39,13 +49,17 @@ public class LoginUI {
             Task<Void> task = new Task<Void>() {
                 @Override
                 public Void call() {
-                    try {
-                        User x = new User(userField.getText(), passField.getText());
-                        updateMessage(x.toString());
-                    } catch (IllegalArgumentException e) {
-                        updateMessage("Username and Password Invalid!!");
-                    }
+                    //send and handle response from state
+                    Disposable sub = stream.subscribe(se -> {
+                        if(se.stateChange() == StateChange.LOGIN) {
+                            User u = se.state().getUser();
+                            if(!u.isValid())
+                                updateMessage("Invalid username and password!");
+                            else updateMessage(u.toString());
 
+                        }
+                    });
+                    store.update(new MyString("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
                     return null;
                 }
             };
@@ -57,11 +71,7 @@ public class LoginUI {
         root.setPadding(new Insets(10));
     }
 
-    public static LoginUI getInstance() {
-        return loginUI;
-    }
-
-    public static VBox getRoot() {
+    public VBox getRoot() {
         return root;
     }
 }

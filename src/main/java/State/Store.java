@@ -5,6 +5,7 @@ import Main.Tuple;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -17,7 +18,10 @@ public class Store<C extends Command> {
     private BehaviorSubject<StateEvent> state$ =
             BehaviorSubject.createDefault(new StateEvent(StateChange.INITIAL, new State()));
 
-    public Store(State state, Captor<C> captor, Triple<C, Function<State,State>, StateChange>...args) {
+    public Store(State state, Captor<C> captor, Triple<C, BiFunction<C, State,State>, StateChange>...args) {
+        //logging
+        this.state$.subscribe(s -> System.out.println(s.state()));
+
         this.state = state;
         this.state$.onNext(new StateEvent(StateChange.INITIAL, state));
         this.captor = captor;

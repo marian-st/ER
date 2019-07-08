@@ -14,7 +14,8 @@ public class LoginDemoMain extends Application {
     public void start(Stage primaryStage) {
         Sistema.systemSetUp();
         primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(LoginUI.getRoot(), 300, 250));
+        LoginComponent login = new LoginComponent(Sistema.getStore());
+        primaryStage.setScene(new Scene(login.getInterface(), 300, 250));
         primaryStage.show();
     }
 }
