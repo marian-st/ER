@@ -1,11 +1,13 @@
 package State.Entities;
 
 
+import System.LoginDemo.Role;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "role")
-public class Role {
+public class RoleEntry {
     @Id
     @GeneratedValue
     private int id;
@@ -13,13 +15,14 @@ public class Role {
     @Column(name = "userid")
     private String name;
     private String password;
+    private Role role;
 
-
-    public Role() {
+    public RoleEntry() {
     }
-    public Role(String name, String password) {
+    public RoleEntry(String name, String password, Role role) {
         this.name = name;
         this.password = password;
+        this.role = role;
     }
 
     public int getId() {
@@ -48,6 +51,6 @@ public class Role {
 
     @Override
     public String toString() {
-        return this.name + ": " + this.password;
+        return this.name + ": " + this.password + " (" + this.role +")";
     }
 }
