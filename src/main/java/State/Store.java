@@ -19,6 +19,9 @@ public class Store<C extends Command> {
             BehaviorSubject.createDefault(new StateEvent(StateChange.INITIAL, new State()));
 
     public Store(State state, Captor<C> captor, Triple<C, BiFunction<C, State,State>, StateChange>...args) {
+        //logging
+        this.state$.subscribe(s -> System.out.println(s.state()));
+
         this.state = state;
         this.state$.onNext(new StateEvent(StateChange.INITIAL, state));
         this.captor = captor;

@@ -18,7 +18,6 @@ public class Viewer extends Component<Command> {
     @Override
     void eventHook(StateEvent se) {
         if (se.stateChange() == StateChange.COUNTER) {
-            System.out.println(se.state());
             view.remove(lab);
             lab = new JLabel(String.format("%d", se.state().getCounter()));
             view.add(lab);
