@@ -29,8 +29,8 @@ public class Main {
 
         Captor<MyString> captor = new CaptorString()
                       /* command             |       associated function                    | state change enum  */
-                .with(new MyString("INC", id), s -> new State(s.getCounter()+1, s.getName()), StateChange.COUNTER)
-                .with(new MyString("DEC", id), s -> new State(s.getCounter()-10, s.getName()), StateChange.COUNTER);
+                .with(new MyString("INC", id), (c, s) -> new State(s.getCounter()+1, s.getName()), StateChange.COUNTER)
+                .with(new MyString("DEC", id), (c, s) -> new State(s.getCounter()-10, s.getName()), StateChange.COUNTER);
 
         Store store = new Store<MyString>(new State(), captor);
 
