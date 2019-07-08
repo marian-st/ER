@@ -1,19 +1,12 @@
 package Main;
 
-import Component.Clicker;
-import Component.Viewer;
-
 import State.State;
 import State.StateChange;
 import State.MyString;
-import State.StateEvent;
 import State.CaptorString;
 import State.Store;
 import State.Captor;
 import Stats.Statistics;
-
-import io.reactivex.disposables.Disposable;
-import io.reactivex.subjects.Subject;
 
 import java.util.UUID;
 
@@ -35,8 +28,6 @@ public class Main {
         Store store = new Store<MyString>(new State(), captor);
 
         Statistics.generate_values(30,4,15);
-        Viewer viewer = new Viewer(store);
-        Clicker clicker = new Clicker(store);
 
         /*
         Subject<StateEvent> subscription = store.getEventStream();

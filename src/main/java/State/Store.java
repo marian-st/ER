@@ -14,13 +14,16 @@ import java.util.function.Function;
 public class Store<C extends Command> {
     private State state;
     private Captor<C> captor;
+    private int counter = 0;
     //hot observable to which state updates are pushed
     private BehaviorSubject<StateEvent> state$ =
             BehaviorSubject.createDefault(new StateEvent(StateChange.INITIAL, new State()));
 
     public Store(State state, Captor<C> captor, Triple<C, BiFunction<C, State,State>, StateChange>...args) {
         //logging
-        this.state$.subscribe(s -> System.out.println(s.state()));
+        this.state$.subscribe(s -> {
+            System.out.println(String.valueOf(counter++) + ": " + s.state());
+        });
 
         this.state = state;
         this.state$.onNext(new StateEvent(StateChange.INITIAL, state));

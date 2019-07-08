@@ -19,10 +19,8 @@ import java.util.UUID;
 
 public class LoginUI {
     private VBox root;
-    private final Subject<StateEvent> stream;
 
     public LoginUI(Store store, Subject<StateEvent> stream) {
-        this.stream = stream;
 
         Label userLabel;
         Label passLabel;
@@ -59,7 +57,7 @@ public class LoginUI {
 
                         }
                     });
-                    store.update(new MyString("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
+                    store.update(new MyString("LOG_UNCHECKED", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
                     return null;
                 }
             };

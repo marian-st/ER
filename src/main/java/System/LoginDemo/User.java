@@ -24,7 +24,7 @@ public class User {
     }
 
     public String toString() {
-        return "Username: " + this.name + "\nPassword: " + this.password + "\nRole: " + this.role;
+        return "{Username: " + this.name + ", password: " + this.password + ", role: " + this.role+"}";
     }
 
     @Override

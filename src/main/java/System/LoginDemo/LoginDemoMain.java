@@ -1,21 +1,12 @@
 package System.LoginDemo;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import State.MyString;
 
-public class LoginDemoMain extends Application {
+public class LoginDemoMain  {
 
     public static void main(String[] args) {
-        launch(args);
+        Sistema.systemSetUp();
+        new LoginComponent<MyString>(Sistema.getStore());
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        Sistema.systemSetUp();
-        primaryStage.setTitle("Login");
-        LoginComponent login = new LoginComponent(Sistema.getStore());
-        primaryStage.setScene(new Scene(login.getInterface(), 300, 250));
-        primaryStage.show();
-    }
 }

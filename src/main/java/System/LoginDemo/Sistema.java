@@ -24,12 +24,16 @@ public class Sistema {
         id = UUID.randomUUID();
 
         Captor<MyString> captor = new CaptorString()
-                /* command             |       associated function                    | state change enum  */
                 .with(new MyString("LOG", id), (c, s) -> {
                             User x = (User) c.getArg();
                             if(x.equals(s.getUserCheck()))
                                 s.setUser(s.getUserCheck());
                             return s;
+                }, StateChange.LOGIN)
+                .with(new MyString("LOG_UNCHECKED", id), (c, s) -> {
+                    User x = (User) c.getArg();
+                    s.setUser(x);
+                    return s;
                 }, StateChange.LOGIN);
 
         store = new Store<MyString>(new State(), captor);
