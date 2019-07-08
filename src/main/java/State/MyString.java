@@ -7,11 +7,16 @@ import java.util.UUID;
 public class MyString implements Command {
         private final String s;
         private final UUID u;
-        public MyString(String s, UUID u) {
+        private final Object obj;
+        public MyString(String s, UUID u, Object obj) {
             this.s = s;
             this.u = u;
+            this.obj = obj;
         }
 
+        public MyString(String s, UUID u) {
+            this(s,u, null);
+        }
         @Override
         public String name() {
             return s;
@@ -21,4 +26,9 @@ public class MyString implements Command {
         public UUID issuer() {
             return u;
         }
+
+    @Override
+    public Object getArg() {
+        return null;
     }
+}
