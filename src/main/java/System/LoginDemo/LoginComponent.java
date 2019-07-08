@@ -25,7 +25,7 @@ public class LoginComponent<C extends Command> extends Component {
     }
 
     protected void initialization(State state) {
-        draw(state);
+        draw();
     }
 
     public static class LoginView extends Application {

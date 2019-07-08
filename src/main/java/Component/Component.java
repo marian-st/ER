@@ -27,7 +27,7 @@ public abstract class Component<C extends Command> {
         return this.store.poll();
     }
 
-    protected void draw(State state) {
+    protected void draw() {
         Application.launch(this.getView(), "");
     };
 
