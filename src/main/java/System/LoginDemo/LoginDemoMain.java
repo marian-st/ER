@@ -1,12 +1,12 @@
 package System.LoginDemo;
 
-import State.MyString;
+import State.StringCommand;
 
 public class LoginDemoMain  {
 
     public static void main(String[] args) {
         Sistema.systemSetUp();
-        new LoginComponent<MyString>(Sistema.getStore());
+        new LoginComponent<StringCommand>(Sistema.getStore());
     }
 
 }

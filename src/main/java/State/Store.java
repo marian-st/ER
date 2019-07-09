@@ -19,7 +19,7 @@ public class Store<C extends Command> {
     //hot observable to which state updates are pushed
     private PublishSubject<StateEvent> state$ = PublishSubject.create();
 
-    public Store(State state, Captor<C> captor, Triple<C, BiFunction<C, State,State>, StateChange>...args) {
+    public Store(State state, Captor<C> captor, Triple<String, BiFunction<C, State,State>, StateChange>...args) {
         //TODO remove -- logging
         this.state$.subscribe(s -> {
             System.out.println(String.valueOf(counter++) + ": " + s.state());

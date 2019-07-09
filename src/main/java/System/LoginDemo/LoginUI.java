@@ -3,7 +3,7 @@ package System.LoginDemo;
 import State.StateEvent;
 import State.StateChange;
 import State.Store;
-import State.MyString;
+import State.StringCommand;
 import io.reactivex.subjects.Subject;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -42,11 +42,11 @@ public class LoginUI {
 
         Button log = new Button("Log");
         log.setAlignment(Pos.CENTER);
-        log.setOnAction(event -> store.update(new MyString("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText()))));
+        log.setOnAction(event -> store.update(new StringCommand("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText()))));
 
         Button logout = new Button("Logout");
         logout.setAlignment(Pos.CENTER_RIGHT);
-        logout.setOnAction(event -> store.update(new MyString("LOGOUT", UUID.randomUUID())));
+        logout.setOnAction(event -> store.update(new StringCommand("LOGOUT", UUID.randomUUID())));
 
         root = new VBox(10, user, pass, log, loginFeedBackBox);
         root.setPadding(new Insets(10));

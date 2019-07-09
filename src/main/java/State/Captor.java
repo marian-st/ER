@@ -8,6 +8,6 @@ import java.util.function.Function;
 
 public interface Captor<C extends Command> {
     Tuple<StateChange, State> run(State s, C c);
-    Captor with(C command, BiFunction<C, State, State> fun, StateChange stateChange);
-    Captor with(Triple<C, BiFunction<C, State, State>, StateChange>... args);
+    Captor with(String st, BiFunction<C, State, State> fun, StateChange stateChange);
+    Captor with(Triple<String, BiFunction<C, State, State>, StateChange>... args);
 }
