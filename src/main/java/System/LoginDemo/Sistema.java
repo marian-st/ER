@@ -41,6 +41,10 @@ public class Sistema {
                         s.setUser(s.getUserCheck());
                     else s.setUser(new User());
                     return s;
+                }, StateChange.LOGIN)
+                .with(new MyString("LOGOUT", id), (c, s) -> {
+                    s.setUser(new User());
+                    return s;
                 }, StateChange.LOGIN);
 
         store = new Store<MyString>(new State(), captor);

@@ -6,6 +6,7 @@ import State.Store;
 import State.MyString;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.Subject;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -39,7 +40,7 @@ public class LoginUI {
         HBox pass = new HBox(10, passLabel, passField);
         pass.setAlignment(Pos.CENTER);
         loginFeedback = new Label();
-        HBox loginFeedBack = new HBox(10, loginFeedback);
+        HBox loginFeedBackBox = new HBox(10, loginFeedback);
 
         Button log = new Button("Log");
         log.setAlignment(Pos.CENTER);
@@ -47,24 +48,48 @@ public class LoginUI {
             Task<Void> task = new Task<Void>() {
                 @Override
                 public Void call() {
-                    //send and handle response from state
-                    stream.filter(se -> se.stateChange() == StateChange.LOGIN)
-                            .take(1)
-                            .subscribe(se -> {
-                                    User u = se.state().getUser();
-                                    if(!u.isValid())
-                                        updateMessage("Invalid username and password!");
-                                    else updateMessage(u.getName() + "\n" + u.getPassword() + "\n" + u.getRole());
-                    });
-                    store.update(new MyString("LOG_FAIL", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
-                    return null;
+                //send and handle response from state
+                store.update(new MyString("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
+                return null;
                 }
             };
-            task.messageProperty().addListener((obs, oldMessage, newMessage) -> loginFeedback.setText(newMessage));
             new Thread(task).start();
         });
 
-        root = new VBox(10, user, pass, log, loginFeedBack);
+        Button logout = new Button("Logout");
+        logout.setAlignment(Pos.CENTER_RIGHT);
+        logout.setVisible(false);
+
+        logout.setOnAction(event -> {
+            Task<Void> task = new Task<Void>() {
+                @Override
+                public Void call() {
+                    //send and handle response from state
+                    store.update(new MyString("LOGOUT", UUID.randomUUID()));
+                    return null;
+                }
+            };
+            new Thread(task).start();
+        });
+        stream.filter(se -> se.stateChange() == StateChange.LOGIN)
+                .subscribe(se -> {
+                    if (se.state().getUser() == se.state().getUserCheck()) {
+                        logout.setVisible(true);
+                        Platform.runLater(new Runnable(){
+                            @Override
+                            public void run() {
+                                loginFeedback.setText("Logged as: " + se.state().getUser().getName());
+                            }});
+                    } else {
+                        logout.setVisible(false);
+                        Platform.runLater(new Runnable(){
+                            @Override
+                            public void run() {
+                                loginFeedback.setText("Invalid username and/or password");
+                            }});
+                    }
+        });
+        root = new VBox(10, user, pass, log, logout, loginFeedBackBox);
         root.setPadding(new Insets(10));
     }
 
