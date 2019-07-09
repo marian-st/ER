@@ -4,10 +4,8 @@ import State.StateEvent;
 import State.StateChange;
 import State.Store;
 import State.MyString;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.Subject;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -44,33 +42,13 @@ public class LoginUI {
 
         Button log = new Button("Log");
         log.setAlignment(Pos.CENTER);
-        log.setOnAction(event -> {
-            Task<Void> task = new Task<Void>() {
-                @Override
-                public Void call() {
-                //send and handle response from state
-                store.update(new MyString("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
-                return null;
-                }
-            };
-            new Thread(task).start();
-        });
+        log.setOnAction(event -> store.update(new MyString("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText()))));
 
         Button logout = new Button("Logout");
         logout.setAlignment(Pos.CENTER_RIGHT);
         logout.setVisible(false);
+        logout.setOnAction(event -> store.update(new MyString("LOGOUT", UUID.randomUUID())));
 
-        logout.setOnAction(event -> {
-            Task<Void> task = new Task<Void>() {
-                @Override
-                public Void call() {
-                    //send and handle response from state
-                    store.update(new MyString("LOGOUT", UUID.randomUUID()));
-                    return null;
-                }
-            };
-            new Thread(task).start();
-        });
         stream.filter(se -> se.stateChange() == StateChange.LOGIN)
                 .subscribe(se -> {
                     if (se.state().getUser() == se.state().getUserCheck()) {
@@ -89,6 +67,7 @@ public class LoginUI {
                             }});
                     }
         });
+
         root = new VBox(10, user, pass, log, logout, loginFeedBackBox);
         root.setPadding(new Insets(10));
     }
