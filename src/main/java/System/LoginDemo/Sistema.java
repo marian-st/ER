@@ -19,7 +19,7 @@ public class Sistema {
     }
 
     public static void systemSetUp() {
-        System.out.println("System Setup initialized");
+        
         //other setup stuff
         id = UUID.randomUUID();
 

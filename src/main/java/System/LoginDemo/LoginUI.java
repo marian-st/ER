@@ -46,20 +46,23 @@ public class LoginUI {
 
         Button logout = new Button("Logout");
         logout.setAlignment(Pos.CENTER_RIGHT);
-        logout.setVisible(false);
         logout.setOnAction(event -> store.update(new MyString("LOGOUT", UUID.randomUUID())));
 
+        root = new VBox(10, user, pass, log, loginFeedBackBox);
+        root.setPadding(new Insets(10));
+        root.getChildren().remove(logout);
         stream.filter(se -> se.stateChange() == StateChange.LOGIN)
                 .subscribe(se -> {
                     if (se.state().getUser() == se.state().getUserCheck()) {
-                        logout.setVisible(true);
+                        root.getChildren().clear();
+                        root.getChildren().addAll(user, pass, log, logout, loginFeedBackBox);
                         Platform.runLater(new Runnable(){
                             @Override
                             public void run() {
                                 loginFeedback.setText("Logged as: " + se.state().getUser().getName());
                             }});
                     } else {
-                        logout.setVisible(false);
+                        root.getChildren().remove(logout);
                         Platform.runLater(new Runnable(){
                             @Override
                             public void run() {
@@ -68,8 +71,6 @@ public class LoginUI {
                     }
         });
 
-        root = new VBox(10, user, pass, log, logout, loginFeedBackBox);
-        root.setPadding(new Insets(10));
     }
 
     public VBox getRoot() {
