@@ -34,6 +34,13 @@ public class Sistema {
                     User x = (User) c.getArg();
                     s.setUser(x);
                     return s;
+                }, StateChange.LOGIN)
+                .with(new MyString("LOG_FAIL", id), (c, s) -> {
+                    User x = (User) c.getArg();
+                    if(x.equals(s.getUserCheck()))
+                        s.setUser(s.getUserCheck());
+                    else s.setUser(new User());
+                    return s;
                 }, StateChange.LOGIN);
 
         store = new Store<MyString>(new State(), captor);

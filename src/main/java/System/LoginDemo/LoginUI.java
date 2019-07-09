@@ -51,13 +51,12 @@ public class LoginUI {
                     stream.filter(se -> se.stateChange() == StateChange.LOGIN)
                             .take(1)
                             .subscribe(se -> {
-                                System.out.println("CALLED");
                                     User u = se.state().getUser();
                                     if(!u.isValid())
                                         updateMessage("Invalid username and password!");
                                     else updateMessage(u.getName() + "\n" + u.getPassword() + "\n" + u.getRole());
                     });
-                    store.update(new MyString("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
+                    store.update(new MyString("LOG_FAIL", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
                     return null;
                 }
             };
