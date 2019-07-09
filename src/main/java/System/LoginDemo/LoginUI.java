@@ -3,10 +3,9 @@ package System.LoginDemo;
 import State.StateEvent;
 import State.StateChange;
 import State.Store;
-import State.MyString;
-import io.reactivex.disposables.Disposable;
+import State.StringCommand;
 import io.reactivex.subjects.Subject;
-import javafx.concurrent.Task;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -39,34 +38,39 @@ public class LoginUI {
         HBox pass = new HBox(10, passLabel, passField);
         pass.setAlignment(Pos.CENTER);
         loginFeedback = new Label();
-        HBox loginFeedBack = new HBox(10, loginFeedback);
+        HBox loginFeedBackBox = new HBox(10, loginFeedback);
 
         Button log = new Button("Log");
         log.setAlignment(Pos.CENTER);
-        log.setOnAction(event -> {
-            Task<Void> task = new Task<Void>() {
-                @Override
-                public Void call() {
-                    //send and handle response from state
-                    stream.filter(se -> se.stateChange() == StateChange.LOGIN)
-                            .take(1)
-                            .subscribe(se -> {
-                                System.out.println("CALLED");
-                                    User u = se.state().getUser();
-                                    if(!u.isValid())
-                                        updateMessage("Invalid username and password!");
-                                    else updateMessage(u.getName() + "\n" + u.getPassword() + "\n" + u.getRole());
-                    });
-                    store.update(new MyString("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
-                    return null;
-                }
-            };
-            task.messageProperty().addListener((obs, oldMessage, newMessage) -> loginFeedback.setText(newMessage));
-            new Thread(task).start();
+        log.setOnAction(event -> store.update(new StringCommand("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText()))));
+
+        Button logout = new Button("Logout");
+        logout.setAlignment(Pos.CENTER_RIGHT);
+        logout.setOnAction(event -> store.update(new StringCommand("LOGOUT", UUID.randomUUID())));
+
+        root = new VBox(10, user, pass, log, loginFeedBackBox);
+        root.setPadding(new Insets(10));
+        root.getChildren().remove(logout);
+        stream.filter(se -> se.stateChange() == StateChange.LOGIN)
+                .subscribe(se -> {
+                    if (se.state().getUser() == se.state().getUserCheck()) {
+                        root.getChildren().clear();
+                        root.getChildren().addAll(user, pass, log, logout, loginFeedBackBox);
+                        Platform.runLater(new Runnable(){
+                            @Override
+                            public void run() {
+                                loginFeedback.setText("Logged as: " + se.state().getUser().getName());
+                            }});
+                    } else {
+                        root.getChildren().remove(logout);
+                        Platform.runLater(new Runnable(){
+                            @Override
+                            public void run() {
+                                loginFeedback.setText("Invalid username and/or password");
+                            }});
+                    }
         });
 
-        root = new VBox(10, user, pass, log, loginFeedBack);
-        root.setPadding(new Insets(10));
     }
 
     public VBox getRoot() {

@@ -2,7 +2,7 @@ package System.LoginDemo;
 
 import State.Captor;
 import State.CaptorString;
-import State.MyString;
+import State.StringCommand;
 import State.State;
 import State.StateChange;
 import State.Store;
@@ -19,24 +19,35 @@ public class Sistema {
     }
 
     public static void systemSetUp() {
-        System.out.println("System Setup initialized");
+        
         //other setup stuff
         id = UUID.randomUUID();
 
-        Captor<MyString> captor = new CaptorString()
-                .with(new MyString("LOG", id), (c, s) -> {
+        Captor<StringCommand> captor = new CaptorString()
+                .with("LOG", (c, s) -> {
                             User x = (User) c.getArg();
                             if(x.equals(s.getUserCheck()))
                                 s.setUser(s.getUserCheck());
                             return s;
                 }, StateChange.LOGIN)
-                .with(new MyString("LOG_UNCHECKED", id), (c, s) -> {
+                .with("LOG_UNCHECKED", (c, s) -> {
                     User x = (User) c.getArg();
                     s.setUser(x);
                     return s;
+                }, StateChange.LOGIN)
+                .with("LOG_FAIL", (c, s) -> {
+                    User x = (User) c.getArg();
+                    if(x.equals(s.getUserCheck()))
+                        s.setUser(s.getUserCheck());
+                    else s.setUser(new User());
+                    return s;
+                }, StateChange.LOGIN)
+                .with("LOGOUT", (c, s) -> {
+                    s.setUser(new User());
+                    return s;
                 }, StateChange.LOGIN);
 
-        store = new Store<MyString>(new State(), captor);
+        store = new Store<StringCommand>(new State(), captor);
     }
 
     //will have all the information into the state and iterate over them
