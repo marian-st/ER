@@ -2,24 +2,22 @@ package State;
 
 import Main.Triple;
 import Main.Tuple;
-import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  *
  */
 public class Store<C extends Command> {
     private State state;
-    private Captor<C> captor;
+    private Reducer<C> reducer;
     private int counter = 0;
     //hot observable to which state updates are pushed
     private PublishSubject<StateEvent> state$ = PublishSubject.create();
 
-    public Store(State state, Captor<C> captor, Triple<String, BiFunction<C, State,State>, StateChange>...args) {
+    public Store(State state, Reducer<C> reducer, Triple<String, BiFunction<C, State,State>, StateChange>...args) {
         //TODO remove -- logging
         this.state$.subscribe(s -> {
             System.out.println(String.valueOf(counter++) + ": " + s.state());
@@ -27,9 +25,9 @@ public class Store<C extends Command> {
 
         this.state = state;
         this.state$.onNext(new StateEvent(StateChange.INITIAL, state));
-        this.captor = captor;
-        // <Command, Function> tuples can be passed here to the captor
-        if (args.length != 0) this.captor = this.captor.with(args);
+        this.reducer = reducer;
+        // <Command, Function> tuples can be passed here to the reducer
+        if (args.length != 0) this.reducer = this.reducer.with(args);
 
     }
     /*
@@ -63,11 +61,11 @@ public class Store<C extends Command> {
     }
 
     /*
-    * Transmute the state based on the captor which will
+    * Transmute the state based on the reducer which will
     * apply the function associated with the command
      */
     private StateChange transmute(C command) {
-        Tuple<StateChange, State> result = this.captor.run(state, command);
+        Tuple<StateChange, State> result = this.reducer.run(state, command);
         this.state = result.snd();
         return result.fst();
     }

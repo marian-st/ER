@@ -3,9 +3,9 @@ package Main;
 import State.State;
 import State.StateChange;
 import State.StringCommand;
-import State.CaptorString;
+import State.ReducerString;
 import State.Store;
-import State.Captor;
+import State.Reducer;
 import Stats.Statistics;
 
 import java.util.UUID;
@@ -20,12 +20,12 @@ public class Main {
     Main() {
         this.id = UUID.randomUUID();
 
-        Captor<StringCommand> captor = new CaptorString()
+        Reducer<StringCommand> reducer = new ReducerString()
                       /* command             |       associated function                    | state change enum  */
                 .with("INC", (c, s) -> new State(s.getCounter()+1, s.getName()), StateChange.COUNTER)
                 .with("DEC", (c, s) -> new State(s.getCounter()-10, s.getName()), StateChange.COUNTER);
 
-        Store store = new Store<StringCommand>(new State(), captor);
+        Store store = new Store<StringCommand>(new State(), reducer);
 
         Statistics.generate_values(30,4,15);
 

@@ -1,18 +1,18 @@
 package System.LoginDemo;
 
-import State.Captor;
-import State.CaptorString;
+import State.Reducer;
+import State.ReducerString;
 import State.StringCommand;
 import State.State;
 import State.StateChange;
 import State.Store;
+import State.StateManager;
 
 import java.util.UUID;
 
 public class Sistema {
     private static Sistema s = new Sistema();
-    private static UUID id;
-    private static Store store;
+    private static StateManager<StringCommand> stateManager;
 
     public static Sistema getInstance() {
         return s;
@@ -21,9 +21,8 @@ public class Sistema {
     public static void systemSetUp() {
         
         //other setup stuff
-        id = UUID.randomUUID();
 
-        Captor<StringCommand> captor = new CaptorString()
+        Reducer<StringCommand> reducer = new ReducerString()
                 .with("LOG", (c, s) -> {
                             User x = (User) c.getArg();
                             if(x.equals(s.getUserCheck()))
@@ -47,7 +46,7 @@ public class Sistema {
                     return s;
                 }, StateChange.LOGIN);
 
-        store = new Store<StringCommand>(new State(), captor);
+        stateManager = new StateManager<StringCommand>(new Store<StringCommand>(new State(), reducer));
     }
 
     //will have all the information into the state and iterate over them
@@ -56,7 +55,7 @@ public class Sistema {
     }
 
     public static Store getStore() {
-        return store;
+        return stateManager.getStore();
     }
 
 }
