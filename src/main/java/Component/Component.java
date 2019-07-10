@@ -5,8 +5,7 @@ import State.StateEvent;
 import State.Store;
 import State.Command;
 import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
-import javafx.application.Application;
+import io.reactivex.disposables.Disposable;import javafx.application.Application;
 
 public abstract class Component<C extends Command> {
 
