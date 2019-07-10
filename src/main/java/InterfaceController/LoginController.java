@@ -1,11 +1,11 @@
 package InterfaceController;
 
+import State.Entities.Role;
+import State.Entities.User;
 import State.StateChange;
 import State.StateEvent;
 import State.StringCommand;
-import System.LoginDemo.Role;
 import System.LoginDemo.Sistema;
-import System.LoginDemo.User;
 import io.reactivex.subjects.Subject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
