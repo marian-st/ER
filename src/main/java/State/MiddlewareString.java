@@ -13,6 +13,7 @@ public class MiddlewareString implements Middleware<StringCommand> {
     public Middleware<StringCommand> with(String st, TriFunction<StringCommand, State,
             Middleware<StringCommand>, State> fun, String commandReturned) {
         this.map.put(st, new Tuple<>(fun, st));
+        return this;
     }
 
     @Override

@@ -7,6 +7,7 @@ import State.StringCommand;
 import State.State;
 import State.StateChange;
 import State.Store;
+import State.MiddlewareString;
 import State.StateManager;
 import System.LoginDemo.HP.HPComponent;
 import javafx.stage.Stage;
@@ -44,7 +45,7 @@ public class Sistema {
                     else return new StringCommand("LOGIN_FAIL", UUID.randomUUID());
                 }, StateChange.LOGIN);*/
 
-        stateManager = new StateManager<StringCommand>(new Store<StringCommand>(new State(), reducer));
+        stateManager = new StateManager<StringCommand>(new Store<StringCommand>(new State(), reducer, new MiddlewareString()));
     }
 
     public void setupUI(Stage stage){
