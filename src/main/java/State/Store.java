@@ -29,6 +29,8 @@ public class Store<C extends Command> {
         // <Command, Function> tuples can be passed here to the reducer
         if (args.length != 0) this.reducer = this.reducer.with(args);
 
+        //this.reducer.setStore(this);
+
     }
     /*
     * TODO check this, may not follow reactive paradigm

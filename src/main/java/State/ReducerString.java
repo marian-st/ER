@@ -8,9 +8,11 @@ import java.util.HashMap;
 import java.util.function.BiFunction;
 
 public class ReducerString implements Reducer<StringCommand> {
+    private Store<StringCommand> store;
     private HashMap<String, Tuple<BiFunction<StringCommand, State, State>, StateChange>> commands =
             new HashMap<String, Tuple<BiFunction<StringCommand, State, State>, StateChange>>();
-
+    private HashMap<String, Tuple<BiFunction<StringCommand, Store<StringCommand>, StringCommand>, StringCommand>>
+            attached = new HashMap<>();
     public ReducerString() {
 
     }
@@ -22,11 +24,22 @@ public class ReducerString implements Reducer<StringCommand> {
     }
 
     @Override
-    public Reducer with(Triple<String, BiFunction<StringCommand, State, State>, StateChange>... args) {
+    public ReducerString with(Triple<String, BiFunction<StringCommand, State, State>, StateChange>... args) {
         for (Triple<String, BiFunction<StringCommand, State, State>, StateChange> a : args) {
             this.commands.put(a.fst(), new Tuple<>(a.snd(), a.trd()));
         }
         return this;
+    }
+
+    @Override
+    public ReducerString attachTo(String st, BiFunction<StringCommand, Store<StringCommand>, StringCommand> fun, StateChange stateChange) {
+        //TODO change
+        return null;
+    }
+
+    @Override
+    public void setStore(Store<StringCommand> store) {
+        this.store = store;
     }
 
     @Override
