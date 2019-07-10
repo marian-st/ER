@@ -18,7 +18,8 @@ public class InterfacesController {
         interfaces.put(name, pane);
     }
 
-    public void activate(String name){
+    public void activate(String name, String title){
+        main.setTitle(title);
         main.setScene(new Scene(interfaces.get(name)));
         main.sizeToScene();
     }
