@@ -3,13 +3,13 @@ package InterfaceController;
 import State.StateChange;
 import State.StateEvent;
 import State.StringCommand;
+import System.LoginDemo.Role;
 import System.LoginDemo.Sistema;
 import System.LoginDemo.User;
 import io.reactivex.subjects.Subject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import State.Store;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -25,8 +25,8 @@ public class LoginController {
 
         stream.filter(se -> se.stateChange() == StateChange.LOGIN)
                 .subscribe(se -> {
-                    if (se.state().getUser() == se.state().getUserCheck()) {
-                        System.out.println("Logged as: " + se.state().getUser().getName());
+                    if (se.state().getUser() == se.state().getUserCheck() && se.state().getUser().getRole() == Role.HEAD_PHYSICIAN) {
+                        Sistema.getInstance().setInterface("HP");
                     } else {
                         System.out.println("Invalid username and/or password");
                     }
