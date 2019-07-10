@@ -19,7 +19,6 @@ public class LoginController {
     private Store<StringCommand> store;
     @FXML private TextField userField;
     @FXML private PasswordField passField;
-    @FXML private Label test;
 
     public LoginController(Store store, Subject<StateEvent> stream) {
         this.store = store;
@@ -27,11 +26,9 @@ public class LoginController {
         stream.filter(se -> se.stateChange() == StateChange.LOGIN)
                 .subscribe(se -> {
                     if (se.state().getUser() == se.state().getUserCheck()) {
-                        test.setVisible(true);
-                        test.setText("Logged as: " + se.state().getUser().getName());
+                        System.out.println("Logged as: " + se.state().getUser().getName());
                     } else {
-                        test.setVisible(true);
-                        test.setText("Invalid username and/or password");
+                        System.out.println("Invalid username and/or password");
                     }
                 });
     }
