@@ -1,5 +1,6 @@
 package System.LoginDemo;
 
+import State.Entities.User;
 import State.Reducer;
 import State.ReducerString;
 import State.StringCommand;
@@ -7,8 +8,6 @@ import State.State;
 import State.StateChange;
 import State.Store;
 import State.StateManager;
-
-import java.util.UUID;
 
 public class Sistema {
     private static Sistema s = new Sistema();

@@ -1,6 +1,6 @@
 package State;
-import System.LoginDemo.Role;
-import System.LoginDemo.User;
+import State.Entities.Role;
+import State.Entities.User;
 
 import java.io.Serializable;
 
@@ -19,7 +19,7 @@ public class State implements Serializable {
         this.name = "Edo";
         this.counter = 0;
         this.user = new User();
-        this.userCheck = new User(1, "eme", "password", Role.HEAD_PHYSICIAN, true);
+        this.userCheck = new User("eme", "password", Role.HEAD_PHYSICIAN, true);
     }
 
     /*
