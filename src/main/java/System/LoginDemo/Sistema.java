@@ -1,5 +1,6 @@
 package System.LoginDemo;
 
+import State.Entities.User;
 import State.Reducer;
 import State.ReducerString;
 import State.StringCommand;
