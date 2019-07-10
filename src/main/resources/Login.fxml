@@ -49,11 +49,6 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="logoutButton" visible="false" layoutX="226.0" layoutY="265.0" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="103.0" text="Logout">
-                <font>
-                    <Font size="18.0" />
-                </font>
-            </Button>
             </children>
         </AnchorPane>
     </children>
