@@ -25,6 +25,6 @@
         <property name="show_sql">false</property>
 
 
-         <mapping class="State.Entities.RoleEntry"/>
+         <mapping class="State.Entities.User"/>
     </session-factory>
 </hibernate-configuration>

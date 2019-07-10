@@ -1,18 +1,27 @@
-package System.LoginDemo;
+package State.Entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="role")
 public class User {
-    private int userID;
+    @Id
+    @GeneratedValue
+    private int id;
+
+    @Column(name = "userid")
     private String name;
     private String password;
     private Role role;
+
+    @Transient
     private boolean valid;
 
     public User() {
 
     }
 
-    public User(int id, String username, String password, Role role, boolean valid) {
-        this.userID = id;
+    public User(String username, String password, Role role, boolean valid) {
         this.name = username;
         this.password = password;
         this.role = role;
@@ -20,7 +29,7 @@ public class User {
     }
 
     public User(String username, String password) {
-        this(1, username, password, null, false);
+        this(username, password, null, false);
     }
 
     public String toString() {
@@ -42,12 +51,12 @@ public class User {
         this.valid = valid;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getId() {
+        return id;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
