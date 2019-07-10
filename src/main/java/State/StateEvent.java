@@ -1,17 +1,17 @@
 package State;
 
-public class StateEvent {
-    private final StateChange sc;
+public class StateEvent<C extends Command> {
+    private final C sc;
     private final State s;
 
-    public StateEvent(StateChange sc, State s) {
+    public StateEvent(C sc, State s) {
         this.sc = sc;
         this.s = s;
     }
-    public StateChange stateChange() {
+    public C stateChange() {
         return this.sc;
-    };
+    }
     public State state() {
         return this.s;
-    };
+    }
 }

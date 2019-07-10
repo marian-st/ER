@@ -22,9 +22,7 @@ public class LoginController {
 
     public LoginController(Store store, Subject<StateEvent> stream) {
         this.store = store;
-
-        stream.filter(se -> se.stateChange() == StateChange.LOGIN)
-                .subscribe(se -> {
+        stream.subscribe(se -> {
                     if (se.state().getUser() == se.state().getUserCheck() && se.state().getUser().getRole() == Role.HEAD_PHYSICIAN) {
                         Sistema.getInstance().setInterface("HP");
                     } else {
@@ -34,6 +32,6 @@ public class LoginController {
     }
 
     @FXML protected void login(ActionEvent event) {
-        store.update(new StringCommand("LOG", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
+        store.update(new StringCommand("LOGIN", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
     }
 }

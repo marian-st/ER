@@ -3,24 +3,23 @@ package State;
 import Main.Tuple;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 public class MiddlewareString implements Middleware<StringCommand> {
-    private HashMap<String, Tuple<TriFunction<StringCommand, State, Middleware<StringCommand>, State>, String>> map =
-            new HashMap<String, Tuple<TriFunction<StringCommand, State, Middleware<StringCommand>, State>, String>>();
+    private HashMap<String, TriFunction<StringCommand, State, Middleware<StringCommand>, Tuple<StringCommand, State>>> map =
+            new HashMap<String, TriFunction<StringCommand, State, Middleware<StringCommand>, Tuple<StringCommand, State>>>();
 
     @Override
     public Middleware<StringCommand> with(String st, TriFunction<StringCommand, State,
-            Middleware<StringCommand>, State> fun, String commandReturned) {
-        this.map.put(st, new Tuple<>(fun, st));
+            Middleware<StringCommand>, Tuple<StringCommand, State>> fun) {
+        this.map.put(st, fun);
         return this;
     }
 
     @Override
-    public Tuple<String, State> run(State s, StringCommand stringCommand) {
-        Tuple<TriFunction<StringCommand, State, Middleware<StringCommand>, State>, String> tup = this.map.get(stringCommand.name());
-        State result = tup.fst().apply(stringCommand, s, this);
-        return new Tuple<>(tup.snd(), result);
+    public Tuple<StringCommand, State> run(State s, StringCommand stringCommand) {
+        TriFunction<StringCommand, State, Middleware<StringCommand>, Tuple<StringCommand, State>> fun =
+                this.map.get(stringCommand.name());
+        return fun.apply(stringCommand, s, this);
     }
     public boolean check(String s) {
         return this.map.containsKey(s);

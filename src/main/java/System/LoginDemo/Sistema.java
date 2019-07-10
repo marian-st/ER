@@ -9,8 +9,11 @@ import State.StateChange;
 import State.Store;
 import State.MiddlewareString;
 import State.StateManager;
+import State.Middleware;
 import System.LoginDemo.HP.HPComponent;
 import javafx.stage.Stage;
+import Main.Tuple;
+import java.util.UUID;
 
 public class Sistema {
     private static Sistema s;
@@ -27,25 +30,24 @@ public class Sistema {
     //NB. This is just demo environment
     private Sistema() {
         Reducer<StringCommand> reducer = new ReducerString()
-                .with("LOG", (c, s) -> {
-                    User x = (User) c.getArg();
-                    if(x.equals(s.getUserCheck()))
-                        s.setUser(s.getUserCheck());
-                    return s;
-                }, StateChange.LOGIN)
+                .with("LOGIN", StateChange.LOGIN)
                 .with("LOGOUT", (c, s) -> {
                     s.setUser(new User());
                     return s;
                 }, StateChange.LOGIN);
-                /*.attachTo("LOG", (c, sto) -> {
+        Middleware<StringCommand> middleware = new MiddlewareString()
+                .with("LOGIN", (c, s, m) -> {
                     User u = (User) c.getArg();
-                    if (u ==  sto.poll().getUserCheck()) {
-                        return new StringCommand("LOGIN_SUCCESS", UUID.randomUUID());
+                    System.out.println("Debug: " + u);
+                    if (s.getUserCheck().equals(u)) {
+                        s.setUser(s.getUserCheck());
+                        return new Tuple<>(new StringCommand("LOGIN_SUCCESS", UUID.randomUUID()), s);
                     }
-                    else return new StringCommand("LOGIN_FAIL", UUID.randomUUID());
-                }, StateChange.LOGIN);*/
-
-        stateManager = new StateManager<StringCommand>(new Store<StringCommand>(new State(), reducer, new MiddlewareString()));
+                    else {
+                        return new Tuple<>(new StringCommand("LOGIN_FAILURE", UUID.randomUUID()), s);
+                    }
+                });
+        stateManager = new StateManager<StringCommand>(new Store<StringCommand>(new State(), reducer, middleware));
     }
 
     public void setupUI(Stage stage){
