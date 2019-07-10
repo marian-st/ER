@@ -8,25 +8,29 @@ import State.State;
 import State.StateChange;
 import State.Store;
 import State.StateManager;
+import System.LoginDemo.HP.HPComponent;
+import javafx.stage.Stage;
 
 public class Sistema {
-    private static Sistema s = new Sistema();
-    private static StateManager<StringCommand> stateManager;
+    private static Sistema s;
+    private StateManager<StringCommand> stateManager;
+    private InterfacesController controller;
 
     public static Sistema getInstance() {
+        if (s == null)
+            s = new Sistema();
         return s;
     }
 
-    public static void systemSetUp() {
-        
-        //other setup stuff
-
+    //will have all the information into the state and iterate over them
+    //NB. This is just demo environment
+    private Sistema() {
         Reducer<StringCommand> reducer = new ReducerString()
                 .with("LOG", (c, s) -> {
-                            User x = (User) c.getArg();
-                            if(x.equals(s.getUserCheck()))
-                                s.setUser(s.getUserCheck());
-                            return s;
+                    User x = (User) c.getArg();
+                    if(x.equals(s.getUserCheck()))
+                        s.setUser(s.getUserCheck());
+                    return s;
                 }, StateChange.LOGIN)
                 .with("LOGOUT", (c, s) -> {
                     s.setUser(new User());
@@ -43,13 +47,22 @@ public class Sistema {
         stateManager = new StateManager<StringCommand>(new Store<StringCommand>(new State(), reducer));
     }
 
-    //will have all the information into the state and iterate over them
-    //NB. This is just demo environment
-    private Sistema() {
+    public void setupUI(Stage stage){
+        try {
+            this.controller = new InterfacesController(stage);
+            this.controller.addInterface("login", new LoginComponent<StringCommand>().getLoader().load());
+            this.controller.addInterface("HP", new HPComponent<StringCommand>().getLoader().load());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error during interfaces setup");
+        }
     }
 
-    public static Store getStore() {
+    public Store getStore() {
         return stateManager.getStore();
     }
 
+    public void setInterface(String component) {
+        controller.activate(component);
+    }
 }

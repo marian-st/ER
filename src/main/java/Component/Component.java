@@ -6,11 +6,14 @@ import State.Store;
 import State.Command;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 
 public abstract class Component<C extends Command> {
 
     private Store <C> store;
     private Disposable subscription;
+
+    public Component() {}
 
     public Component(Store <C> store) {
         this.store = store;
@@ -26,9 +29,7 @@ public abstract class Component<C extends Command> {
         return this.store.poll();
     }
 
-    protected void draw() {
-        Application.launch(this.getView(), "");
-    };
+    protected abstract void draw() throws Exception;
 
     private void clean() {
         this.subscription.dispose();
@@ -37,10 +38,15 @@ public abstract class Component<C extends Command> {
         this.store.update(c);
     }
 
-    protected abstract Class getView();
     protected abstract void eventHook(StateEvent se);
-    protected abstract void initialization(State state);
-
+    protected void initialization(State state) {
+        try {
+            draw();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Something went wrong drawing the scene");
+        }
+    }
 
     /**
      * GETTERS AND SETTERS
