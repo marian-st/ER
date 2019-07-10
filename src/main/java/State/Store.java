@@ -14,15 +14,19 @@ public class Store<C extends Command> {
     private State state;
     private Reducer<C> reducer;
     private int counter = 0;
-    //hot observable to which state updates are pushed
-    private PublishSubject<StateEvent> state$ = PublishSubject.create();
+    private Middleware<C> middleware;
 
-    public Store(State state, Reducer<C> reducer, Triple<String, BiFunction<C, State,State>, StateChange>...args) {
+    //streams
+    private PublishSubject<StateEvent> state$ = PublishSubject.create();
+    private PublishSubject<String> commands$= PublishSubject.create();
+
+    public Store(State state, Reducer<C> reducer, Middleware middleware, Triple<String, BiFunction<C, State,State>, StateChange>...args) {
         //TODO remove -- logging
         this.state$.subscribe(s -> {
             System.out.println(String.valueOf(counter++) + ": " + s.state());
         });
 
+        this.middleware = middleware;
         this.state = state;
         this.state$.onNext(new StateEvent(StateChange.INITIAL, state));
         this.reducer = reducer;
@@ -50,26 +54,37 @@ public class Store<C extends Command> {
      *    of the non deterministic order in which this.state is called
      */
      synchronized public void update(C command) {
-         //TODO remove -- logging
-         System.out.println("Command: " + command.name());
+        //TODO remove -- logging
+        System.out.println("Command: " + command.name());
         // change the state based on the command
-        StateChange sc = transmute(command);
+
+        State state;
+        String commandName;
+
+        Tuple<StateChange, State> resultReducer = this.reducer.run(this.state, command);
+        if (this.middleware.check(command.name())) {
+            Tuple<String, State> resultMiddleware = this.middleware.run(resultReducer.snd(), command);
+            state = resultMiddleware.snd();
+            commandName = resultMiddleware.fst();
+        } else {
+            state = resultReducer.snd();
+            commandName = command.name();
+        }
+        StateChange sc = resultReducer.fst();
+
+        this.state$.onNext(new StateEvent(sc, state));
+        this.commands$.onNext(commandName);
+
         // notify subscribers about the state change
-        this.state$.onNext(new StateEvent(sc, this.state));
+
     }
 
     public Subject<StateEvent> getEventStream() {
         return state$;
     }
 
-    /*
-    * Transmute the state based on the reducer which will
-    * apply the function associated with the command
-     */
-    private StateChange transmute(C command) {
-        Tuple<StateChange, State> result = this.reducer.run(state, command);
-        this.state = result.snd();
-        return result.fst();
+    public Subject<String> getCommandStream() {
+        return commands$;
     }
 
 }

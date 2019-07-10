@@ -18,8 +18,15 @@ public class ReducerString implements Reducer<StringCommand> {
     }
 
     @Override
-    public ReducerString with(String s, BiFunction<StringCommand, State, State> fun, StateChange stateChange) {
-        this.commands.put(s, new Tuple<>(fun, stateChange));
+    public ReducerString with(String st, BiFunction<StringCommand, State, State> fun, StateChange stateChange) {
+        this.commands.put(st, new Tuple<>(fun, stateChange));
+        return this;
+    }
+
+    @Override
+    public ReducerString with(String st, StateChange stateChange) {
+        BiFunction<StringCommand, State, State> fun = (c, s) -> s;
+        this.commands.put(st, new Tuple<>(fun, stateChange));
         return this;
     }
 
@@ -29,12 +36,6 @@ public class ReducerString implements Reducer<StringCommand> {
             this.commands.put(a.fst(), new Tuple<>(a.snd(), a.trd()));
         }
         return this;
-    }
-
-    @Override
-    public ReducerString attachTo(String st, BiFunction<StringCommand, Store<StringCommand>, StringCommand> fun, StateChange stateChange) {
-        //TODO change
-        return null;
     }
 
     @Override
