@@ -7,6 +7,8 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -18,12 +20,12 @@
           <items>
                   <Menu mnemonicParsing="false" text="Visualizza">
                     <items>
-                      <MenuItem fx:id="menuShowPatient" mnemonicParsing="false" text="Pazienti" onAction="#showPatients"/>
-                        <MenuItem fx:id="menuShowMonitoring" mnemonicParsing="false" text="Monitoraggio" onAction="#showMonitoring"/>
+                      <MenuItem fx:id="menuShowPatient" mnemonicParsing="false" onAction="#showPatients" text="Pazienti" />
+                        <MenuItem fx:id="menuShowMonitoring" mnemonicParsing="false" onAction="#showMonitoring" text="Monitoraggio" />
                     </items>
                   </Menu>
-                  <MenuItem fx:id="menuSearch" mnemonicParsing="false" text="Ricerca" onAction="#search"/>
-                  <MenuItem fx:id="menuDismiss" mnemonicParsing="false" text="Dimetti" onAction="#dismissPatient"/>
+                  <MenuItem fx:id="menuSearch" mnemonicParsing="false" onAction="#search" text="Ricerca" />
+                  <MenuItem fx:id="menuDismiss" mnemonicParsing="false" onAction="#dismissPatient" text="Dimetti" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="menuLogout" mnemonicParsing="false" onAction="#logout" text="Logout" />
           </items>
@@ -41,17 +43,26 @@
               <items>
                 <AnchorPane minHeight="715.0" minWidth="212.0" prefHeight="715.0" prefWidth="214.0">
                      <children>
-                        <Button fx:id="buttonShowPatient" layoutY="-1.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Visualizza pazienti" onAction="#showPatients"/>
-                        <Button fx:id="buttonSearch" layoutY="139.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Ricerca cartella" onAction="#search"/>
-                        <Button fx:id="buttonDismiss" layoutY="279.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Dimetti paziente" onAction="#dismissPatient"/>
-                        <Button fx:id="buttonShowMonitoring" layoutY="419.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Visualizza dati monitoraggio" onAction="#showMonitoring"/>
-                        <Button fx:id="buttonLogout" layoutY="682.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="216.0" text="Logout" onAction="#logout"/>
+                        <Button fx:id="buttonShowPatient" layoutY="-1.0" mnemonicParsing="false" onAction="#showPatients" prefHeight="140.0" prefWidth="216.0" text="Visualizza pazienti" />
+                        <Button fx:id="buttonSearch" layoutY="139.0" mnemonicParsing="false" onAction="#search" prefHeight="140.0" prefWidth="216.0" text="Ricerca cartella" />
+                        <Button fx:id="buttonDismiss" layoutY="279.0" mnemonicParsing="false" onAction="#dismissPatient" prefHeight="140.0" prefWidth="216.0" text="Dimetti paziente" />
+                        <Button fx:id="buttonShowMonitoring" layoutY="419.0" mnemonicParsing="false" onAction="#showMonitoring" prefHeight="140.0" prefWidth="216.0" text="Visualizza dati monitoraggio" />
+                        <Button fx:id="buttonLogout" layoutY="682.0" mnemonicParsing="false" onAction="#logout" prefHeight="45.0" prefWidth="216.0" text="Logout" />
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="727.0" minWidth="899.0" prefHeight="727.0" prefWidth="899.0">
+                <AnchorPane minHeight="727.0" minWidth="900.0" prefHeight="727.0" prefWidth="900.0">
                      <children>
-                        <Label alignment="CENTER" layoutX="227.0" layoutY="248.0" prefHeight="207.0" prefWidth="446.0" text="Visualizza Pazienti" textAlignment="JUSTIFY" />
-                     </children></AnchorPane>
+                        <TableView prefHeight="729.0" prefWidth="900.0" fx:id="table">
+                          <columns>
+                              <TableColumn minWidth="130.0" maxWidth="130.0" prefWidth="130.0" text="Nome" />
+                              <TableColumn minWidth="130.0" maxWidth="130.0" prefWidth="130.0" text="Cognome" />
+                              <TableColumn minWidth="260.0" maxWidth="130.0" prefWidth="260.0" text="Codice Fiscale" />
+                              <TableColumn minWidth="180.0" maxWidth="130.0" prefWidth="180.0" text="Data di Nascita" />
+                              <TableColumn minWidth="200.0" maxWidth="130.0" prefWidth="200.0" text="Luogo di Nascita" />
+                          </columns>
+                        </TableView>
+                     </children>
+                </AnchorPane>
               </items>
             </SplitPane>
       </children>
