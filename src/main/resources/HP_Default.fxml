@@ -18,12 +18,12 @@
           <items>
                   <Menu mnemonicParsing="false" text="Visualizza">
                     <items>
-                      <MenuItem fx:id="menuShowPatient" mnemonicParsing="false" text="Pazienti" />
-                        <MenuItem fx:id="menuShowMonitoring" mnemonicParsing="false" text="Monitoraggio" />
+                      <MenuItem fx:id="menuShowPatient" mnemonicParsing="false" text="Pazienti" onAction="#showPatients"/>
+                        <MenuItem fx:id="menuShowMonitoring" mnemonicParsing="false" text="Monitoraggio" onAction="#showMonitoring"/>
                     </items>
                   </Menu>
-                  <MenuItem fx:id="menuSearch" mnemonicParsing="false" text="Ricerca" />
-                  <MenuItem fx:id="menuDismiss" mnemonicParsing="false" text="Dimetti" />
+                  <MenuItem fx:id="menuSearch" mnemonicParsing="false" text="Ricerca" onAction="#search"/>
+                  <MenuItem fx:id="menuDismiss" mnemonicParsing="false" text="Dimetti" onAction="#dismissPatient"/>
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem fx:id="menuLogout" mnemonicParsing="false" onAction="#logout" text="Logout" />
           </items>
@@ -41,11 +41,11 @@
               <items>
                 <AnchorPane minHeight="715.0" minWidth="212.0" prefHeight="715.0" prefWidth="214.0">
                      <children>
-                        <Button fx:id="buttonShowPatient" layoutY="-1.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Visualizza pazienti" />
-                        <Button fx:id="buttonSearch" layoutY="139.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Ricerca cartella" />
-                        <Button fx:id="buttonDismiss" layoutY="279.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Dimetti paziente" />
-                        <Button fx:id="buttonShowMonitoring" layoutY="419.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Visualizza dati monitoraggio" textAlignment="JUSTIFY" />
-                        <Button fx:id="buttonLogout" layoutY="682.0" mnemonicParsing="false" onAction="#logout" prefHeight="45.0" prefWidth="216.0" text="Logout" />
+                        <Button fx:id="buttonShowPatient" layoutY="-1.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Visualizza pazienti" onAction="#showPatients"/>
+                        <Button fx:id="buttonSearch" layoutY="139.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Ricerca cartella" onAction="#search"/>
+                        <Button fx:id="buttonDismiss" layoutY="279.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Dimetti paziente" onAction="#dismissPatient"/>
+                        <Button fx:id="buttonShowMonitoring" layoutY="419.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="216.0" text="Visualizza dati monitoraggio" onAction="#showMonitoring"/>
+                        <Button fx:id="buttonLogout" layoutY="682.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="216.0" text="Logout" onAction="#logout"/>
                      </children>
                   </AnchorPane>
                 <AnchorPane minHeight="727.0" minWidth="899.0" prefHeight="727.0" prefWidth="899.0">

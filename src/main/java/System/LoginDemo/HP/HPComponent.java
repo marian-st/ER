@@ -14,9 +14,9 @@ public class HPComponent<C extends Command> extends Component {
     private final Sistema sys = Sistema.getInstance();
     public static final String HPTitle = "ER - HeadPhysician";
 
-    public HPComponent() {
+    public HPComponent(String type) {
         HPController hpctl = new HPController(sys.getStore(), sys.getStore().getEventStream());
-        this.loader = new FXMLLoader(getClass().getResource("/HP_base.fxml"));
+        this.loader = new FXMLLoader(getClass().getResource(new HPFactory().getHPInterface(type)));
         loader.setController(hpctl);
     }
 
@@ -28,11 +28,11 @@ public class HPComponent<C extends Command> extends Component {
 
     }
 
-    protected void draw() throws Exception {
-        sys.setInterface("HP", HPTitle);
+    protected final void draw() throws Exception {
+        sys.setInterface("HPDF", HPTitle);
     }
 
-    public FXMLLoader getLoader() {
+    public final FXMLLoader getLoader() {
         return this.loader;
     }
 }

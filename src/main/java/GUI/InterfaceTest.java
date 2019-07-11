@@ -14,7 +14,7 @@ public class InterfaceTest extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/HP_base.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/HPDefault.fxml"));
         Scene scene = new Scene(root, 1120, 760);
 
         primaryStage.setTitle("ER - @UserName");

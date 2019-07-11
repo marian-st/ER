@@ -11,6 +11,7 @@ import State.MiddlewareString;
 import State.StateManager;
 import State.Middleware;
 import System.LoginDemo.HP.HPComponent;
+import System.LoginDemo.HP.HPDefault;
 import javafx.stage.Stage;
 import Main.Tuple;
 import java.util.UUID;
@@ -54,7 +55,10 @@ public class Sistema {
         try {
             this.controller = new InterfacesController(stage);
             this.controller.addInterface("login", new LoginComponent<StringCommand>().getLoader().load());
-            this.controller.addInterface("HP", new HPComponent<StringCommand>().getLoader().load());
+            this.controller.addInterface("HPDF", new HPComponent<StringCommand>("default").getLoader().load());
+            this.controller.addInterface("HPS", new HPComponent<StringCommand>("search").getLoader().load());
+            this.controller.addInterface("HPM", new HPComponent<StringCommand>("monitoring").getLoader().load());
+            this.controller.addInterface("HPD", new HPComponent<StringCommand>("dismiss").getLoader().load());
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error during interfaces setup");

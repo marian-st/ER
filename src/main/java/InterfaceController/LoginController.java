@@ -26,7 +26,7 @@ public class LoginController {
             userField.clear();
             passField.clear();
             if (se.state().getUser() == se.state().getUserCheck() && se.state().getUser().getRole() == Role.HEAD_PHYSICIAN) {
-                Sistema.getInstance().setInterface("HP", HPComponent.HPTitle);
+                Sistema.getInstance().setInterface("HPDF", HPComponent.HPTitle);
             } else {
                 System.out.println("Invalid username and/or password");
             }

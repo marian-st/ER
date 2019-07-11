@@ -8,7 +8,6 @@ import System.LoginDemo.LoginComponent;
 import System.LoginDemo.Sistema;
 import io.reactivex.subjects.Subject;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
 
 import java.util.UUID;
 
@@ -22,17 +21,17 @@ public class HPController {
     }
 
     @FXML protected void showPatients() {
-        sys.setInterface("HP", HPComponent.HPTitle);
+        sys.setInterface("HPDF", HPComponent.HPTitle);
     }
 
-    @FXML protected void showFolders() {
-        sys.setInterface("HP", HPComponent.HPTitle);
+    @FXML protected void search() {
+        sys.setInterface("HPS", HPComponent.HPTitle);
     }
     @FXML protected void dismissPatient() {
-        sys.setInterface("HP", HPComponent.HPTitle);
+        sys.setInterface("HPD", HPComponent.HPTitle);
     }
     @FXML protected void showMonitoring() {
-        sys.setInterface("HP", HPComponent.HPTitle);
+        sys.setInterface("HPM", HPComponent.HPTitle);
     }
 
     @FXML protected void logout() {
