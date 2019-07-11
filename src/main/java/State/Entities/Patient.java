@@ -1,6 +1,7 @@
 package State.Entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,17 +20,16 @@ public class Patient {
     @Temporal(TemporalType.DATE)
     private Date birthDay;
 
-    @OneToMany
-    @JoinColumn(name = "administration_id")
-    private List<Administration> administrations;
+    @OneToMany(mappedBy = "patient")
+    private List<Administration> administrations = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "recovery_id")
-    private List<Recovery> recoveries;
+    private List<Recovery> recoveries = new ArrayList<>();
 
     public Patient() { }
 
-    //TODO add constructors with administrations and recoveris
+    //TODO add constructors with administrations and recoveries
     public Patient(String name, String surname, String fiscalCode, String placeOfBirth, Date birthDay) {
         this.name = name;
         this.surname = surname;
@@ -93,6 +93,30 @@ public class Patient {
 
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
+    }
+
+    public List<Administration> getAdministrations() {
+        return administrations;
+    }
+
+    public void setAdministrations(List<Administration> administrations) {
+        this.administrations = administrations;
+    }
+
+    public void addToAddministrations(Administration administration) {
+        this.administrations.add(administration);
+    }
+
+    public List<Recovery> getRecoveries() {
+        return recoveries;
+    }
+
+    public void setRecoveries(List<Recovery> recoveries) {
+        this.recoveries = recoveries;
+    }
+
+    public void addToRecoveries(Recovery recovery) {
+        this.recoveries.add(recovery);
     }
 
 }

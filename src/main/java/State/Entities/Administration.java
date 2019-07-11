@@ -26,14 +26,32 @@ public class Administration{
 
     //TODO add no prescription, no patient constructor
     public Administration() { }
-    public Administration(Date date, int hour, double dose, String notes, Patient patient, Prescription prescription)
+
+    public Administration(Date date, int hour, double dose, String notes)
             throws Exception {
         if (hour < 0 || hour > 23 || dose <= 0) throw new Exception("Administration: invalid parameters");
         this.date = date;
         this.hour = hour;
         this.dose = dose;
         this.notes = notes;
+    }
+
+    public Administration(Date date, int hour, double dose, String notes, Patient patient, Prescription prescription)
+            throws Exception {
+        this(date, hour, dose, notes);
         this.patient = patient;
+        this.prescription = prescription;
+    }
+
+    public Administration(Date date, int hour, double dose, String notes, Patient patient)
+            throws Exception {
+        this(date, hour, dose, notes);
+        this.patient = patient;
+    }
+
+    public Administration(Date date, int hour, double dose, String notes, Prescription prescription)
+            throws Exception {
+        this(date, hour, dose, notes);
         this.prescription = prescription;
     }
 
