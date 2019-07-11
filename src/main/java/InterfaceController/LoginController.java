@@ -2,9 +2,9 @@ package InterfaceController;
 
 import State.Entities.Role;
 import State.Entities.User;
-import State.StateChange;
 import State.StateEvent;
 import State.StringCommand;
+import System.LoginDemo.HP.HPComponent;
 import System.LoginDemo.Sistema;
 import io.reactivex.subjects.Subject;
 import javafx.event.ActionEvent;
@@ -24,7 +24,7 @@ public class LoginController {
         this.store = store;
         stream.subscribe(se -> {
                     if (se.state().getUser() == se.state().getUserCheck() && se.state().getUser().getRole() == Role.HEAD_PHYSICIAN) {
-                        Sistema.getInstance().setInterface("HP");
+                        Sistema.getInstance().setInterface("HP", HPComponent.HPTitle);
                     } else {
                         System.out.println("Invalid username and/or password");
                     }

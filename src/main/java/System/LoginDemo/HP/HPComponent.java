@@ -10,7 +10,8 @@ import State.Store;
 
 public class HPComponent<C extends Command> extends Component {
     private FXMLLoader loader;
-    private Sistema sys = Sistema.getInstance();
+    private final Sistema sys = Sistema.getInstance();
+    public static final String HPTitle = "ER - HeadPhysician";
 
     public HPComponent() {
         this.loader = new FXMLLoader(getClass().getResource("/HP_base.fxml"));
@@ -25,7 +26,7 @@ public class HPComponent<C extends Command> extends Component {
     }
 
     protected void draw() throws Exception {
-        sys.setInterface("HP");
+        sys.setInterface("HP", HPTitle);
     }
 
     public FXMLLoader getLoader() {

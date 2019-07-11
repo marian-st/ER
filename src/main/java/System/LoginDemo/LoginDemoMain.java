@@ -13,7 +13,7 @@ public class LoginDemoMain extends Application {
         Sistema sys = Sistema.getInstance();
         sys.setupUI(primaryStage);
 
-        sys.setInterface("login");
+        sys.setInterface("login", LoginComponent.loginTitle);
         primaryStage.show();
     }
 

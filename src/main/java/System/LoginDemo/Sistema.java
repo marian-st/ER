@@ -65,7 +65,7 @@ public class Sistema {
         return stateManager.getStore();
     }
 
-    public void setInterface(String component) {
-        controller.activate(component);
+    public void setInterface(String component, String title) {
+        controller.activate(component, title);
     }
 }

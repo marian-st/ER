@@ -9,7 +9,8 @@ import State.Store;
 
 public class LoginComponent<C extends Command> extends Component {
     private FXMLLoader loader;
-    private Sistema sys = Sistema.getInstance();
+    private final Sistema sys = Sistema.getInstance();
+    public static final String loginTitle = "ER - Login";
 
     public LoginComponent() {
         LoginController logctl = new LoginController(sys.getStore(), sys.getStore().getEventStream());
@@ -26,7 +27,7 @@ public class LoginComponent<C extends Command> extends Component {
     }
 
     protected void draw() throws Exception {
-        sys.setInterface("login");
+        sys.setInterface("login", loginTitle);
     }
 
     public FXMLLoader getLoader() {
