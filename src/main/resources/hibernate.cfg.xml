@@ -30,6 +30,7 @@
         <mapping class="State.Entities.Administration"/>
         <mapping class="State.Entities.Prescription"/>
         <mapping class="State.Entities.Recovery"/>
+        <mapping class="State.Entities.Monitoring"/>
 
     </session-factory>
 </hibernate-configuration>

@@ -5,10 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.time.Month;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 public class ExampleDatabase {
     public static void main(String[] args) {
@@ -46,16 +43,26 @@ public class ExampleDatabase {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save(u1);
-        session.save(u2);
-        session.save(u3);
-        session.save(patient1);
-        session.save(patient2);
+
         try {
             Administration adm1 = new Administration(new GregorianCalendar(2019, Calendar.JULY, 11).getTime(),
                     14, 75.76,"All good", patient1);
+            Prescription pr1 = new Prescription("Aspirin", new GregorianCalendar(2019, Calendar.JULY,10).getTime(),
+                    20, 23.89, 3, "Dr. Mario", adm1,new ArrayList<>());
+
+            adm1.setPrescription(pr1);
+            patient1.addToAddministrations(adm1);
+            session.save(pr1);
+            session.save(patient1);
             session.save(adm1);
+
         } catch (Exception e) {System.out.println(e);}
+
+
+        session.save(u1);
+        session.save(u2);
+        session.save(u3);
+
         session.getTransaction().commit();
 
     }

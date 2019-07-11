@@ -27,6 +27,7 @@ public class Prescription {
     @JoinColumn(name = "recovery_id")
     private List<Recovery> recoveries;
 
+
     @ManyToOne
     @JoinColumn(name = "administration_id")
     private Administration administration;
@@ -46,7 +47,7 @@ public class Prescription {
         if (recoveries.size() != 0) this.recoveries.addAll(recoveries);
     }
 
-    public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor ,
+    public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor,
                         Administration administration, Recovery ...recoveries) throws Exception{
         this(drug, date, duration, dailyDose, numberOfDoses, doctor, administration, Arrays.asList(recoveries));
     }
@@ -114,11 +115,23 @@ public class Prescription {
         this.recoveries = recoveries;
     }
 
+    public void addToRecoveries(Recovery recovery) {
+        this.recoveries.add(recovery);
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Administration getAdministration() {
+        return administration;
+    }
+
+    public void setAdministration(Administration administration) {
+        this.administration = administration;
     }
 }
