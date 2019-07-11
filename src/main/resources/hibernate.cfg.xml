@@ -25,6 +25,11 @@
         <property name="show_sql">false</property>
 
 
-         <mapping class="State.Entities.User"/>
+        <mapping class="State.Entities.User"/>
+        <mapping class="State.Entities.Patient"/>
+        <mapping class="State.Entities.Administration"/>
+        <mapping class="State.Entities.Prescription"/>
+        <mapping class="State.Entities.Recovery"/>
+
     </session-factory>
 </hibernate-configuration>
