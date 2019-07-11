@@ -1,6 +1,7 @@
 package System.LoginDemo.HP;
 
 import Component.Component;
+import InterfaceController.HPController;
 import State.Command;
 import State.StateEvent;
 import System.LoginDemo.Sistema;
@@ -14,7 +15,9 @@ public class HPComponent<C extends Command> extends Component {
     public static final String HPTitle = "ER - HeadPhysician";
 
     public HPComponent() {
+        HPController hpctl = new HPController(sys.getStore(), sys.getStore().getEventStream());
         this.loader = new FXMLLoader(getClass().getResource("/HP_base.fxml"));
+        loader.setController(hpctl);
     }
 
     public HPComponent(Store<C> store) {

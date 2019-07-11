@@ -54,6 +54,7 @@ public class ExampleDatabase {
             patient1.addToAddministrations(adm1);
             session.save(pr1);
             session.save(patient1);
+            session.save(patient2);
             session.save(adm1);
 
         } catch (Exception e) {System.out.println(e);}

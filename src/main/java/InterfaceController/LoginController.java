@@ -23,12 +23,14 @@ public class LoginController {
     public LoginController(Store store, Subject<StateEvent> stream) {
         this.store = store;
         stream.subscribe(se -> {
-                    if (se.state().getUser() == se.state().getUserCheck() && se.state().getUser().getRole() == Role.HEAD_PHYSICIAN) {
-                        Sistema.getInstance().setInterface("HP", HPComponent.HPTitle);
-                    } else {
-                        System.out.println("Invalid username and/or password");
-                    }
-                });
+            userField.clear();
+            passField.clear();
+            if (se.state().getUser() == se.state().getUserCheck() && se.state().getUser().getRole() == Role.HEAD_PHYSICIAN) {
+                Sistema.getInstance().setInterface("HP", HPComponent.HPTitle);
+            } else {
+                System.out.println("Invalid username and/or password");
+            }
+        });
     }
 
     @FXML protected void login(ActionEvent event) {

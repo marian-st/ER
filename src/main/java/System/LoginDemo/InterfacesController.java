@@ -1,5 +1,6 @@
 package System.LoginDemo;
 
+import System.LoginDemo.HP.HPComponent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -19,8 +20,13 @@ public class InterfacesController {
     }
 
     public void activate(String name, String title){
+        if(main.getScene() != null)
+            main.getScene().setRoot(interfaces.get(name));
+        else main.setScene(new Scene(interfaces.get(name)));
+
         main.setTitle(title);
-        main.setScene(new Scene(interfaces.get(name)));
+        main.centerOnScreen();
         main.sizeToScene();
+
     }
 }
