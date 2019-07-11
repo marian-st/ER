@@ -5,6 +5,7 @@ import java.util.Date;
 
 @Entity
 public class Administration{
+
     @Id
     @GeneratedValue
     @Column(name = "administration_id")
@@ -56,20 +57,30 @@ public class Administration{
     }
 
     public String toString() {
-        return String.format("{%s, %d, %fd, %s, %s, %s}", date, hour, dose, notes, patient, prescription);
+        String s = String.format("{%s, %d, %fd, %s, ", date, hour, dose, notes);
+        try {
+            String patientId = String.valueOf(patient.getId());
+            s += String.valueOf(patientId);
+        } catch (NullPointerException e) {
+            s += "null";
+        }
+        try {
+            String prescriptionId = String.valueOf(prescription.getId());
+            s+= ", " + String.valueOf(prescriptionId) + "}";
+        } catch (NullPointerException e) {
+            s+= ", null}";
+        }
+        return s;
+
     }
 
     /**
      * GETTERS AND SETTERS
      */
 
-    /*public int getId() {
+    public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }*/
 
     public Date getDate() {
         return date;

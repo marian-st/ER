@@ -23,8 +23,7 @@ public class Patient {
     @OneToMany(mappedBy = "patient")
     private List<Administration> administrations = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name = "recovery_id")
+    @OneToMany(mappedBy = "patient")
     private List<Recovery> recoveries = new ArrayList<>();
 
     public Patient() { }
@@ -46,14 +45,10 @@ public class Patient {
      * GETTERS AND SETTERS
      */
 
-    /*
+
     public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }*/
 
     public String getName() {
         return name;

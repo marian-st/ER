@@ -23,10 +23,22 @@ public class ExampleDatabase {
         Session session = sessionFactory.openSession();
 
         @SuppressWarnings("unchecked")
-        List<Administration> administrations = session.createQuery("FROM Administration ").list();
-        for (Administration ad : administrations) {
-            System.out.println(ad.getPatient());
-        }
+        Administration adm = (Administration) session.createQuery("FROM Administration ").list().get(0);
+        Prescription pre = (Prescription) session.createQuery("FROM Prescription ").list().get(0);
+        System.out.println(adm);
+        System.out.println(pre.getAdministrations());
+
+        session.beginTransaction();
+        adm.setPrescription(pre);
+        session.save(adm);
+
+        session.getTransaction().commit();
+
+        session = sessionFactory.openSession();
+        adm = (Administration) session.createQuery("FROM Administration ").list().get(0);
+        pre = (Prescription) session.createQuery("FROM Prescription ").list().get(0);
+        System.out.println(adm);
+        System.out.println(pre.getAdministrations());
         session.close();
     }
 
@@ -43,15 +55,17 @@ public class ExampleDatabase {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-
+        Recovery rec1 = new Recovery();
         try {
             Administration adm1 = new Administration(new GregorianCalendar(2019, Calendar.JULY, 11).getTime(),
                     14, 75.76,"All good", patient1);
             Prescription pr1 = new Prescription("Aspirin", new GregorianCalendar(2019, Calendar.JULY,10).getTime(),
-                    20, 23.89, 3, "Dr. Mario", adm1,new ArrayList<>());
+                    20, 23.89, 3, "Dr. Mario", rec1, adm1);
 
-            adm1.setPrescription(pr1);
-            patient1.addToAddministrations(adm1);
+            /*adm1.setPrescription(pr1);
+            patient1.addToAddministrations(adm1);*/
+            session.save(rec1);
+            session.save(adm1);
             session.save(pr1);
             session.save(patient1);
             session.save(patient2);

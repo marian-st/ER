@@ -1,25 +1,25 @@
 package State;
+import State.Entities.Patient;
 import State.Entities.Role;
 import State.Entities.User;
 
 import java.io.Serializable;
+import java.util.*;
 
 public class State implements Serializable {
-    private int counter;
-    private String name;
     private User userCheck;
     private User user;
+    private List<Patient> patients = new ArrayList<>();
 
-    public State(int nl, String name) {
-        this.counter = nl;
-        this.name = name;
-    }
     // Must be the initial state
     public State() {
-        this.name = "Edo";
-        this.counter = 0;
+
         this.user = new User();
         this.userCheck = new User("eme", "password", Role.HEAD_PHYSICIAN, true);
+        this.patients.add(new Patient("Carlo", "Combi", "CMBCBMWHATEVER291Z", "Verona",
+                new GregorianCalendar(1965, Calendar.APRIL, 11).getTime()));
+        this.patients.add(new Patient("Barbara", "Oliboni", "BRBLBIDONTKNOW329I", "Verona",
+                new GregorianCalendar(1973, Calendar.OCTOBER, 8).getTime()));
     }
 
     /*
@@ -30,7 +30,7 @@ public class State implements Serializable {
     }
 
     public String toString() {
-        return String.format("{ name = %s, counter = %d , user = %s}", this.name, this.counter, this.user);
+        return String.format("{user = %s, patients = %s}", this.user, this.patients);
     }
 
     /*
@@ -38,22 +38,6 @@ public class State implements Serializable {
     *               Getters and setters                 *
     *****************************************************
     */
-
-    public int getCounter() {
-        return counter;
-    }
-
-    public void setCounter(int counter) {
-        this.counter = counter;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public User getUserCheck() {
         return userCheck;
@@ -69,6 +53,14 @@ public class State implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Patient> getPatients() {
+        return this.patients;
+    }
+
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
     }
 
 }

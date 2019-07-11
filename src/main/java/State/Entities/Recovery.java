@@ -23,11 +23,13 @@ public class Recovery {
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @OneToMany
-    @JoinColumn
+    @OneToMany(mappedBy = "recovery")
     private List<Monitoring> monitorings;
 
-    //TODO add constructos
+    @OneToMany(mappedBy = "recovery")
+    private List<Prescription> prescriptions;
+
+    //TODO add constructors
     /**
     * GETTERS AND SETTERS
     **/
@@ -88,8 +90,5 @@ public class Recovery {
         this.prescriptions = prescriptions;
     }
 
-    @OneToMany
-    @JoinColumn(name = "prescritpion_id")
-    List<Prescription> prescriptions;
 
 }
