@@ -7,7 +7,6 @@ import State.StringCommand;
 import System.LoginDemo.HP.HPComponent;
 import System.LoginDemo.Sistema;
 import io.reactivex.subjects.Subject;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import State.Store;
 import javafx.scene.control.PasswordField;
@@ -17,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import java.util.UUID;
 
 public class LoginController {
+    private Sistema sys = Sistema.getInstance();
     private Store<StringCommand> store;
     @FXML private TextField userField;
     @FXML private PasswordField passField;
@@ -39,7 +39,7 @@ public class LoginController {
     }
 
     @FXML protected void close() {
-        Sistema.getInstance().endSystem();
+        sys.endSystem();
     }
 
     @FXML protected void buttonPressed(KeyEvent e)
