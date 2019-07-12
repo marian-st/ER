@@ -4,6 +4,7 @@ import Component.Component;
 import InterfaceController.HPController;
 import State.Command;
 import State.StateEvent;
+import State.StringCommand;
 import System.LoginDemo.Sistema;
 import javafx.fxml.FXMLLoader;
 import State.Store;
@@ -20,9 +21,6 @@ public class HPComponent<C extends Command> extends Component {
         loader.setController(hpctl);
     }
 
-    public HPComponent(Store<C> store) {
-        super(store);
-    }
 
     protected void eventHook(StateEvent se) {
 

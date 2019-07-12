@@ -54,11 +54,11 @@
                      <children>
                         <TableView prefHeight="729.0" prefWidth="900.0" fx:id="table">
                           <columns>
-                              <TableColumn minWidth="130.0" maxWidth="130.0" prefWidth="130.0" text="Nome" />
-                              <TableColumn minWidth="130.0" maxWidth="130.0" prefWidth="130.0" text="Cognome" />
-                              <TableColumn minWidth="260.0" maxWidth="130.0" prefWidth="260.0" text="Codice Fiscale" />
-                              <TableColumn minWidth="180.0" maxWidth="130.0" prefWidth="180.0" text="Data di Nascita" />
-                              <TableColumn minWidth="200.0" maxWidth="130.0" prefWidth="200.0" text="Luogo di Nascita" />
+                              <TableColumn minWidth="130.0" maxWidth="130.0" prefWidth="130.0" text="name" fx:id="name"/>
+                              <TableColumn minWidth="130.0" maxWidth="130.0" prefWidth="130.0" text="Surname" />
+                              <TableColumn minWidth="260.0" maxWidth="130.0" prefWidth="260.0" text="FiscalCode" />
+                              <TableColumn minWidth="180.0" maxWidth="130.0" prefWidth="180.0" text="Birthday" />
+                              <TableColumn minWidth="200.0" maxWidth="130.0" prefWidth="200.0" text="PlaceOfBirth" />
                           </columns>
                         </TableView>
                      </children>

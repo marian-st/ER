@@ -21,10 +21,8 @@ public class Main {
     Main() {
         this.id = UUID.randomUUID();
 
-        Reducer<StringCommand> reducer = new ReducerString()
+        Reducer<StringCommand> reducer = new ReducerString();
                       /* command             |       associated function                    | state change enum  */
-                .with("INC", (c, s) -> new State(s.getCounter()+1, s.getName()), StateChange.COUNTER)
-                .with("DEC", (c, s) -> new State(s.getCounter()-10, s.getName()), StateChange.COUNTER);
 
         Store store = new Store<StringCommand>(new State(), reducer, new MiddlewareString());
 

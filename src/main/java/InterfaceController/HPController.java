@@ -7,33 +7,48 @@ import State.StringCommand;
 import System.LoginDemo.HP.HPComponent;
 import System.LoginDemo.LoginComponent;
 import System.LoginDemo.Sistema;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.Subject;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.UUID;
 
 public class HPController {
-    private Store<StringCommand> store;
+    private final Store<StringCommand> store;
     private final Sistema sys = Sistema.getInstance();
-    @FXML private TableView<Patient> table;
-
+    @FXML private TableView<Patient> table = new TableView<>();
+    @FXML private TableColumn<Patient, String> name = new TableColumn<>();
+    Disposable dis;
     public HPController(Store<StringCommand> store, Subject<StateEvent> stream) {
+        name.setCellValueFactory();
+
+        ObservableList<Patient> data  = table.getItems();
         this.store = store;
 
-        //TODO: sub2PewDiePie
+        try {
+            dis.dispose();
+        } catch (NullPointerException e) {}
 
-        //TODO: get from state patients and write them into the table
-        ObservableList<Patient> data  = table.getItems();
-        //data.addAll(); --> var args of all the patients from state
+        dis = stream.subscribe(se ->
+        {
+            data.removeAll();
+            data.addAll(se.state().getPatients());
+            System.out.println(data);
+            table.setItems(data);
+        });
+
     }
 
     @FXML protected void showPatients() {
         //TODO: get from state patients and write them into the table
-        ObservableList<Patient> data  = table.getItems();
-        //data.addAll(); --> var args of all the patients from state
-
+        ObservableList<Patient> data = table.getItems();
+        data.removeAll();
+        data.addAll(store.poll().getPatients());
+        table.setItems(data);
         sys.setInterface("HPDF", HPComponent.HPTitle);
     }
 
