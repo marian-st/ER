@@ -9,6 +9,7 @@ import System.LoginDemo.LoginComponent;
 import System.LoginDemo.Sistema;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.Subject;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -21,13 +22,14 @@ public class HPController {
     private final Store<StringCommand> store;
     private final Sistema sys = Sistema.getInstance();
     @FXML private TableView<Patient> table = new TableView<>();
-    @FXML private TableColumn<Patient, String> name = new TableColumn<>();
     Disposable dis;
-    public HPController(Store<StringCommand> store, Subject<StateEvent> stream) {
-        name.setCellValueFactory();
 
-        ObservableList<Patient> data  = table.getItems();
+    public HPController(Store<StringCommand> store, Subject<StateEvent> stream) {
+
         this.store = store;
+        ObservableList<Patient> data  = table.getItems();
+        data.addAll(store.poll().getPatients());
+
 
         try {
             dis.dispose();
@@ -35,20 +37,16 @@ public class HPController {
 
         dis = stream.subscribe(se ->
         {
-            data.removeAll();
-            data.addAll(se.state().getPatients());
-            System.out.println(data);
-            table.setItems(data);
+            ObservableList<Patient> data2  = table.getItems();
+            data2.addAll(se.state().getPatients());
         });
 
     }
 
     @FXML protected void showPatients() {
         //TODO: get from state patients and write them into the table
-        ObservableList<Patient> data = table.getItems();
-        data.removeAll();
+        ObservableList<Patient> data  = table.getItems();
         data.addAll(store.poll().getPatients());
-        table.setItems(data);
         sys.setInterface("HPDF", HPComponent.HPTitle);
     }
 
