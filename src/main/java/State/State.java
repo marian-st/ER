@@ -15,7 +15,7 @@ public class State implements Serializable {
     public State() {
 
         this.user = new User();
-        this.userCheck = new User("eme", "password", Role.HEAD_PHYSICIAN, true);
+        this.userCheck = new User("eme", "pw", Role.HEAD_PHYSICIAN, true);
         this.patients.add(new Patient("Carlo", "Combi", "CMBCBMWHATEVER291Z", "Verona",
                 new GregorianCalendar(1965, Calendar.APRIL, 11).getTime()));
         this.patients.add(new Patient("Barbara", "Oliboni", "BRBLBIDONTKNOW329I", "Verona",

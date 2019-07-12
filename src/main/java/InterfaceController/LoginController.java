@@ -7,15 +7,16 @@ import State.StringCommand;
 import System.LoginDemo.HP.HPComponent;
 import System.LoginDemo.Sistema;
 import io.reactivex.subjects.Subject;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import State.Store;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 
 import java.util.UUID;
 
 public class LoginController {
+    private Sistema sys = Sistema.getInstance();
     private Store<StringCommand> store;
     @FXML private TextField userField;
     @FXML private PasswordField passField;
@@ -33,7 +34,19 @@ public class LoginController {
         });
     }
 
-    @FXML protected void login(ActionEvent event) {
+    @FXML protected void login() {
         store.update(new StringCommand("LOGIN", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
+    }
+
+    @FXML protected void close() {
+        sys.endSystem();
+    }
+
+    @FXML protected void buttonPressed(KeyEvent e)
+    {
+        if(e.getCode().toString().equals("ENTER"))
+        {
+            this.login();
+        }
     }
 }

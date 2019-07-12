@@ -11,7 +11,6 @@ import State.MiddlewareString;
 import State.StateManager;
 import State.Middleware;
 import System.LoginDemo.HP.HPComponent;
-import System.LoginDemo.HP.HPDefault;
 import javafx.stage.Stage;
 import Main.Tuple;
 import java.util.UUID;
@@ -71,5 +70,9 @@ public class Sistema {
 
     public void setInterface(String component, String title) {
         controller.activate(component, title);
+    }
+
+    public void endSystem() {
+        this.controller.deactivate();
     }
 }
