@@ -1,6 +1,5 @@
 package System.LoginDemo;
 
-import System.LoginDemo.HP.HPComponent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -27,6 +26,9 @@ public class InterfacesController {
         main.setTitle(title);
         main.centerOnScreen();
         main.sizeToScene();
+    }
 
+    public void deactivate() {
+        main.close();
     }
 }

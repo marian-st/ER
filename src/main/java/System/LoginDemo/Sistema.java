@@ -72,4 +72,8 @@ public class Sistema {
     public void setInterface(String component, String title) {
         controller.activate(component, title);
     }
+
+    public void endSystem() {
+        this.controller.deactivate();
+    }
 }
