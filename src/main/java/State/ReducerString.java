@@ -8,44 +8,37 @@ import java.util.HashMap;
 import java.util.function.BiFunction;
 
 public class ReducerString implements Reducer<StringCommand> {
-    private Store<StringCommand> store;
-    private HashMap<String, Tuple<BiFunction<StringCommand, State, State>, StateChange>> commands =
-            new HashMap<String, Tuple<BiFunction<StringCommand, State, State>, StateChange>>();
-    private HashMap<String, Tuple<BiFunction<StringCommand, Store<StringCommand>, StringCommand>, StringCommand>>
-            attached = new HashMap<>();
+    private HashMap<String, BiFunction<StringCommand, State, State>> commands =
+            new HashMap<String, BiFunction<StringCommand, State, State>>();
+
     public ReducerString() {
 
     }
 
     @Override
-    public ReducerString with(String st, BiFunction<StringCommand, State, State> fun, StateChange stateChange) {
-        this.commands.put(st, new Tuple<>(fun, stateChange));
+    public ReducerString with(String st, BiFunction<StringCommand, State, State> fun) {
+        this.commands.put(st, fun);
         return this;
     }
 
     @Override
-    public ReducerString with(String st, StateChange stateChange) {
+    public ReducerString with(String st) {
         BiFunction<StringCommand, State, State> fun = (c, s) -> s;
-        this.commands.put(st, new Tuple<>(fun, stateChange));
+        this.commands.put(st, fun);
         return this;
     }
 
     @Override
-    public ReducerString with(Triple<String, BiFunction<StringCommand, State, State>, StateChange>... args) {
-        for (Triple<String, BiFunction<StringCommand, State, State>, StateChange> a : args) {
-            this.commands.put(a.fst(), new Tuple<>(a.snd(), a.trd()));
+    public ReducerString with(Tuple<String, BiFunction<StringCommand, State, State>> ... args) {
+        for (Tuple<String, BiFunction<StringCommand, State, State>> a : args) {
+            this.commands.put(a.fst(), a.snd());
         }
         return this;
     }
 
     @Override
-    public void setStore(Store<StringCommand> store) {
-        this.store = store;
-    }
-
-    @Override
-    public Tuple<StateChange, State> run(State state, StringCommand s) {
-        BiFunction<StringCommand, State, State> fun = this.commands.get(s.name()).fst();
-        return new Tuple<>(this.commands.get(s.name()).snd(), fun.apply(s, state));
+    public State run(State state, StringCommand s) {
+        BiFunction<StringCommand, State, State> fun = this.commands.get(s.name());
+        return fun.apply(s, state);
     }
 }

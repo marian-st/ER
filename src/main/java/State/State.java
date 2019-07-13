@@ -30,7 +30,19 @@ public class State implements Serializable {
     }
 
     public String toString() {
-        return String.format("{user = %s, patients = %s}", this.user, this.patients);
+        StringBuilder sb = new StringBuilder("{");
+        if(this.user != null) {
+            sb.append(user.toString()).append(", ");
+        } else {
+            sb.append("null, ");
+        }
+
+        if(!this.patients.isEmpty()) {
+            sb.append(this.patients);
+        } else {
+            sb.append("null");
+        }
+        return sb.toString();
     }
 
     /*

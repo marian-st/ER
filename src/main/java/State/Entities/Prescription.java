@@ -1,10 +1,7 @@
 package State.Entities;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Prescription {
@@ -12,7 +9,6 @@ public class Prescription {
     @GeneratedValue
     @Column(name = "prescription_id")
     private int id;
-
 
     private String drug;
 
@@ -25,18 +21,14 @@ public class Prescription {
     private String doctor;
 
     @OneToMany(mappedBy = "prescription")
-    private List<Administration> administrations;
+    private List<Administration> administrations = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "recovery_id")
     private Recovery recovery;
 
-
-    //TODO add no Administration, no recoveries constructor
-
-    public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor ,
-                        Recovery recovery, List<Administration> administration) throws Exception {
-
+    public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor)
+            throws Exception {
         if(duration <= 0 || dailyDose <= 0 || numberOfDoses <= 0) throw new Exception("Prescription: invalid parameters");
         this.date = date;
         this.drug = drug;
@@ -44,14 +36,40 @@ public class Prescription {
         this.dailyDose = dailyDose;
         this.numberOfDoses = numberOfDoses;
         this.doctor = doctor;
-        this.administrations = administration;
+    }
+
+    public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor,
+                        Recovery recovery) throws Exception{
+        this(drug, date, duration, dailyDose, numberOfDoses, doctor);
         this.recovery = recovery;
+    }
+
+    public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor,
+                        Recovery recovery, List<Administration> administration) throws Exception {
+        this(drug, date, duration, dailyDose, numberOfDoses, doctor);
+        this.recovery = recovery;
+        this.administrations = administration;
     }
 
     public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor,
                         Recovery recovery, Administration ...administrations) throws Exception{
         this(drug, date, duration, dailyDose, numberOfDoses, doctor, recovery, Arrays.asList(administrations));
     }
+
+
+
+    public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor,
+                        List<Administration> administration) throws Exception{
+        this(drug, date, duration, dailyDose, numberOfDoses, doctor);
+        this.administrations = administration;
+    }
+
+    public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor,
+                        Administration ...administrations) throws Exception{
+        this(drug, date, duration, dailyDose, numberOfDoses, doctor);
+        this.administrations = Arrays.asList(administrations);
+    }
+
 
     public Prescription() {}
 
@@ -62,7 +80,9 @@ public class Prescription {
     /**
      * GETTERS AND SETTERS
      */
-
+    public int getId() {
+        return this.id;
+    }
     public String getDrug() {
         return drug;
     }
@@ -114,16 +134,9 @@ public class Prescription {
     public Recovery getRecovery() {
         return recovery;
     }
+
     public void setRecovery(Recovery recovery) {
         this.recovery = recovery;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public List<Administration> getAdministrations() {

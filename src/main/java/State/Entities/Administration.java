@@ -25,7 +25,6 @@ public class Administration{
     @JoinColumn(name = "prescription_id")
     private Prescription prescription;
 
-    //TODO add no prescription, no patient constructor
     public Administration() { }
 
     public Administration(Date date, int hour, double dose, String notes)

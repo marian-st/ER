@@ -34,6 +34,10 @@ public class Recovery {
     * GETTERS AND SETTERS
     **/
 
+    public int getId() {
+        return this.id;
+    }
+
     public Date getDate() {
         return date;
     }

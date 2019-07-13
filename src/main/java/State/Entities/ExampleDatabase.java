@@ -58,7 +58,7 @@ public class ExampleDatabase {
         Recovery rec1 = new Recovery();
         try {
             Administration adm1 = new Administration(new GregorianCalendar(2019, Calendar.JULY, 11).getTime(),
-                    14, 75.76,"All good", patient1);
+                    14, 75.76, "All good", patient1);
             Prescription pr1 = new Prescription("Aspirin", new GregorianCalendar(2019, Calendar.JULY,10).getTime(),
                     20, 23.89, 3, "Dr. Mario", rec1, adm1);
 

@@ -20,7 +20,7 @@ public class Store<C extends Command> {
     private PublishSubject<StateEvent> state$ = PublishSubject.create();
     private PublishSubject<String> commands$= PublishSubject.create();
 
-    public Store(State state, Reducer<C> reducer, Middleware middleware, Triple<String, BiFunction<C, State,State>, StateChange>...args) {
+    public Store(State state, Reducer<C> reducer, Middleware<C> middleware, Tuple<String, BiFunction<C, State,State>>...args) {
         //TODO remove -- logging
         this.state$.subscribe(s -> {
             System.out.println(String.valueOf(counter++) + " | " + s.stateChange() + "\n" + s.state() + "\n");
@@ -53,20 +53,20 @@ public class Store<C extends Command> {
      *    at the same time as it can produce data inconsistencies because
      *    of the non deterministic order in which this.state is called
      */
-     synchronized public void update(C command) {
+    synchronized public void update(C command) {
         State state;
         C comm = command;
-        Tuple<StateChange, State> resultReducer = this.reducer.run(this.state, command);
+        State resultReducer = this.reducer.run(this.state, command);
         if (this.middleware.check(command.name())) {
-            Tuple<C, State> resultMiddleware = this.middleware.run(resultReducer.snd(), command);
+            Tuple<C, State> resultMiddleware = this.middleware.run(resultReducer, command);
             state = resultMiddleware.snd();
             comm = resultMiddleware.fst();
         } else {
-            state = resultReducer.snd();
+            state = resultReducer;
         }
 
+        this.state = state;
         this.state$.onNext(new StateEvent<C>(comm, state));
-
         // notify subscribers about the state change
 
     }

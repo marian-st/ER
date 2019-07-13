@@ -21,10 +21,10 @@ public class Patient {
     private Date birthDay;
 
     @OneToMany(mappedBy = "patient")
-    private List<Administration> administrations = new ArrayList<>();
+    private List<Administration> administrations;
 
     @OneToMany(mappedBy = "patient")
-    private List<Recovery> recoveries = new ArrayList<>();
+    private List<Recovery> recoveries;
 
     public Patient() { }
 
@@ -37,8 +37,33 @@ public class Patient {
         this.birthDay = birthDay;
     }
 
+    public Patient(String name, String surname, String fiscalCode, String placeOfBirth, Date birthDay,
+                   List<Administration> administrations, List<Recovery> recoveries) {
+        this(name,surname, fiscalCode, placeOfBirth, birthDay);
+        this.administrations.addAll(administrations);
+        this.recoveries.addAll(recoveries);
+    }
+
     public String toString() {
-        return String.format("{%s, %s, %s, %s, %s}", name, surname, fiscalCode, placeOfBirth, birthDay);
+        StringBuilder sb = new StringBuilder(String.format("{%s, %s, %s, %s, %s, ", name, surname, fiscalCode, placeOfBirth, birthDay));
+        if (this.administrations != null && !this.administrations.isEmpty() ) {
+            for (Administration adm : this.administrations) {
+                sb.append(String.valueOf(adm.getId()));
+                sb.append(", ");
+            }
+        } else {
+            sb.append("null, ");
+        }
+        if (this.recoveries != null && !this.recoveries.isEmpty()) {
+            for (Recovery rec : this.recoveries) {
+                sb.append(String.valueOf(rec.getId()));
+                sb.append(", ");
+            }
+        } else {
+            sb.append("null, ");
+        }
+        int lg = sb.toString().length()-2;
+        return sb.substring(0,lg);
     }
 
     /**
