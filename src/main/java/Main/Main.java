@@ -1,7 +1,6 @@
 package Main;
 
 import State.State;
-import State.StateChange;
 import State.StringCommand;
 import State.ReducerString;
 import State.Store;

@@ -47,9 +47,9 @@ public class HPController {
 
     @FXML protected void showPatients() {
         //TODO: get from state patients and write them into the table
-        ObservableList<Patient> data  = table.getItems();
+        /*ObservableList<Patient> data  = table.getItems();
         data.removeAll(table.getItems());
-        data.addAll(store.poll().getPatients());
+        data.addAll(store.poll().getPatients());*/
         sys.setInterface("HPDF", HPComponent.HPTitle);
     }
 

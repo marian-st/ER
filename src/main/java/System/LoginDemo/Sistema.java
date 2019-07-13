@@ -1,25 +1,27 @@
 package System.LoginDemo;
 
+import State.Entities.Patient;
 import State.Entities.User;
 import State.Reducer;
 import State.ReducerString;
 import State.StringCommand;
 import State.State;
-import State.StateChange;
 import State.Store;
+import State.DatabaseService;
 import State.MiddlewareString;
-import State.StateManager;
 import State.Middleware;
 import System.LoginDemo.HP.HPComponent;
+
 import javafx.stage.Stage;
 import Main.Tuple;
+
+import java.util.List;
 import java.util.UUID;
 
 public class Sistema {
     private static Sistema s;
-    private StateManager<StringCommand> stateManager;
+    private Store<StringCommand> store;
     private InterfacesController controller;
-
     public static Sistema getInstance() {
         if (s == null)
             s = new Sistema();
@@ -30,15 +32,15 @@ public class Sistema {
     //NB. This is just demo environment
     private Sistema() {
         Reducer<StringCommand> reducer = new ReducerString()
-                .with("LOGIN", StateChange.LOGIN)
+                .with("LOGIN")
                 .with("LOGOUT", (c, s) -> {
                     s.setUser(new User());
                     return s;
-                }, StateChange.LOGIN);
+                })
+                .with("LOAD");
         Middleware<StringCommand> middleware = new MiddlewareString()
                 .with("LOGIN", (c, s, m) -> {
                     User u = (User) c.getArg();
-                    System.out.println("Debug: " + u);
                     if (s.getUserCheck().equals(u)) {
                         s.setUser(s.getUserCheck());
                         return new Tuple<>(new StringCommand("LOGIN_SUCCESS", UUID.randomUUID()), s);
@@ -46,8 +48,14 @@ public class Sistema {
                     else {
                         return new Tuple<>(new StringCommand("LOGIN_FAILURE", UUID.randomUUID()), s);
                     }
+                })
+                .with("LOAD", (c, s, m) -> {
+                    List<Patient> ps = DatabaseService.getPatients();
+                    s.setPatients(ps);
+                    return new Tuple<>(new StringCommand("LOADED", UUID.randomUUID()), s);
                 });
-        stateManager = new StateManager<StringCommand>(new Store<StringCommand>(new State(), reducer, middleware));
+        store = new Store<StringCommand>(new State(), reducer, middleware);
+        store.update(new StringCommand("LOAD", UUID.randomUUID()));
     }
 
     public void setupUI(Stage stage){
@@ -65,7 +73,7 @@ public class Sistema {
     }
 
     public Store getStore() {
-        return stateManager.getStore();
+        return store;
     }
 
     public void setInterface(String component, String title) {
