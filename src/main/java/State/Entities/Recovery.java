@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Recovery {
+public class Recovery implements Entry{
     @Id
     @GeneratedValue
     @Column(name = "recovery_id")

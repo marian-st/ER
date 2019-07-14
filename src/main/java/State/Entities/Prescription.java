@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-public class Prescription {
+public class Prescription implements Entry{
     @Id
     @GeneratedValue
     @Column(name = "prescription_id")
@@ -29,7 +29,7 @@ public class Prescription {
 
     public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor)
             throws Exception {
-        if(duration <= 0 || dailyDose <= 0 || numberOfDoses <= 0) throw new Exception("Prescription: invalid parameters");
+        if(duration <= 0 || dailyDose <= 0 || numberOfDoses <= 0) throw new IllegalArgumentException("Prescription: invalid arguments");
         this.date = date;
         this.drug = drug;
         this.duration = duration;

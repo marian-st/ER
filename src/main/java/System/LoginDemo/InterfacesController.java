@@ -24,7 +24,7 @@ public class InterfacesController {
         else main.setScene(new Scene(interfaces.get(name)));
 
         main.setTitle(title);
-        main.centerOnScreen();
+        //main.centerOnScreen();
         main.sizeToScene();
     }
 

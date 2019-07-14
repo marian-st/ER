@@ -1,13 +1,11 @@
 package State.Entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "patient")
-public class Patient {
+public class Patient implements Entry{
     @Id
     @GeneratedValue
     @Column(name = "patient_id")

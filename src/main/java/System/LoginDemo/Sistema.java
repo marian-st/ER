@@ -1,5 +1,6 @@
 package System.LoginDemo;
 
+import State.Entities.Entry;
 import State.Entities.Patient;
 import State.Entities.User;
 import State.Reducer;
@@ -17,6 +18,7 @@ import Main.Tuple;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Sistema {
     private static Sistema s;
@@ -50,7 +52,9 @@ public class Sistema {
                     }
                 })
                 .with("LOAD", (c, s, m) -> {
-                    List<Patient> ps = DatabaseService.getPatients();
+                    List<Patient> ps = DatabaseService.getEntries("Patient").stream()
+                            .map(e -> (Patient) e)
+                            .collect(Collectors.toList());
                     s.setPatients(ps);
                     return new Tuple<>(new StringCommand("LOADED", UUID.randomUUID()), s);
                 });

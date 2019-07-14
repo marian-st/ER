@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Administration{
+public class Administration implements Entry{
 
     @Id
     @GeneratedValue
@@ -29,7 +29,7 @@ public class Administration{
 
     public Administration(Date date, int hour, double dose, String notes)
             throws Exception {
-        if (hour < 0 || hour > 23 || dose <= 0) throw new Exception("Administration: invalid parameters");
+        if (hour < 0 || hour > 23 || dose <= 0) throw new IllegalArgumentException("Administration: invalid arguments");
         this.date = date;
         this.hour = hour;
         this.dose = dose;

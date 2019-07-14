@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Monitoring {
+public class Monitoring implements Entry{
     @Id
     @GeneratedValue
     @Column(name = "monitoring_id")
