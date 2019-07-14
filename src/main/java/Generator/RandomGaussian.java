@@ -6,19 +6,34 @@ import java.util.Random;
  Generate pseudo-random floating point values, with an
  approximately Gaussian (normal) distribution.
  */
-public final class RandomGaussian {
-    private Random fRandom = new Random();
+public class RandomGaussian {
+    private Random random = new Random();
+    private double mean;
+    private double variance;
+    private final double defaultMean;
+    private final double defaultVariance;
 
-    public static void main(String... aArgs){
-        RandomGaussian gaussian = new RandomGaussian();
-        double MEAN = 125.0f;
-        double VARIANCE = 2.5f;
-        for (int i = 0; i < 100; i++)
-            System.out.println("Generated : " + gaussian.getGaussian(MEAN, VARIANCE));
+    public RandomGaussian(double mean, double variance) {
+        this.mean = mean;
+        this.variance = variance;
+        this.defaultMean = mean;
+        this.defaultVariance = variance;
+    }
+
+    public void changeValues(double m, double v) {
+        this.mean = m;
+        this.variance = v;
+    }
+
+    public void reset() {
+        this.mean = this.defaultMean;
+        this.variance = this.defaultVariance;
     }
 
     //nextGaussian returns a value of a normalized gaussian distribution
-    private double getGaussian(double aMean, double aVariance){
-        return aMean + fRandom.nextGaussian() * aVariance;
+    public long getValue(){
+        long l = Math.round(mean + random.nextGaussian() * variance);
+        System.out.println("Generated : " + l);
+        return l;
     }
 }
