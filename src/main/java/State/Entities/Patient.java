@@ -1,6 +1,7 @@
 package State.Entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,10 +20,10 @@ public class Patient implements Entry{
     private Date birthDay;
 
     @OneToMany(mappedBy = "patient")
-    private List<Administration> administrations;
+    private List<Administration> administrations = new ArrayList<>();
 
     @OneToMany(mappedBy = "patient")
-    private List<Recovery> recoveries;
+    private List<Recovery> recoveries = new ArrayList<>();
 
     public Patient() { }
 

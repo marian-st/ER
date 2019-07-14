@@ -76,4 +76,8 @@ public class State implements Serializable {
         this.patients = patients;
     }
 
+    public void addPatient(Patient patient) {
+        this.patients.add(patient);
+    }
+
 }

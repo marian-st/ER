@@ -1,6 +1,5 @@
 package System.LoginDemo;
 
-import State.Entities.Entry;
 import State.Entities.Patient;
 import State.Entities.User;
 import State.Reducer;
@@ -15,9 +14,7 @@ import System.LoginDemo.HP.HPComponent;
 
 import javafx.stage.Stage;
 import Main.Tuple;
-
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Sistema {
@@ -39,7 +36,8 @@ public class Sistema {
                     s.setUser(new User());
                     return s;
                 })
-                .with("LOAD");
+                .with("LOAD")
+                .with("ADD_PATIENT");
         Middleware<StringCommand> middleware = new MiddlewareString()
                 .with("LOGIN", (c, s, m) -> {
                     User u = (User) c.getArg();
@@ -57,9 +55,17 @@ public class Sistema {
                             .collect(Collectors.toList());
                     s.setPatients(ps);
                     return new Tuple<>(new StringCommand("LOADED", UUID.randomUUID()), s);
+                }).with("ADD_PATIENT" , (c, s, m) -> {
+                    Patient patient = (Patient) c.getArg();
+                    s.addPatient(patient);
+                    DatabaseService.addEntry(patient);
+                    return new Tuple<>(new StringCommand("ADDED_PATIENT", UUID.randomUUID()), s);
                 });
+
         store = new Store<StringCommand>(new State(), reducer, middleware);
         store.update(new StringCommand("LOAD", UUID.randomUUID()));
+        //store.update(new StringCommand("ADD_PATIENT", UUID.randomUUID(), new Patient("Roberto", "Posenato", "PSNRBR71G208281JA",
+        //        "Verona", new GregorianCalendar(1971, Calendar.JULY, 20).getTime())));
     }
 
     public void setupUI(Stage stage){

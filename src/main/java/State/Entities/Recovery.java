@@ -1,6 +1,7 @@
 package State.Entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Recovery implements Entry{
     private int id;
 
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date startDate;
 
     private String diagnosis;
     private boolean active;
@@ -24,26 +25,57 @@ public class Recovery implements Entry{
     private Patient patient;
 
     @OneToMany(mappedBy = "recovery")
-    private List<Monitoring> monitorings;
+    private List<Monitoring> monitorings = new ArrayList<>();
 
     @OneToMany(mappedBy = "recovery")
-    private List<Prescription> prescriptions;
+    private List<Prescription> prescriptions = new ArrayList<>();
 
     //TODO add constructors
+
     /**
     * GETTERS AND SETTERS
     **/
+
+    public Recovery () {}
+    public Recovery(Date start, Date end, String diagnosis, boolean active, String dischargeSummary) {
+        this.startDate = start;
+        this.endDate = end;
+        this.diagnosis = diagnosis;
+        this.active = active;
+        this.dischargeSummary = dischargeSummary;
+    }
+
+    public Recovery(Date start, Date end, String diagnosis, boolean active, String dischargeSummary, Patient patient) {
+        this(start, end, diagnosis, active, dischargeSummary);
+        this.patient = patient;
+    }
+
+    public Recovery(Date start, Date end, String diagnosis, boolean active, String dischargeSummary, Patient patient,
+                    List<Monitoring> monitorings, List<Prescription> prescriptions) {
+        this(start, end, diagnosis, active, dischargeSummary, patient);
+        this.monitorings.addAll(monitorings);
+        this.prescriptions.addAll(prescriptions);
+    }
+
+
+    public Recovery(Date start, Date end, String diagnosis, boolean active, String dischargeSummary,
+                    List<Monitoring> monitorings, List<Prescription> prescriptions) {
+        this(start, end, diagnosis, active, dischargeSummary);
+        this.monitorings.addAll(monitorings);
+        this.prescriptions.addAll(prescriptions);
+    }
+
 
     public int getId() {
         return this.id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStartDate(Date date) {
+        this.startDate = date;
     }
 
     public String getDiagnosis() {
@@ -94,5 +126,15 @@ public class Recovery implements Entry{
         this.prescriptions = prescriptions;
     }
 
+    public void addToPrescriptions(Prescription prescription) {this.prescriptions.add(prescription);}
 
+    public List<Monitoring> getMonitorings() {
+        return monitorings;
+    }
+
+    public void setMonitorings(List<Monitoring> monitorings) {
+        this.monitorings = monitorings;
+    }
+
+    public void addToMonitorings(Monitoring monitoring) {this.monitorings.add(monitoring);}
 }
