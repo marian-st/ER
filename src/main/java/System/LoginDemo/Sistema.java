@@ -64,8 +64,8 @@ public class Sistema {
 
         store = new Store<StringCommand>(new State(), reducer, middleware);
         store.update(new StringCommand("LOAD", UUID.randomUUID()));
-        //store.update(new StringCommand("ADD_PATIENT", UUID.randomUUID(), new Patient("Roberto", "Posenato", "PSNRBR71G208281JA",
-        //        "Verona", new GregorianCalendar(1971, Calendar.JULY, 20).getTime())));
+        store.update(new StringCommand("ADD_PATIENT", UUID.randomUUID(), new Patient("Roberto", "Posenato", "PSNRBR71G208281JA",
+                "Verona", new GregorianCalendar(1971, Calendar.JULY, 20).getTime())));
     }
 
     public void setupUI(Stage stage){
