@@ -1,7 +1,7 @@
 package State;
-import State.Entities.Patient;
-import State.Entities.Role;
-import State.Entities.User;
+import Entities.Patient;
+import Entities.Role;
+import Entities.User;
 
 import java.io.Serializable;
 import java.util.*;

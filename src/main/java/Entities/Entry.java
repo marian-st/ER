@@ -1,4 +1,4 @@
-package State.Entities;
+package Entities;
 
 public interface Entry {
 }
