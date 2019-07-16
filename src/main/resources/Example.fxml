@@ -21,7 +21,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Monitoring" onAction="#startMonitoring"/>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
                     </items>
@@ -47,9 +47,9 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField id="userField" fx:id="userField1" layoutX="207.0" layoutY="84.0" promptText="username" />
-                  <PasswordField id="passField" fx:id="passField1" layoutX="207.0" layoutY="176.0" promptText="password" />
-                  <Button fx:id="loginButton1" layoutX="71.0" layoutY="283.0" mnemonicParsing="false" onAction="#login" prefHeight="27.0" prefWidth="103.0" text="Login">
+                  <TextField id="userField" fx:id="userField" layoutX="207.0" layoutY="84.0" promptText="username" />
+                  <PasswordField id="passField" fx:id="passField" layoutX="207.0" layoutY="176.0" promptText="password" />
+                  <Button fx:id="loginButton" layoutX="71.0" layoutY="283.0" mnemonicParsing="false" onAction="#login" prefHeight="27.0" prefWidth="103.0" text="Login">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -58,7 +58,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="362.0" prefWidth="171.0">
                <children>
-                  <Button layoutX="25.0" layoutY="121.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="103.0" style="-fx-border-color: yellow;" text="Show&#10;Live&#10;Patients'&#10;Stats" textAlignment="CENTER" />
+                  <Button layoutX="25.0" layoutY="121.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="103.0" style="-fx-border-color: yellow;" text="Show&#10;Live&#10;Patients'&#10;Stats" textAlignment="CENTER" onAction="#startMonitoring"/>
                </children>
             </AnchorPane>
         </items>

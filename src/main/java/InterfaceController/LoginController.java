@@ -9,9 +9,11 @@ import System.Sistema;
 import io.reactivex.subjects.Subject;
 import javafx.fxml.FXML;
 import State.Store;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import java.util.UUID;
 
@@ -48,5 +50,12 @@ public class LoginController {
         {
             this.login();
         }
+    }
+
+    @FXML protected void startMonitoring() {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(sys.getInterface("MON")));
+        stage.sizeToScene();
+        stage.show();
     }
 }
