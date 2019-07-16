@@ -25,12 +25,12 @@
         <property name="show_sql">false</property>
 
 
-        <mapping class="State.Entities.User"/>
-        <mapping class="State.Entities.Patient"/>
-        <mapping class="State.Entities.Administration"/>
-        <mapping class="State.Entities.Prescription"/>
-        <mapping class="State.Entities.Recovery"/>
-        <mapping class="State.Entities.Monitoring"/>
+        <mapping class="Entities.User"/>
+        <mapping class="Entities.Patient"/>
+        <mapping class="Entities.Administration"/>
+        <mapping class="Entities.Prescription"/>
+        <mapping class="Entities.Recovery"/>
+        <mapping class="Entities.Monitoring"/>
 
     </session-factory>
 </hibernate-configuration>

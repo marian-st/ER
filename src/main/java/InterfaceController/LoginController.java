@@ -1,17 +1,19 @@
 package InterfaceController;
 
-import State.Entities.Role;
-import State.Entities.User;
+import Entities.Role;
+import Entities.User;
 import State.StateEvent;
 import State.StringCommand;
-import System.LoginDemo.HP.HPComponent;
-import System.LoginDemo.Sistema;
+import Component.HPComponent;
+import System.Sistema;
 import io.reactivex.subjects.Subject;
 import javafx.fxml.FXML;
 import State.Store;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import java.util.UUID;
 
@@ -48,5 +50,12 @@ public class LoginController {
         {
             this.login();
         }
+    }
+
+    @FXML protected void startMonitoring() {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(sys.getInterface("MON")));
+        stage.sizeToScene();
+        stage.show();
     }
 }

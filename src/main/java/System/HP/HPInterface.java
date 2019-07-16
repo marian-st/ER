@@ -1,4 +1,4 @@
-package System.LoginDemo.HP;
+package System.HP;
 
 public interface HPInterface {
     String getFile();

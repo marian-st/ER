@@ -6,7 +6,6 @@ import State.ReducerString;
 import State.Store;
 import State.MiddlewareString;
 import State.Reducer;
-import Stats.Statistics;
 
 import java.util.UUID;
 
@@ -24,8 +23,6 @@ public class Main {
                       /* command             |       associated function                    | state change enum  */
 
         Store store = new Store<StringCommand>(new State(), reducer, new MiddlewareString());
-
-        Statistics.generate_values(30,4,15);
 
         /*
         Subject<StateEvent> subscription = store.getEventStream();

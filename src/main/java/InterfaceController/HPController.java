@@ -1,20 +1,17 @@
 package InterfaceController;
 
-import State.Entities.Patient;
+import Entities.Patient;
 import State.StateEvent;
 import State.Store;
 import State.StringCommand;
-import System.LoginDemo.HP.HPComponent;
-import System.LoginDemo.LoginComponent;
-import System.LoginDemo.Sistema;
+import Component.HPComponent;
+import Component.LoginComponent;
+import System.Sistema;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.Subject;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.UUID;
 

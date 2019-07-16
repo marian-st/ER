@@ -1,8 +1,8 @@
 package test.java;
 
 import Main.Tuple;
-import State.Entities.Patient;
-import State.Entities.User;
+import Entities.Patient;
+import Entities.User;
 import State.Store;
 import State.StringCommand;
 import State.State;

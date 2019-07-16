@@ -1,11 +1,11 @@
-package System.LoginDemo;
+package Component;
 
-import Component.Component;
 import InterfaceController.LoginController;
 import State.Command;
 import State.StateEvent;
 import javafx.fxml.FXMLLoader;
 import State.Store;
+import System.Sistema;
 
 public class LoginComponent<C extends Command> extends Component {
     private FXMLLoader loader;
@@ -14,7 +14,7 @@ public class LoginComponent<C extends Command> extends Component {
 
     public LoginComponent() {
         LoginController logctl = new LoginController(sys.getStore(), sys.getStore().getEventStream());
-        loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/Example.fxml"));
         loader.setController(logctl);
     }
 
@@ -26,7 +26,7 @@ public class LoginComponent<C extends Command> extends Component {
 
     }
 
-    protected void draw() throws Exception {
+    protected void draw() {
         sys.setInterface("login", loginTitle);
     }
 

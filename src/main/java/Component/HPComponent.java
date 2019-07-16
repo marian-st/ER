@@ -1,14 +1,11 @@
-package System.LoginDemo.HP;
+package Component;
 
-import Component.Component;
 import InterfaceController.HPController;
 import State.Command;
 import State.StateEvent;
-import State.StringCommand;
-import System.LoginDemo.Sistema;
+import System.HP.HPFactory;
 import javafx.fxml.FXMLLoader;
-import State.Store;
-
+import System.Sistema;
 
 public class HPComponent<C extends Command> extends Component {
     private FXMLLoader loader;
@@ -26,7 +23,7 @@ public class HPComponent<C extends Command> extends Component {
 
     }
 
-    protected final void draw() throws Exception {
+    protected final void draw() {
         sys.setInterface("HPDF", HPTitle);
     }
 

@@ -1,4 +1,4 @@
-package State.Entities;
+package Entities;
 
 import javax.persistence.*;
 import java.util.*;
@@ -30,7 +30,7 @@ public class Prescription implements Entry{
     public Prescription(String drug, Date date, int duration, double dailyDose, int numberOfDoses, String doctor)
             throws Exception {
         if(duration <= 0 || dailyDose <= 0 || numberOfDoses <= 0) throw new IllegalArgumentException("Prescription: invalid arguments");
-        this.date = date;
+        this.date = new java.sql.Date(date.getTime());
         this.drug = drug;
         this.duration = duration;
         this.dailyDose = dailyDose;
@@ -96,7 +96,7 @@ public class Prescription implements Entry{
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = new java.sql.Date(date.getTime());
     }
 
     public int getDuration() {

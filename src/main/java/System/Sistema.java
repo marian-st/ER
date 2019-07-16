@@ -1,7 +1,8 @@
-package System.LoginDemo;
+package System;
 
-import State.Entities.Patient;
-import State.Entities.User;
+import Component.MonitoringComponent;
+import Entities.Patient;
+import Entities.User;
 import State.Reducer;
 import State.ReducerString;
 import State.StringCommand;
@@ -10,8 +11,10 @@ import State.Store;
 import State.DatabaseService;
 import State.MiddlewareString;
 import State.Middleware;
-import System.LoginDemo.HP.HPComponent;
+import Component.HPComponent;
 
+import Component.LoginComponent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import Main.Tuple;
 import java.util.*;
@@ -38,6 +41,7 @@ public class Sistema {
                 })
                 .with("LOAD")
                 .with("ADD_PATIENT");
+
         Middleware<StringCommand> middleware = new MiddlewareString()
                 .with("LOGIN", (c, s, m) -> {
                     User u = (User) c.getArg();
@@ -64,8 +68,8 @@ public class Sistema {
 
         store = new Store<StringCommand>(new State(), reducer, middleware);
         store.update(new StringCommand("LOAD", UUID.randomUUID()));
-        store.update(new StringCommand("ADD_PATIENT", UUID.randomUUID(), new Patient("Roberto", "Posenato", "PSNRBR71G208281JA",
-                "Verona", new GregorianCalendar(1971, Calendar.JULY, 20).getTime())));
+        /*store.update(new StringCommand("ADD_PATIENT", UUID.randomUUID(), new Patient("Roberto", "Posenato", "PSNRBRA373UUS88I",
+                "Verona", new GregorianCalendar(1981, Calendar.FEBRUARY, 11).getTime())));*/
     }
 
     public void setupUI(Stage stage){
@@ -76,6 +80,7 @@ public class Sistema {
             this.controller.addInterface("HPS", new HPComponent<StringCommand>("search").getLoader().load());
             this.controller.addInterface("HPM", new HPComponent<StringCommand>("monitoring").getLoader().load());
             this.controller.addInterface("HPD", new HPComponent<StringCommand>("dismiss").getLoader().load());
+            this.controller.addInterface("MON", new MonitoringComponent<StringCommand>().getLoader().load());
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error during interfaces setup");
@@ -92,5 +97,9 @@ public class Sistema {
 
     public void endSystem() {
         this.controller.deactivate();
+    }
+
+    public Pane getInterface(String s) {
+        return this.controller.getInterface(s);
     }
 }

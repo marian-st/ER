@@ -1,10 +1,9 @@
-package State.Entities;
+package Entities;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 

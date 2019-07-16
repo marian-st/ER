@@ -1,7 +1,8 @@
-package State.Entities;
+package Entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Patient implements Entry{
         this.surname = surname;
         this.fiscalCode = fiscalCode;
         this.placeOfBirth = placeOfBirth;
-        this.birthDay = birthDay;
+        this.birthDay = new java.sql.Date(birthDay.getTime());
     }
 
     public Patient(String name, String surname, String fiscalCode, String placeOfBirth, Date birthDay,
@@ -111,7 +112,7 @@ public class Patient implements Entry{
     }
 
     public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
+        this.birthDay = new java.sql.Date(birthDay.getTime());
     }
 
     public List<Administration> getAdministrations() {

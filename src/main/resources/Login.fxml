@@ -18,7 +18,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
+                        <MenuItem mnemonicParsing="false" text="Monitoring" onAction="#startMonitoring"/>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Close" onAction="#close"/>
                     </items>
@@ -32,7 +32,7 @@
         </MenuBar>
         <AnchorPane fx:id="mainAnchor" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
-                <Label alignment="CENTER" layoutX="155.0" layoutY="184.0" style="&#10;" text="Password" textAlignment="CENTER">
+                <Label alignment="CENTER" layoutX="155.0" layoutY="184.0" text="Password" textAlignment="CENTER">
                     <font>
                         <Font size="18.0" />
                     </font>

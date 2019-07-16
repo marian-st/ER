@@ -1,7 +1,9 @@
-package System.LoginDemo;
+package System.Login;
 
+import Component.LoginComponent;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import System.Sistema;
 
 public class LoginDemoMain extends Application {
     public static void main(String... args) {
