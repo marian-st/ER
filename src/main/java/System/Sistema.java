@@ -1,8 +1,10 @@
 package System;
 
 import Component.MonitoringComponent;
+import Entities.Monitoring;
 import Entities.Patient;
 import Entities.User;
+import Generator.MonitoringEntry;
 import State.Reducer;
 import State.ReducerString;
 import State.StringCommand;
@@ -41,8 +43,8 @@ public class Sistema {
                     return s;
                 })
                 .with("LOAD")
-                .with("ADD_PATIENT");
-
+                .with("ADD_PATIENT")
+                .with("ADD_MONITORING_ENTRY");
         Middleware<StringCommand> middleware = new MiddlewareString()
                 .with("LOGIN", (c, s, m) -> {
                     User u = (User) c.getArg();
@@ -65,6 +67,38 @@ public class Sistema {
                     s.addPatient(patient);
                     DatabaseService.addEntry(patient);
                     return new Tuple<>(new StringCommand("ADDED_PATIENT", UUID.randomUUID()), s);
+                })
+                .with("ADD_MONITORING_ENTRY", (c,s,m) -> {
+                    MonitoringEntry me = (MonitoringEntry) c.getArg();
+                    List<Monitoring> monitorings = s.getMonitorings();
+                    Monitoring entry = new Monitoring();
+                    if (monitorings.size() == 0) {
+                        entry.setDate(new Date(System.currentTimeMillis()));
+                        entry.setDiastolicPressure(80);
+                        entry.setSystolicPressure(120);
+                        entry.setHeartRate(56);
+                        entry.setTemperature(37.3);
+                    } else {
+                        Monitoring last = monitorings.get(monitorings.size() - 1);
+                        entry.setDate(new Date(System.currentTimeMillis()));
+                        entry.setDiastolicPressure(last.getDiastolicPressure());
+                        entry.setSystolicPressure(last.getSystolicPressure());
+                        entry.setHeartRate(last.getHeartRate());
+                        entry.setTemperature(last.getTemperature());
+                    }
+                    switch(me.getValue()) {
+                        case SBP:
+                            entry.setDiastolicPressure(((Tuple<Integer, Integer>) me.getEntry()).fst());
+                            entry.setSystolicPressure(((Tuple<Integer, Integer>) me.getEntry()).snd());
+                            break;
+                        case HEART_RATE:
+                            entry.setHeartRate((int) me.getEntry());
+                            break;
+                        case TEMPERATURE:
+                            entry.setTemperature((double) me.getEntry());
+                    }
+                    s.addMonitoring(entry);
+                    return new Tuple<>(new StringCommand("ADDED_MONITORING", UUID.randomUUID()), s);
                 });
 
         store = new Store<StringCommand>(new State(), reducer, middleware);

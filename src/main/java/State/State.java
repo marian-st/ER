@@ -1,8 +1,10 @@
 package State;
+import Entities.Monitoring;
 import Entities.Patient;
 import Entities.Role;
 import Entities.User;
 
+import javax.management.monitor.Monitor;
 import java.io.Serializable;
 import java.util.*;
 
@@ -10,6 +12,7 @@ public class State implements Serializable {
     private User userCheck;
     private User user;
     private List<Patient> patients = new ArrayList<>();
+    private List<Monitoring> monitorings = new ArrayList<>();
 
     // Must be the initial state
     public State() {
@@ -78,6 +81,18 @@ public class State implements Serializable {
 
     public void addPatient(Patient patient) {
         this.patients.add(patient);
+    }
+
+    public List<Monitoring> getMonitorings() {
+        return monitorings;
+    }
+
+    public void setMonitorings(List<Monitoring> monitorings) {
+        this.monitorings = monitorings;
+    }
+
+    public void addMonitoring(Monitoring monitoring) {
+        this.monitorings.add(monitoring);
     }
 
 }
