@@ -1,5 +1,6 @@
 package InterfaceController;
 
+import Component.MonitoringComponent;
 import Entities.Role;
 import Entities.User;
 import State.StateEvent;
@@ -57,6 +58,7 @@ public class LoginController {
         Stage stage = new Stage();
         stage.getIcons().add(new Image("/logo.png"));
         stage.setScene(new Scene(sys.getInterface("MON")));
+        stage.setTitle(MonitoringComponent.monitoringTitle);
         stage.sizeToScene();
         stage.show();
     }
