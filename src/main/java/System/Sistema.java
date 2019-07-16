@@ -1,7 +1,7 @@
-package System.LoginDemo;
+package System;
 
-import State.Entities.Patient;
-import State.Entities.User;
+import Entities.Patient;
+import Entities.User;
 import State.Reducer;
 import State.ReducerString;
 import State.StringCommand;
@@ -10,8 +10,9 @@ import State.Store;
 import State.DatabaseService;
 import State.MiddlewareString;
 import State.Middleware;
-import System.LoginDemo.HP.HPComponent;
+import Component.HPComponent;
 
+import Component.LoginComponent;
 import javafx.stage.Stage;
 import Main.Tuple;
 import java.util.*;
@@ -64,8 +65,8 @@ public class Sistema {
 
         store = new Store<StringCommand>(new State(), reducer, middleware);
         store.update(new StringCommand("LOAD", UUID.randomUUID()));
-        store.update(new StringCommand("ADD_PATIENT", UUID.randomUUID(), new Patient("Roberto", "Posenato", "PSNRBR71G208281JA",
-                "Verona", new GregorianCalendar(1971, Calendar.JULY, 20).getTime())));
+        //store.update(new StringCommand("ADD_PATIENT", UUID.randomUUID(), new Patient("Roberto", "Posenato", "PSNRBR71G208281JA",
+        //        "Verona", new GregorianCalendar(1971, Calendar.JULY, 20).getTime())));
     }
 
     public void setupUI(Stage stage){

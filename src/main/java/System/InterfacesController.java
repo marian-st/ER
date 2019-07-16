@@ -1,4 +1,4 @@
-package System.LoginDemo;
+package System;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;

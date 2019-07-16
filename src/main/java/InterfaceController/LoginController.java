@@ -1,11 +1,11 @@
 package InterfaceController;
 
-import State.Entities.Role;
-import State.Entities.User;
+import Entities.Role;
+import Entities.User;
 import State.StateEvent;
 import State.StringCommand;
-import System.LoginDemo.HP.HPComponent;
-import System.LoginDemo.Sistema;
+import Component.HPComponent;
+import System.Sistema;
 import io.reactivex.subjects.Subject;
 import javafx.fxml.FXML;
 import State.Store;
