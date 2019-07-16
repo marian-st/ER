@@ -38,8 +38,8 @@ public class Recovery implements Entry{
 
     public Recovery () {}
     public Recovery(Date start, Date end, String diagnosis, boolean active, String dischargeSummary) {
-        this.startDate = start;
-        this.endDate = end;
+        this.startDate = new java.sql.Date(start.getTime());
+        this.endDate = new java.sql.Date(end.getTime());
         this.diagnosis = diagnosis;
         this.active = active;
         this.dischargeSummary = dischargeSummary;
@@ -75,7 +75,7 @@ public class Recovery implements Entry{
     }
 
     public void setStartDate(Date date) {
-        this.startDate = date;
+        this.startDate = new java.sql.Date(date.getTime());
     }
 
     public String getDiagnosis() {
@@ -99,7 +99,7 @@ public class Recovery implements Entry{
     }
 
     public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+        this.endDate = new java.sql.Date(endDate.getTime());
     }
 
     public String getDischargeSummary() {

@@ -30,7 +30,7 @@ public class Administration implements Entry{
     public Administration(Date date, int hour, double dose, String notes)
             throws Exception {
         if (hour < 0 || hour > 23 || dose <= 0) throw new IllegalArgumentException("Administration: invalid arguments");
-        this.date = date;
+        this.date = new java.sql.Date(date.getTime());
         this.hour = hour;
         this.dose = dose;
         this.notes = notes;
@@ -86,7 +86,7 @@ public class Administration implements Entry{
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = new java.sql.Date(date.getTime());
     }
 
     public int getHour() {
