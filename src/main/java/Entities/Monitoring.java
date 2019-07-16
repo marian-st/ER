@@ -16,7 +16,8 @@ public class Monitoring implements Entry{
     private int systolicPressure;
     private int diastolicPressure;
 
-    private int beatsPerMinute;
+    @Column(name ="beatsPerMinute")
+    private int heartRate;
 
     private double temperature;
 
@@ -24,23 +25,23 @@ public class Monitoring implements Entry{
     @JoinColumn(name = "recovery_id")
     private Recovery recovery;
 
-    public Monitoring(Date date, int diastolicPressure, int systolicPressure, int beatsPerMinute, double temperature)
+    public Monitoring(Date date, int diastolicPressure, int systolicPressure, int heartRate, double temperature)
             throws IllegalArgumentException {
         if(temperature <= -273.15) throw new IllegalArgumentException("Monitoring: patient has reached zero entropy; must " +
                 "re-establish thermodynamics laws.");
-        if(systolicPressure < 0 || diastolicPressure < 0 || beatsPerMinute < 0 || temperature < 0) throw
+        if(systolicPressure < 0 || diastolicPressure < 0 || heartRate < 0 || temperature < 0) throw
             new IllegalArgumentException("Monitoring: illegal arguments");
         this.date = new java.sql.Date(date.getTime());
         this.systolicPressure = systolicPressure;
         this.diastolicPressure = diastolicPressure;
-        this.beatsPerMinute = beatsPerMinute;
+        this.heartRate = heartRate;
         this.temperature = temperature;
     }
 
-    public Monitoring(Date date, int diastolicPressure, int systolicPressure, int beatsPerMinute, double temperature,
+    public Monitoring(Date date, int diastolicPressure, int systolicPressure, int heartRate, double temperature,
                       Recovery recovery)
             throws IllegalArgumentException {
-        this(date, diastolicPressure, systolicPressure, beatsPerMinute, temperature);
+        this(date, diastolicPressure, systolicPressure, heartRate, temperature);
         this.recovery = recovery;
     }
 
@@ -80,12 +81,12 @@ public class Monitoring implements Entry{
         this.diastolicPressure = diastolicPressure;
     }
 
-    public int getBeatsPerMinute() {
-        return beatsPerMinute;
+    public int getHeartRate() {
+        return heartRate;
     }
 
-    public void setBeatsPerMinute(int beatsPerMinute) {
-        this.beatsPerMinute = beatsPerMinute;
+    public void setHeartRate(int heartRate) {
+        this.heartRate = heartRate;
     }
 
     public double getTemperature() {
@@ -106,7 +107,7 @@ public class Monitoring implements Entry{
 
     public String toString() {
         String s = String.format("{%s, %d, %d, %d, %fd", this.date, this.diastolicPressure, this.systolicPressure ,
-                this.beatsPerMinute, this.temperature);
+                this.heartRate, this.temperature);
 
         if (recovery != null) s += ", " + this.recovery.getId();
         s += "}";

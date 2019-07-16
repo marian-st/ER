@@ -41,6 +41,7 @@ public class Sistema {
                 })
                 .with("LOAD")
                 .with("ADD_PATIENT");
+
         Middleware<StringCommand> middleware = new MiddlewareString()
                 .with("LOGIN", (c, s, m) -> {
                     User u = (User) c.getArg();
