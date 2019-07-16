@@ -32,8 +32,6 @@ public class RandomGaussian {
 
     //nextGaussian returns a value of a normalized gaussian distribution
     public long getValue(){
-        long l = Math.round(mean + random.nextGaussian() * variance);
-        System.out.println("Generated : " + l);
-        return l;
+        return Math.round(mean + random.nextGaussian() * variance);
     }
 }

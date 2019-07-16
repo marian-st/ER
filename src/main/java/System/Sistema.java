@@ -14,6 +14,7 @@ import State.Middleware;
 import Component.HPComponent;
 
 import Component.LoginComponent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import Main.Tuple;
@@ -74,6 +75,7 @@ public class Sistema {
 
     public void setupUI(Stage stage){
         try {
+            stage.getIcons().add(new Image("/logo.png"));
             this.controller = new InterfacesController(stage);
             this.controller.addInterface("login", new LoginComponent<StringCommand>().getLoader().load());
             this.controller.addInterface("HPDF", new HPComponent<StringCommand>("default").getLoader().load());
