@@ -30,7 +30,7 @@ public class Monitoring implements Entry{
                 "re-establish thermodynamics laws.");
         if(systolicPressure < 0 || diastolicPressure < 0 || beatsPerMinute < 0 || temperature < 0) throw
             new IllegalArgumentException("Monitoring: illegal arguments");
-        this.date = date;
+        this.date = new java.sql.Date(date.getTime());
         this.systolicPressure = systolicPressure;
         this.diastolicPressure = diastolicPressure;
         this.beatsPerMinute = beatsPerMinute;
@@ -61,7 +61,7 @@ public class Monitoring implements Entry{
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = new java.sql.Date(date.getTime());
     }
 
     public int getSystolicPressure() {
