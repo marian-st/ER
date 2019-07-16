@@ -12,6 +12,7 @@ import State.Store;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -54,6 +55,7 @@ public class LoginController {
 
     @FXML protected void startMonitoring() {
         Stage stage = new Stage();
+        stage.getIcons().add(new Image("/logo.png"));
         stage.setScene(new Scene(sys.getInterface("MON")));
         stage.sizeToScene();
         stage.show();
