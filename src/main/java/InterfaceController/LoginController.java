@@ -24,6 +24,7 @@ public class LoginController {
     private Store<StringCommand> store;
     @FXML private TextField userField;
     @FXML private PasswordField passField;
+    private Stage stage = null;
 
     public LoginController(Store store, Subject<StateEvent> stream) {
         this.store = store;
@@ -55,11 +56,13 @@ public class LoginController {
     }
 
     @FXML protected void startMonitoring() {
-        Stage stage = new Stage();
-        stage.getIcons().add(new Image("/logo.png"));
-        stage.setScene(new Scene(sys.getInterface("MON")));
-        stage.setTitle(MonitoringComponent.monitoringTitle);
-        stage.sizeToScene();
-        stage.show();
+        if(stage == null) {
+            stage = new Stage();
+            stage.getIcons().add(new Image("/logo.png"));
+            stage.setScene(new Scene(sys.getInterface("MON")));
+            stage.setTitle(MonitoringComponent.monitoringTitle);
+            stage.sizeToScene();
+            stage.show();
+        } else this.stage.toFront();
     }
 }
