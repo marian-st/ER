@@ -3,6 +3,7 @@ package System;
 import Component.MonitoringComponent;
 import Entities.Monitoring;
 import Entities.Patient;
+import Entities.Recovery;
 import Entities.User;
 import Generator.MonitoringEntry;
 import State.Reducer;
@@ -29,6 +30,7 @@ public class Sistema {
     private Store<StringCommand> store;
     private InterfacesController controller;
     private Stage monitoringStage = null;
+
     public static Sistema getInstance() {
         if (s == null)
             s = new Sistema();
@@ -64,6 +66,14 @@ public class Sistema {
                             .map(e -> (Patient) e)
                             .collect(Collectors.toList());
                     s.setPatients(ps);
+                    List<Recovery> rec = ps.stream().flatMap(p -> p.getRecoveries().stream()).filter(r ->
+                            r.isActive()).collect(Collectors.toList());
+                    //TODO add
+                    /*if (rec.size() == 0) {
+
+                    }*/
+                    s.setActiveRecoveries(rec);
+                    s.setMainRecovery(rec.get(0));
                     return new Tuple<>(new StringCommand("LOADED", UUID.randomUUID()), s);
                 }).with("ADD_PATIENT" , (c, s, m) -> {
                     Patient patient = (Patient) c.getArg();

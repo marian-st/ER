@@ -34,7 +34,7 @@ public class DatabaseService {
 
         Recovery rec1 = new Recovery(new GregorianCalendar(2019, Calendar.JUNE, 22).getTime(),
                 new GregorianCalendar(2019, Calendar.JULY, 13).getTime(), "Fractured Meniscus",
-                false, "Completely healed", patient1);
+                true, "Completely healed", patient1);
         try {
             Administration adm1 = new Administration(new GregorianCalendar(2019, Calendar.JULY, 11).getTime(),
                     14, 75.76, "All good", patient1);

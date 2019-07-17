@@ -1,10 +1,6 @@
 package State;
-import Entities.Monitoring;
-import Entities.Patient;
-import Entities.Role;
-import Entities.User;
+import Entities.*;
 
-import javax.management.monitor.Monitor;
 import java.io.Serializable;
 import java.util.*;
 
@@ -13,6 +9,8 @@ public class State implements Serializable {
     private User user;
     private List<Patient> patients = new ArrayList<>();
     private List<Monitoring> monitorings = new ArrayList<>();
+    private Recovery mainRecovery;
+    private List<Recovery> activeRecoveries;
 
     // Must be the initial state
     public State() {
@@ -95,6 +93,24 @@ public class State implements Serializable {
     public void addMonitoring(Monitoring monitoring) {
         this.monitorings.add(monitoring);
     }
+
+
+    public Recovery getMainRecovery() {
+        return mainRecovery;
+    }
+
+    public void setMainRecovery(Recovery mainRecovery) {
+        this.mainRecovery = mainRecovery;
+    }
+
+    public List<Recovery> getActiveRecoveries() {
+        return activeRecoveries;
+    }
+
+    public void setActiveRecoveries(List<Recovery> activeRecoveries) {
+        this.activeRecoveries = activeRecoveries;
+    }
+
 
     @Override
     public boolean equals(Object oth) {
