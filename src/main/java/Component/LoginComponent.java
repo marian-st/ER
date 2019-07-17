@@ -14,7 +14,7 @@ public class LoginComponent<C extends Command> extends Component {
 
     public LoginComponent() {
         LoginController logctl = new LoginController(sys.getStore(), sys.getStore().getEventStream());
-        loader = new FXMLLoader(getClass().getResource("/Example.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
         loader.setController(logctl);
     }
 

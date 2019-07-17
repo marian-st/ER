@@ -6,7 +6,7 @@ public class HPDismiss<C extends Command> implements HPInterface{
     private String file;
 
     public HPDismiss() {
-        this.file = "/HP_Dismiss.fxml";
+        this.file = "/A_HP_Dismiss.fxml";
     }
 
     public String getFile() {
