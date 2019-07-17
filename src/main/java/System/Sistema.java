@@ -16,6 +16,7 @@ import State.Middleware;
 import Component.HPComponent;
 
 import Component.LoginComponent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -27,6 +28,7 @@ public class Sistema {
     private static Sistema s;
     private Store<StringCommand> store;
     private InterfacesController controller;
+    public static Stage monitoringStage = null;
     public static Sistema getInstance() {
         if (s == null)
             s = new Sistema();
@@ -44,8 +46,9 @@ public class Sistema {
                 })
                 .with("LOAD")
                 .with("ADD_PATIENT")
+                .with("START_MONITORING")
                 .with("ADD_MONITORING_ENTRY");
-        Middleware<StringCommand> middleware = new MiddlewareString()
+        Middleware<StringCommand> middleware = new MiddlewareString(monitoringStage)
                 .with("LOGIN", (c, s, m) -> {
                     User u = (User) c.getArg();
                     if (s.getUserCheck().equals(u)) {
@@ -99,6 +102,17 @@ public class Sistema {
                     }
                     s.addMonitoring(entry);
                     return new Tuple<>(new StringCommand("ADDED_MONITORING", UUID.randomUUID()), s);
+                }).with("START_MONITORING", (c,s,m) -> {
+                    if (monitoringStage == null) {
+                        monitoringStage = new Stage();
+                        monitoringStage.getIcons().add(new Image("/logo.png"));
+                        monitoringStage.setScene(new Scene(Sistema.getInstance().getInterface("MON")));
+                        monitoringStage.setTitle(MonitoringComponent.monitoringTitle);
+                        monitoringStage.sizeToScene();
+                    }
+                    monitoringStage.show();
+                    monitoringStage.toFront();
+                    return new Tuple((new StringCommand("SHOW_MONITORING", UUID.randomUUID())), s);
                 });
 
         store = new Store<StringCommand>(new State(), reducer, middleware);
