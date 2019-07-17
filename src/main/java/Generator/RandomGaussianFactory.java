@@ -7,8 +7,7 @@ package Generator;
 public class RandomGaussianFactory {
     public GeneratorInterface getDataGenerator(Value value) {
         switch(value) {
-            case DBP: return new DBPGenerator();
-            case SBP: return new SBPGenerator();
+            case BP: return new BPGenerator();
             case HEART_RATE: return new HeartRateGenerator();
             case TEMPERATURE: return new TemperatureGenerator();
             default: return null;

@@ -87,7 +87,7 @@ public class Sistema {
                         entry.setTemperature(last.getTemperature());
                     }
                     switch(me.getValue()) {
-                        case SBP:
+                        case BP:
                             entry.setDiastolicPressure(((Tuple<Integer, Integer>) me.getEntry()).fst());
                             entry.setSystolicPressure(((Tuple<Integer, Integer>) me.getEntry()).snd());
                             break;

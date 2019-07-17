@@ -4,16 +4,15 @@ import java.util.*;
 
 import Entities.Recovery;
 import Main.Tuple;
-import State.Command;
 import State.Store;
 import State.StringCommand;
 
 public class DataThread extends Thread {
     private final Store<StringCommand> store;
     private final Recovery recovery;
-    private final int numTask = 4;
-    private final Long[] times = {2000L, 2000L, 3000L, 5000L}; //2-2-3-5 (s)
-    private final Value[] taskJob = {Value.SBP, Value.DBP, Value.HEART_RATE, Value.TEMPERATURE};
+    private final int numTask = 3;
+    private final Long[] times = {2000L, 3000L, 5000L}; //2-2-3-5 (s)
+    private final Value[] taskJob = {Value.BP, Value.HEART_RATE, Value.TEMPERATURE};
     private ArrayList<TimerTask> tasks = new ArrayList<>();
     private ArrayList<Timer> timers = new ArrayList<>();
 
