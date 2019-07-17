@@ -20,6 +20,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1200.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -28,6 +29,8 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
                   <MenuItem mnemonicParsing="false" text="Login" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Alarms Test" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Close" />
             </items>
@@ -43,14 +46,30 @@
          <children>
             <AnchorPane prefHeight="600.0" prefWidth="650.0">
                <children>
-                  <Label layoutX="24.0" layoutY="35.0" prefHeight="21.0" prefWidth="107.0" style="-fx-font-size: 20;" text="Nome" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
-                  <Label layoutX="24.0" layoutY="64.0" prefHeight="21.0" prefWidth="133.0" style="-fx-font-size: 20;" text="Cognome" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" />
-                  <TableView layoutY="200.0" prefHeight="400.0" prefWidth="650.0" style="-fx-background-color: black;">
+                  <Label layoutX="24.0" layoutY="35.0" prefHeight="21.0" prefWidth="107.0" style="-fx-font-size: 20;" text="Nome" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" fx:id="nameLabel"/>
+                  <Label layoutX="24.0" layoutY="64.0" prefHeight="21.0" prefWidth="133.0" style="-fx-font-size: 20;" text="Cognome" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" fx:id="surnameLabel"/>
+                  <TableView layoutY="200.0" prefHeight="400.0" prefWidth="650.0" style="-fx-background-color: black;" fx:id="dataTable">
                     <columns>
-                      <TableColumn prefWidth="180.0" text="Heart Rate" />
-                      <TableColumn prefWidth="210.0" text="Temperature" />
-                        <TableColumn prefWidth="127.0" text="DBP" />
-                        <TableColumn prefWidth="127.0" text="SBP" />
+                      <TableColumn prefWidth="180.0" text="Heart Rate">
+                          <cellValueFactory>
+                              <PropertyValueFactory property="heartRate" />
+                          </cellValueFactory>
+                      </TableColumn>
+                      <TableColumn prefWidth="210.0" text="Temperature">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="temperature" />
+                        </cellValueFactory>
+                      </TableColumn>
+                      <TableColumn prefWidth="127.0" text="DBP" >
+                        <cellValueFactory>
+                            <PropertyValueFactory property="diastolicPressure" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="127.0" text="SBP" >
+                        <cellValueFactory>
+                            <PropertyValueFactory property="diastolicPressure" />
+                        </cellValueFactory>
+                    </TableColumn>
                     </columns>
                   </TableView>
                   <Label layoutX="43.0" layoutY="133.0" style="-fx-font-size: 40;" text="150" />
@@ -61,11 +80,12 @@
                   <Label layoutX="301.0" layoutY="141.0" prefHeight="21.0" prefWidth="17.0" text="°C" />
                   <Label layoutX="465.0" layoutY="141.0" style="-fx-font-size: 13;" text="mmHg" />
                   <Label layoutX="590.0" layoutY="141.0" style="-fx-font-size: 13;" text="mmHg" />
+                  <Label layoutX="523.0" layoutY="23.0" prefHeight="45.0" prefWidth="119.0" style="-fx-font-size: 30;" text="Room 10" />
                </children>
             </AnchorPane>
             <VBox prefHeight="200.0" prefWidth="550.0">
                <children>
-                  <LineChart prefHeight="300.0" prefWidth="440.0" title="Heart Rate">
+                  <LineChart prefHeight="300.0" prefWidth="440.0" title="Heart Rate" fx:id="hrGraphic">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" />
                      </xAxis>
@@ -83,7 +103,7 @@
                         </Lighting>
                      </effect>
                   </LineChart>
-                  <LineChart prefHeight="300.0" prefWidth="440.0" title="DBP / SBP">
+                  <LineChart prefHeight="300.0" prefWidth="440.0" title="DBP / SBP" fx:id="bpGraphic">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" />
                      </xAxis>
@@ -119,16 +139,16 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" style="-fx-font-size: 18;" text="Letto 1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 3" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 7" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 8" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 9" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 10" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Room 1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Room 2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Room 3" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Room 4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Room 5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Room 6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Room 7" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Room 8" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Room 9" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Room 10" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </children>
