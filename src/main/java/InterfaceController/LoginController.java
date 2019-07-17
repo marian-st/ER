@@ -40,7 +40,7 @@ public class LoginController {
     }
 
     @FXML protected void login() {
-        store.update(new StringCommand("LOGIN", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
+        store.update(new StringCommand("LOGIN", new User(userField.getText(), passField.getText())));
     }
 
     @FXML protected void close() {
@@ -56,15 +56,6 @@ public class LoginController {
     }
 
     @FXML protected void startMonitoring() {
-        //todo moves to Middleware
-
-        if(stage == null) {
-            stage = new Stage();
-            stage.getIcons().add(new Image("/logo.png"));
-            stage.setScene(new Scene(sys.getInterface("MON")));
-            stage.setTitle(MonitoringComponent.monitoringTitle);
-            stage.sizeToScene();
-            stage.show();
-        } else this.stage.toFront();
+        store.update(new StringCommand("START_MONITORING"));
     }
 }

@@ -28,7 +28,6 @@ public class Patient implements Entry{
 
     public Patient() { }
 
-    //TODO add constructors with administrations and recoveries
     public Patient(String name, String surname, String fiscalCode, String placeOfBirth, Date birthDay) {
         this.name = name;
         this.surname = surname;

@@ -1,10 +1,16 @@
 package State;
 
 import Main.Tuple;
+import javafx.stage.Stage;
 
 import java.util.HashMap;
 
 public class MiddlewareString implements Middleware<StringCommand> {
+    private Stage stage;
+
+    public MiddlewareString(Stage stage) {
+        this.stage = stage;
+    }
     private HashMap<String, TriFunction<StringCommand, State, Middleware<StringCommand>, Tuple<StringCommand, State>>> map =
             new HashMap<String, TriFunction<StringCommand, State, Middleware<StringCommand>, Tuple<StringCommand, State>>>();
 
@@ -20,6 +26,10 @@ public class MiddlewareString implements Middleware<StringCommand> {
         TriFunction<StringCommand, State, Middleware<StringCommand>, Tuple<StringCommand, State>> fun =
                 this.map.get(stringCommand.name());
         return fun.apply(stringCommand, s, this);
+    }
+
+    public Stage getStage() {
+        return this.stage;
     }
     public boolean check(String s) {
         return this.map.containsKey(s);

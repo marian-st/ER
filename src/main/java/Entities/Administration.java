@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Administration implements Entry{
+public class Administration implements Entry {
 
     @Id
     @GeneratedValue

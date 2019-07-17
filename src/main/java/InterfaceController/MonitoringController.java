@@ -25,7 +25,9 @@ public class MonitoringController {
     @FXML private LineChart bpGraphic;
 
     public MonitoringController(Store store, Subject<StateEvent> stream) {
+        this.store = store;
 
+        // iscrizione
     }
 
 

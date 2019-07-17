@@ -61,7 +61,7 @@ public class HPController {
     }
 
     @FXML protected void logout() {
-        store.update(new StringCommand("LOGOUT", UUID.randomUUID()));
+        store.update(new StringCommand("LOGOUT"));
         sys.setInterface("login", LoginComponent.loginTitle);
     }
 }
