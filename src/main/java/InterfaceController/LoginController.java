@@ -40,7 +40,7 @@ public class LoginController {
     }
 
     @FXML protected void login() {
-        store.update(new StringCommand("LOGIN", UUID.randomUUID(), new User(userField.getText(), passField.getText())));
+        store.update(new StringCommand("LOGIN", new User(userField.getText(), passField.getText())));
     }
 
     @FXML protected void close() {
@@ -56,6 +56,6 @@ public class LoginController {
     }
 
     @FXML protected void startMonitoring() {
-        store.update(new StringCommand("START_MONITORING", UUID.randomUUID()));
+        store.update(new StringCommand("START_MONITORING"));
     }
 }

@@ -55,10 +55,10 @@ public class Sistema {
                     User u = (User) c.getArg();
                     if (s.getUserCheck().equals(u)) {
                         s.setUser(s.getUserCheck());
-                        return new Tuple<>(new StringCommand("LOGIN_SUCCESS", UUID.randomUUID()), s);
+                        return new Tuple<>(new StringCommand("LOGIN_SUCCESS"), s);
                     }
                     else {
-                        return new Tuple<>(new StringCommand("LOGIN_FAILURE", UUID.randomUUID()), s);
+                        return new Tuple<>(new StringCommand("LOGIN_FAILURE"), s);
                     }
                 })
                 .with("LOAD", (c, s, m) -> {
@@ -66,20 +66,20 @@ public class Sistema {
                             .map(e -> (Patient) e)
                             .collect(Collectors.toList());
                     s.setPatients(ps);
-                    List<Recovery> rec = ps.stream().flatMap(p -> p.getRecoveries().stream()).filter(r ->
-                            r.isActive()).collect(Collectors.toList());
+                    List<Recovery> rec = ps.stream().flatMap(p -> p.getRecoveries().stream()).filter(Recovery::isActive)
+                            .collect(Collectors.toList());
                     //TODO add
                     /*if (rec.size() == 0) {
 
                     }*/
                     s.setActiveRecoveries(rec);
                     s.setMainRecovery(rec.get(0));
-                    return new Tuple<>(new StringCommand("LOADED", UUID.randomUUID()), s);
+                    return new Tuple<>(new StringCommand("LOADED"), s);
                 }).with("ADD_PATIENT" , (c, s, m) -> {
                     Patient patient = (Patient) c.getArg();
                     s.addPatient(patient);
                     DatabaseService.addEntry(patient);
-                    return new Tuple<>(new StringCommand("ADDED_PATIENT", UUID.randomUUID()), s);
+                    return new Tuple<>(new StringCommand("ADDED_PATIENT"), s);
                 })
                 .with("ADD_MONITORING_ENTRY", (c,s,m) -> {
                     MonitoringEntry me = (MonitoringEntry) c.getArg();
@@ -89,7 +89,7 @@ public class Sistema {
                         entry.setDate(new Date(System.currentTimeMillis()));
                         entry.setDiastolicPressure(80);
                         entry.setSystolicPressure(120);
-                        entry.setHeartRate(56);
+                        entry.setHeartRate(75);
                         entry.setTemperature(37.3);
                     } else {
                         Monitoring last = monitorings.get(monitorings.size() - 1);
@@ -111,7 +111,7 @@ public class Sistema {
                             entry.setTemperature((double) me.getEntry());
                     }
                     s.addMonitoring(entry);
-                    return new Tuple<>(new StringCommand("ADDED_MONITORING", UUID.randomUUID()), s);
+                    return new Tuple<>(new StringCommand("ADDED_MONITORING"), s);
                 }).with("START_MONITORING", (c,s,m) -> {
                     if (monitoringStage == null) {
                         monitoringStage = new Stage();
@@ -122,12 +122,12 @@ public class Sistema {
                     }
                     monitoringStage.show();
                     monitoringStage.toFront();
-                    return new Tuple((new StringCommand("SHOW_MONITORING", UUID.randomUUID())), s);
+                    return new Tuple((new StringCommand("SHOW_MONITORING")), s);
                 });
 
         store = new Store<StringCommand>(new State(), reducer, middleware);
-        store.update(new StringCommand("LOAD", UUID.randomUUID()));
-        /*store.update(new StringCommand("ADD_PATIENT", UUID.randomUUID(), new Patient("Roberto", "Posenato", "PSNRBRA373UUS88I",
+        store.update(new StringCommand("LOAD"));
+        /*store.update(new StringCommand("ADD_PATIENT", new Patient("Roberto", "Posenato", "PSNRBRA373UUS88I",
                 "Verona", new GregorianCalendar(1981, Calendar.FEBRUARY, 11).getTime())));*/
     }
 

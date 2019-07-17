@@ -39,10 +39,10 @@ public class StoreTest {
                     User u = (User) c.getArg();
                     if (s.getUserCheck().equals(u)) {
                         s.setUser(s.getUserCheck());
-                        return new Tuple<>(new StringCommand("LOGIN_SUCCESS", UUID.randomUUID()), s);
+                        return new Tuple<>(new StringCommand("LOGIN_SUCCESS"), s);
                     }
                     else {
-                        return new Tuple<>(new StringCommand("LOGIN_FAILURE", UUID.randomUUID()), s);
+                        return new Tuple<>(new StringCommand("LOGIN_FAILURE"), s);
                     }
                 })
                 .with("LOAD", (c, s, m) -> {
@@ -50,12 +50,12 @@ public class StoreTest {
                             .map(e -> (Patient) e)
                             .collect(Collectors.toList());
                     s.setPatients(ps);
-                    return new Tuple<>(new StringCommand("LOADED", UUID.randomUUID()), s);
+                    return new Tuple<>(new StringCommand("LOADED"), s);
                 }).with("ADD_PATIENT" , (c, s, m) -> {
                     Patient patient = (Patient) c.getArg();
                     s.addPatient(patient);
                     //DatabaseService.addEntry(patient);
-                    return new Tuple<>(new StringCommand("ADDED_PATIENT", UUID.randomUUID()), s);
+                    return new Tuple<>(new StringCommand("ADDED_PATIENT"), s);
                 });
 
         private Store<StringCommand> store = new Store<StringCommand>(new State(), reducer, middleware);
@@ -67,14 +67,14 @@ public class StoreTest {
                 "Verona", new GregorianCalendar(1971, Calendar.JULY, 20).getTime());
         assertArrayEquals(store.poll().getPatients().toArray(), new Patient[] {});
 
-        store.update(new StringCommand("ADD_PATIENT", UUID.randomUUID(), p));
+        store.update(new StringCommand("ADD_PATIENT", p));
         assertArrayEquals(store.poll().getPatients().toArray(), new Patient[] {p});
 
 
         Disposable dis = store.getCommandStream().subscribe(s -> {
             assertEquals(s, "LOGIN_SUCCESS");
         });
-        store.update(new StringCommand("LOGIN", UUID.randomUUID(),
+        store.update(new StringCommand("LOGIN",
                 new User("eme", "pw", Role.HEAD_PHYSICIAN, false)));
         assertEquals(store.poll().getUser(), store.poll().getUserCheck());
         dis.dispose();
@@ -83,7 +83,7 @@ public class StoreTest {
         dis = store.getCommandStream().subscribe(s -> {
             assertEquals(s, "LOGIN_FAILURE");
         });
-        store.update(new StringCommand("LOGIN", UUID.randomUUID(),
+        store.update(new StringCommand("LOGIN",
                 new User("", "", Role.HEAD_PHYSICIAN, true)));
         dis.dispose();
 
@@ -92,7 +92,7 @@ public class StoreTest {
         dis = store.getCommandStream().subscribe(s -> {
             assertEquals(s, "NON_EXISTENT_COMMAND");
         });
-        store.update(new StringCommand("v", UUID.randomUUID()));
+        store.update(new StringCommand("v"));
         assertEquals(st, store.poll());
         dis.dispose();
     }

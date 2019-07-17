@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public interface Command {
     String name();
-    UUID issuer();
+    //UUID issuer();
     Object getArg();
     Command errorCommand();
 }
