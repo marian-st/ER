@@ -56,6 +56,8 @@ public class LoginController {
     }
 
     @FXML protected void startMonitoring() {
+        //todo moves to Middleware
+
         if(stage == null) {
             stage = new Stage();
             stage.getIcons().add(new Image("/logo.png"));
