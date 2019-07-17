@@ -56,13 +56,6 @@ public class LoginController {
     }
 
     @FXML protected void startMonitoring() {
-        if(stage == null) {
-            stage = new Stage();
-            stage.getIcons().add(new Image("/logo.png"));
-            stage.setScene(new Scene(sys.getInterface("MON")));
-            stage.setTitle(MonitoringComponent.monitoringTitle);
-            stage.sizeToScene();
-            stage.show();
-        } else this.stage.toFront();
+        store.update(new StringCommand("START_MONITORING", UUID.randomUUID()));
     }
 }

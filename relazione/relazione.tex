@@ -1,0 +1,58 @@
+\documentclass{article}
+\usepackage[left=2cm, right=2cm]{geometry}
+%opening
+\title{}
+\author{}
+\usepackage{tikz}
+\usepackage{pgfopts}
+\usepackage{xstring}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{./tikz-uml}
+\usepackage{babel}[italian]
+\begin{document}
+
+\maketitle
+
+\section{Casi d'uso}
+
+\begin{tikzpicture}
+\begin{umlsystem}[x=0, fill=red!5]{Casi d'uso}
+\umlusecase[x=-.5]{Inserisce dati anagrafici}
+\umlusecase[y=-1.2, x=.35]{Inserisce dati somministrazione}
+\umlusecase[x=5.3, y=-2.2]{Inserisce note stato paziente}
+\umlusecase[y=-3.5, x =1.3]{Visualizza dati paziente (ultime due ore)}
+\umlusecase[x=3, y=-5]{Inserisce diagnosi d'ingresso}
+\umlusecase[x=3, y=-6.2]{Aggiunge prescrizioni}
+\umlusecase[x=2.9,  y=-7.4]{Spegne allarmi}
+\umlusecase[x=.6, y=-9]{Visualizza/stampa reports pazienti}
+\umlusecase[x=0, y=-10.2]{Compila lettera di dimissioni}
+\end{umlsystem}
+
+\umlactor[x=-5.5]{Infermiere}
+\umlactor[x=-5.5, y=-9.7]{Primario}
+\umlactor[x=-5.5, y=-5.7]{Medico}
+
+\umlassoc{Infermiere}{usecase-1}
+\umlassoc{Infermiere}{usecase-2}
+\umlassoc{Infermiere}{usecase-4}
+
+\umlassoc{Medico}{usecase-4}
+\umlassoc{Medico}{usecase-5}
+\umlassoc{Medico}{usecase-6}
+\umlassoc{Medico}{usecase-7}
+
+\umlassoc{Primario}{usecase-4}
+\umlassoc{Primario}{usecase-8}
+\umlassoc{Primario}{usecase-9}
+%\umlassoc{subuser}{usecase-3}
+%\umlassoc{admin}{usecase-5}
+%\umlassoc{admin}{usecase-6}
+%\umlinherit{usecase-2}{usecase-1}
+\umlVHextend{usecase-3}{usecase-2}
+%\umlinclude[name=incl]{usecase-3}{usecase-4}
+%
+%\umlnote[x=7, y=-7]{incl-1}{note on include dependency}
+\end{tikzpicture}
+
+\end{document}

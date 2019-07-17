@@ -8,11 +8,11 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<VBox prefHeight="760.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="760.0" prefWidth="1120.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -52,22 +52,22 @@
                   </AnchorPane>
                 <AnchorPane minHeight="727.0" minWidth="900.0" prefHeight="727.0" prefWidth="900.0">
                      <children>
-                        <TableView prefHeight="729.0" prefWidth="900.0" fx:id="table">
+                        <TableView fx:id="table" prefHeight="729.0" prefWidth="900.0">
                           <columns>
-                              <TableColumn  minWidth="130.0" maxWidth="130.0" prefWidth="130.0" text="Nome" >
-                                      <cellValueFactory><PropertyValueFactory property="name"/></cellValueFactory>
+                              <TableColumn maxWidth="130.0" minWidth="130.0" prefWidth="130.0" text="Nome">
+                                      <cellValueFactory><PropertyValueFactory property="name" /></cellValueFactory>
                               </TableColumn>
-                              <TableColumn minWidth="130.0" maxWidth="130.0" prefWidth="130.0" text="Cognome" >
-                                      <cellValueFactory><PropertyValueFactory property="surname"/></cellValueFactory>
+                              <TableColumn maxWidth="130.0" minWidth="130.0" prefWidth="130.0" text="Cognome">
+                                      <cellValueFactory><PropertyValueFactory property="surname" /></cellValueFactory>
                               </TableColumn>
-                              <TableColumn minWidth="260.0" maxWidth="130.0" prefWidth="260.0" text="Codice fiscale" >
-                                      <cellValueFactory><PropertyValueFactory property="fiscalCode"/></cellValueFactory>
+                              <TableColumn maxWidth="130.0" minWidth="260.0" prefWidth="260.0" text="Codice fiscale">
+                                      <cellValueFactory><PropertyValueFactory property="fiscalCode" /></cellValueFactory>
                               </TableColumn>
-                              <TableColumn minWidth="180.0" maxWidth="130.0" prefWidth="180.0" text="Data di nascita" >
-                                      <cellValueFactory><PropertyValueFactory property="birthDay"/></cellValueFactory>
+                              <TableColumn maxWidth="130.0" minWidth="180.0" prefWidth="180.0" text="Data di nascita">
+                                      <cellValueFactory><PropertyValueFactory property="birthDay" /></cellValueFactory>
                               </TableColumn>
-                              <TableColumn minWidth="200.0" maxWidth="130.0" prefWidth="200.0" text="Luogo di Nascita" >
-                                      <cellValueFactory><PropertyValueFactory property="placeOfBirth"/></cellValueFactory>
+                              <TableColumn maxWidth="130.0" minWidth="200.0" prefWidth="200.0" text="Luogo di Nascita">
+                                      <cellValueFactory><PropertyValueFactory property="placeOfBirth" /></cellValueFactory>
                               </TableColumn>
                           </columns>
                         </TableView>

@@ -11,6 +11,7 @@ import State.Reducer;
 import State.Middleware;
 import State.MiddlewareString;
 import State.DatabaseService;
+import System.Sistema;
 
 import State.ReducerString;
 import io.reactivex.disposables.Disposable;
@@ -33,7 +34,7 @@ public class StoreTest {
                 })
                 .with("LOAD")
                 .with("ADD_PATIENT");
-    private Middleware<StringCommand> middleware = new MiddlewareString()
+    private Middleware<StringCommand> middleware = new MiddlewareString(Sistema.getInstance().getMonitoringStage())
                 .with("LOGIN", (c, s, m) -> {
                     User u = (User) c.getArg();
                     if (s.getUserCheck().equals(u)) {

@@ -3,6 +3,7 @@ package System;
 import Component.MonitoringComponent;
 import Entities.Monitoring;
 import Entities.Patient;
+import Entities.Recovery;
 import Entities.User;
 import Generator.MonitoringEntry;
 import State.Reducer;
@@ -16,6 +17,7 @@ import State.Middleware;
 import Component.HPComponent;
 
 import Component.LoginComponent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -27,6 +29,8 @@ public class Sistema {
     private static Sistema s;
     private Store<StringCommand> store;
     private InterfacesController controller;
+    private Stage monitoringStage = null;
+
     public static Sistema getInstance() {
         if (s == null)
             s = new Sistema();
@@ -44,8 +48,9 @@ public class Sistema {
                 })
                 .with("LOAD")
                 .with("ADD_PATIENT")
+                .with("START_MONITORING")
                 .with("ADD_MONITORING_ENTRY");
-        Middleware<StringCommand> middleware = new MiddlewareString()
+        Middleware<StringCommand> middleware = new MiddlewareString(monitoringStage)
                 .with("LOGIN", (c, s, m) -> {
                     User u = (User) c.getArg();
                     if (s.getUserCheck().equals(u)) {
@@ -61,6 +66,14 @@ public class Sistema {
                             .map(e -> (Patient) e)
                             .collect(Collectors.toList());
                     s.setPatients(ps);
+                    List<Recovery> rec = ps.stream().flatMap(p -> p.getRecoveries().stream()).filter(r ->
+                            r.isActive()).collect(Collectors.toList());
+                    //TODO add
+                    /*if (rec.size() == 0) {
+
+                    }*/
+                    s.setActiveRecoveries(rec);
+                    s.setMainRecovery(rec.get(0));
                     return new Tuple<>(new StringCommand("LOADED", UUID.randomUUID()), s);
                 }).with("ADD_PATIENT" , (c, s, m) -> {
                     Patient patient = (Patient) c.getArg();
@@ -87,7 +100,7 @@ public class Sistema {
                         entry.setTemperature(last.getTemperature());
                     }
                     switch(me.getValue()) {
-                        case SBP:
+                        case BP:
                             entry.setDiastolicPressure(((Tuple<Integer, Integer>) me.getEntry()).fst());
                             entry.setSystolicPressure(((Tuple<Integer, Integer>) me.getEntry()).snd());
                             break;
@@ -99,6 +112,17 @@ public class Sistema {
                     }
                     s.addMonitoring(entry);
                     return new Tuple<>(new StringCommand("ADDED_MONITORING", UUID.randomUUID()), s);
+                }).with("START_MONITORING", (c,s,m) -> {
+                    if (monitoringStage == null) {
+                        monitoringStage = new Stage();
+                        monitoringStage.getIcons().add(new Image("/logo.png"));
+                        monitoringStage.setScene(new Scene(Sistema.getInstance().getInterface("MON")));
+                        monitoringStage.setTitle(MonitoringComponent.monitoringTitle);
+                        monitoringStage.sizeToScene();
+                    }
+                    monitoringStage.show();
+                    monitoringStage.toFront();
+                    return new Tuple((new StringCommand("SHOW_MONITORING", UUID.randomUUID())), s);
                 });
 
         store = new Store<StringCommand>(new State(), reducer, middleware);
@@ -137,5 +161,9 @@ public class Sistema {
 
     public Pane getInterface(String s) {
         return this.controller.getInterface(s);
+    }
+
+    public Stage getMonitoringStage() {
+        return monitoringStage;
     }
 }

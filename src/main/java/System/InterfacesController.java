@@ -27,6 +27,7 @@ public class InterfacesController {
             main.getScene().setRoot(interfaces.get(name));
         else main.setScene(new Scene(interfaces.get(name)));
 
+        main.setResizable(false);
         main.setTitle(title);
         main.sizeToScene();
     }

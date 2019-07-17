@@ -1,10 +1,6 @@
 package State;
-import Entities.Monitoring;
-import Entities.Patient;
-import Entities.Role;
-import Entities.User;
+import Entities.*;
 
-import javax.management.monitor.Monitor;
 import java.io.Serializable;
 import java.util.*;
 
@@ -13,13 +9,16 @@ public class State implements Serializable {
     private User user;
     private List<Patient> patients = new ArrayList<>();
     private List<Monitoring> monitorings = new ArrayList<>();
+    private Recovery mainRecovery;
+    private List<Recovery> activeRecoveries;
 
     // Must be the initial state
     public State() {
 
         this.user = new User();
         this.userCheck = new User("eme", "pw", Role.HEAD_PHYSICIAN, true);
-        /*this.patients.add(new Patient("Carlo", "Combi", "CMBCBMWHATEVER291Z", "Verona",
+        /*
+        this.patients.add(new Patient("Carlo", "Combi", "CMBCBMWHATEVER291Z", "Verona",
                 new GregorianCalendar(1965, Calendar.APRIL, 11).getTime()));
         this.patients.add(new Patient("Barbara", "Oliboni", "BRBLBIDONTKNOW329I", "Verona",
                 new GregorianCalendar(1973, Calendar.OCTOBER, 8).getTime()));
@@ -94,6 +93,24 @@ public class State implements Serializable {
     public void addMonitoring(Monitoring monitoring) {
         this.monitorings.add(monitoring);
     }
+
+
+    public Recovery getMainRecovery() {
+        return mainRecovery;
+    }
+
+    public void setMainRecovery(Recovery mainRecovery) {
+        this.mainRecovery = mainRecovery;
+    }
+
+    public List<Recovery> getActiveRecoveries() {
+        return activeRecoveries;
+    }
+
+    public void setActiveRecoveries(List<Recovery> activeRecoveries) {
+        this.activeRecoveries = activeRecoveries;
+    }
+
 
     @Override
     public boolean equals(Object oth) {
