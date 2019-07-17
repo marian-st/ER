@@ -5,6 +5,7 @@ import Entities.Monitoring;
 import Entities.Patient;
 import Entities.Recovery;
 import Entities.User;
+import Generator.DataThread;
 import Generator.MonitoringEntry;
 import Generator.Value;
 import State.Reducer;
@@ -47,9 +48,6 @@ public class Sistema {
                     s.setUser(new User());
                     return s;
                 })
-                .with("LOAD")
-                .with("ADD_PATIENT")
-                .with("START_MONITORING")
                 .with("GENERATE_BP", (c, s) -> {
                     s.getActiveRecoveries().forEach(r -> r.generateMonitoring(Value.BP));
                     return s;
@@ -62,6 +60,10 @@ public class Sistema {
                     s.getActiveRecoveries().forEach(r -> r.generateMonitoring(Value.TEMPERATURE));
                     return s;
                 })
+                .with("LOAD")
+                .with("ADD_PATIENT")
+                .with("START_MONITORING")
+                .with("SHOW_MONITORING")
                 .with("ADD_MONITORING_ENTRY");
         Middleware<StringCommand> middleware = new MiddlewareString(monitoringStage)
                 .with("LOGIN", (c, s, m) -> {
@@ -93,7 +95,7 @@ public class Sistema {
                     DatabaseService.addEntry(patient);
                     return new Tuple<>(new StringCommand("ADDED_PATIENT"), s);
                 })
-                .with("START_MONITORING", (c,s,m) -> {
+                .with("SHOW_MONITORING", (c,s,m) -> {
                     if (monitoringStage == null) {
                         monitoringStage = new Stage();
                         monitoringStage.getIcons().add(new Image("/logo.png"));
@@ -103,12 +105,16 @@ public class Sistema {
                     }
                     monitoringStage.show();
                     monitoringStage.toFront();
-                    return new Tuple((new StringCommand("SHOW_MONITORING")), s);
+                    return new Tuple((new StringCommand("OPEN_MONITORING")), s);
+                })
+                .with("START_MONITORING", (c,s,m) -> {
+                    new DataThread(store).start();
+                    return new Tuple<>(new StringCommand("MONITORING_HAS_STARTED"), s);
                 });
 
         store = new Store<StringCommand>(new State(), reducer, middleware);
         store.update(new StringCommand("LOAD"));
-        store.poll().getPatients().get(0).getRecoveries().get(0).getLastMonitoring();
+        store.update(new StringCommand("START_MONITORING"));
         /*store.update(new StringCommand("ADD_PATIENT", new Patient("Roberto", "Posenato", "PSNRBRA373UUS88I",
                 "Verona", new GregorianCalendar(1981, Calendar.FEBRUARY, 11).getTime())));*/
     }
