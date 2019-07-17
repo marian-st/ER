@@ -20,6 +20,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1200.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -45,14 +46,30 @@
          <children>
             <AnchorPane prefHeight="600.0" prefWidth="650.0">
                <children>
-                  <Label layoutX="24.0" layoutY="35.0" prefHeight="21.0" prefWidth="107.0" style="-fx-font-size: 20;" text="Name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
-                  <Label layoutX="24.0" layoutY="64.0" prefHeight="21.0" prefWidth="133.0" style="-fx-font-size: 20;" text="Surname" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" />
-                  <TableView layoutY="200.0" prefHeight="400.0" prefWidth="650.0" style="-fx-background-color: black;">
+                  <Label layoutX="24.0" layoutY="35.0" prefHeight="21.0" prefWidth="107.0" style="-fx-font-size: 20;" text="Nome" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" fx:id="nameLabel"/>
+                  <Label layoutX="24.0" layoutY="64.0" prefHeight="21.0" prefWidth="133.0" style="-fx-font-size: 20;" text="Cognome" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" fx:id="surnameLabel"/>
+                  <TableView layoutY="200.0" prefHeight="400.0" prefWidth="650.0" style="-fx-background-color: black;" fx:id="dataTable">
                     <columns>
-                      <TableColumn prefWidth="180.0" text="Heart Rate" />
-                      <TableColumn prefWidth="210.0" text="Temperature" />
-                        <TableColumn prefWidth="127.0" text="DBP" />
-                        <TableColumn prefWidth="127.0" text="SBP" />
+                      <TableColumn prefWidth="180.0" text="Heart Rate">
+                          <cellValueFactory>
+                              <PropertyValueFactory property="heartRate" />
+                          </cellValueFactory>
+                      </TableColumn>
+                      <TableColumn prefWidth="210.0" text="Temperature">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="temperature" />
+                        </cellValueFactory>
+                      </TableColumn>
+                      <TableColumn prefWidth="127.0" text="DBP" >
+                        <cellValueFactory>
+                            <PropertyValueFactory property="diastolicPressure" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn prefWidth="127.0" text="SBP" >
+                        <cellValueFactory>
+                            <PropertyValueFactory property="diastolicPressure" />
+                        </cellValueFactory>
+                    </TableColumn>
                     </columns>
                   </TableView>
                   <Label layoutX="43.0" layoutY="133.0" style="-fx-font-size: 40;" text="150" />
@@ -68,7 +85,7 @@
             </AnchorPane>
             <VBox prefHeight="200.0" prefWidth="550.0">
                <children>
-                  <LineChart prefHeight="300.0" prefWidth="440.0" title="Heart Rate">
+                  <LineChart prefHeight="300.0" prefWidth="440.0" title="Heart Rate" fx:id="hrGraphic">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" />
                      </xAxis>
@@ -86,7 +103,7 @@
                         </Lighting>
                      </effect>
                   </LineChart>
-                  <LineChart prefHeight="300.0" prefWidth="440.0" title="DBP / SBP">
+                  <LineChart prefHeight="300.0" prefWidth="440.0" title="DBP / SBP" fx:id="bpGraphic">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" tickLabelFill="WHITE" />
                      </xAxis>

@@ -13,7 +13,7 @@ public class MonitoringComponent<C extends Command> extends Component {
 
     public MonitoringComponent() {
         //LoginController logctl = new LoginController(sys.getStore(), sys.getStore().getEventStream());
-        loader = new FXMLLoader(getClass().getResource("/A_Monitoring.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/Monitoring.fxml"));
         //loader.setController(logctl);
     }
 
