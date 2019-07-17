@@ -1,10 +1,12 @@
 package Entities;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-public class Monitoring implements Entry{
+public class Monitoring implements Entry {
     @Id
     @GeneratedValue
     @Column(name = "monitoring_id")
@@ -47,8 +49,17 @@ public class Monitoring implements Entry{
 
 
     public Monitoring() {
+
     }
 
+    public Monitoring defaultMonitoring() {
+        this.diastolicPressure = 80;
+        this.systolicPressure = 120;
+        this.temperature = 37;
+        this.heartRate = 75;
+        this.date = new java.sql.Date(new Date().getTime());
+        return this;
+    }
     /**
      * GETTERS AND SETTERS
      */
