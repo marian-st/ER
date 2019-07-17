@@ -62,7 +62,7 @@ public class Sistema {
                 })
                 .with("LOAD")
                 .with("ADD_PATIENT")
-                .with("START_MONITORING")
+                .with("START_MONITORING")               
                 .with("SHOW_MONITORING")
                 .with("ADD_MONITORING_ENTRY");
         Middleware<StringCommand> middleware = new MiddlewareString(monitoringStage)
@@ -94,8 +94,7 @@ public class Sistema {
                     s.addPatient(patient);
                     DatabaseService.addEntry(patient);
                     return new Tuple<>(new StringCommand("ADDED_PATIENT"), s);
-                })
-                .with("SHOW_MONITORING", (c,s,m) -> {
+                }).with("SHOW_MONITORING", (c,s,m) -> {
                     if (monitoringStage == null) {
                         monitoringStage = new Stage();
                         monitoringStage.getIcons().add(new Image("/logo.png"));
