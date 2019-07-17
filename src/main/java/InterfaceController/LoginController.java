@@ -1,6 +1,5 @@
 package InterfaceController;
 
-import Component.MonitoringComponent;
 import Entities.Role;
 import Entities.User;
 import State.StateEvent;
@@ -10,14 +9,11 @@ import System.Sistema;
 import io.reactivex.subjects.Subject;
 import javafx.fxml.FXML;
 import State.Store;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import java.util.UUID;
 
 public class LoginController {
     private Sistema sys = Sistema.getInstance();

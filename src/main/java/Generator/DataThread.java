@@ -40,20 +40,15 @@ public class DataThread extends Thread {
         }
 
         public void run() {
-            System.out.println(this.value + ": " + generator.getValue());
-            MonitoringEntry monitoringEntry;
             if (value == Value.BP) {
-                monitoringEntry = new MonitoringEntry<Tuple<Integer, Integer>>();
+                store.update(new StringCommand("GENERATE_BP"));
             }
             else if (value == Value.HEART_RATE) {
-                monitoringEntry = new MonitoringEntry<Integer>();
+                store.update(new StringCommand("GENERATE_HEART_RATE"));
             }
             else {
-                monitoringEntry = new MonitoringEntry<Double>();
+                store.update(new StringCommand("GENERATE_TEMPERATURE"));
             }
-            monitoringEntry.setValue(this.value);
-            monitoringEntry.setEntry(generator.getValue());
-            store.update(new StringCommand("ADD_MONITORING_ENTRY", UUID.randomUUID(), monitoringEntry));
         }
     }
 }

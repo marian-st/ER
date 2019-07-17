@@ -1,5 +1,11 @@
 package Entities;
 
+import Generator.BPGenerator;
+import Generator.HeartRateGenerator;
+import Generator.TemperatureGenerator;
+import Generator.Value;
+
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +26,15 @@ public class Recovery implements Entry{
     private Date endDate;
     private String dischargeSummary;
 
+    @Transient
+    private final BPGenerator bpGenerator = new BPGenerator();
+
+    @Transient
+    private final HeartRateGenerator heartRateGenerator = new HeartRateGenerator();
+
+    @Transient
+    private final TemperatureGenerator temperatureGenerator = new TemperatureGenerator();
+
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
@@ -30,7 +45,6 @@ public class Recovery implements Entry{
     @OneToMany(mappedBy = "recovery")
     private List<Prescription> prescriptions = new ArrayList<>();
 
-    //TODO add constructors
 
     /**
     * GETTERS AND SETTERS
@@ -65,6 +79,46 @@ public class Recovery implements Entry{
         this.prescriptions.addAll(prescriptions);
     }
 
+    public Monitoring getLastMonitoring() {
+        if (this.monitorings.size() == 0) {
+            System.out.println("*** Recovery: trying to get the last monitoring when the array is empty ***");
+            return new Monitoring().defaultMonitoring();
+        }
+        return this.monitorings.get(this.monitorings.size()-1);
+    }
+
+    public void generateMonitoring(Value value) {
+        if (active) {
+            Monitoring last = this.getLastMonitoring();
+            Monitoring nm = new Monitoring();
+            nm.setDate(new Date());
+            if (value == Value.BP) {
+                Main.Tuple<Integer, Integer> ints = this.bpGenerator.getValue();
+                nm.setDiastolicPressure(ints.fst());
+                nm.setSystolicPressure(ints.snd());
+                nm.setHeartRate(last.getHeartRate());
+                nm.setTemperature(last.getTemperature());
+            }
+            else if (value == Value.HEART_RATE) {
+                nm.setHeartRate(this.heartRateGenerator.getValue());
+                nm.setDiastolicPressure(last.getDiastolicPressure());
+                nm.setSystolicPressure(last.getSystolicPressure());
+                nm.setTemperature(last.getTemperature());
+            }
+            else {
+                nm.setTemperature(this.temperatureGenerator.getValue());
+                nm.setDiastolicPressure(last.getDiastolicPressure());
+                nm.setSystolicPressure(last.getSystolicPressure());
+                nm.setHeartRate(last.getHeartRate());
+            }
+        this.addToMonitorings(nm);
+        }
+
+    }
+
+    /**
+     * GETTERS AND SETTERS
+     */
 
     public int getId() {
         return this.id;
