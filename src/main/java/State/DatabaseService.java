@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.lang.module.Configuration;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;

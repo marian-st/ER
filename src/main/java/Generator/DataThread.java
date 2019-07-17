@@ -14,7 +14,7 @@ public class DataThread extends Thread{
 
     public DataThread() {
         for(int i=0; i<numTask; i++) {
-            this.tasks.add(new LoopTask(taskJob[i]));
+            this.tasks.add(new DataTask(taskJob[i]));
             this.timers.add(new Timer());
         }
     }
@@ -24,17 +24,17 @@ public class DataThread extends Thread{
             this.timers.get(i).scheduleAtFixedRate(this.tasks.get(i), new Date(), times[i]);
     }
 
-    /**
-     * this class will create the various Gaussian based on the Value passed to the constructor
-     */
-    private class LoopTask extends TimerTask {
+    private class DataTask extends TimerTask {
+        private GeneratorInterface generator;
         private Value value;
 
-        public LoopTask(Value v) {
+        public DataTask(Value v) {
             this.value = v;
+            generator = new RandomGaussianFactory().getDataGenerator(v);
         }
+
         public void run() {
-            System.out.println(this.value);
+            System.out.println(this.value + ": " + generator.getValue());
         }
     }
 }

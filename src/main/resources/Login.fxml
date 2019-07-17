@@ -20,7 +20,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Monitoring" />
+                        <MenuItem mnemonicParsing="false" text="Monitoring" onAction="#startMonitoring"/>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
                     </items>
@@ -44,14 +44,14 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField id="userField" fx:id="userField11" layoutX="174.0" layoutY="56.0" promptText="username" />
-            <PasswordField id="passField" fx:id="passField11" layoutX="174.0" layoutY="130.0" promptText="password" />
-            <Button fx:id="loginButton11" layoutX="71.0" layoutY="208.0" mnemonicParsing="false" onAction="#login" prefHeight="27.0" prefWidth="103.0" text="Login">
+            <TextField id="userField" fx:id="userField" layoutX="174.0" layoutY="56.0" promptText="username" />
+            <PasswordField id="passField" fx:id="passField" layoutX="174.0" layoutY="130.0" promptText="password" />
+            <Button fx:id="loginButton" layoutX="71.0" layoutY="208.0" mnemonicParsing="false" onAction="#login" prefHeight="27.0" prefWidth="103.0" text="Login">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="467.0" layoutY="70.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="103.0" style="-fx-border-color: yellow; -fx-font-size: 20;" text="Show&#10;Live" textAlignment="CENTER" />
+            <Button layoutX="467.0" layoutY="70.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="103.0" style="-fx-border-color: yellow; -fx-font-size: 20;" text="Show&#10;Live" textAlignment="CENTER" onAction="#startMonitoring"/>
          </children>
          <opaqueInsets>
             <Insets />
