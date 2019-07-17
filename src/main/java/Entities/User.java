@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="role")
-public class User implements Entry{
+public class User implements Entry {
     @Id
     @GeneratedValue
     private int id;

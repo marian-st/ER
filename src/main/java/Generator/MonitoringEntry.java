@@ -7,7 +7,7 @@ public class MonitoringEntry<T> {
     private T entry;
 
     public MonitoringEntry() {}
-    public MonitoringEntry(Value value, T entry ) {
+    public MonitoringEntry(Value value, T entry) {
         this.value = value;
         this.entry = entry;
     }

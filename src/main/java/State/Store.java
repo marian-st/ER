@@ -57,7 +57,13 @@ public class Store<C extends Command> {
     synchronized public void update(C command) {
         State state;
         C comm = command;
-        State resultReducer = this.reducer.run(this.state, command);
+        State resultReducer;
+        try {
+            resultReducer = this.reducer.run(this.state, command);
+        } catch (ReducerString.NonExistentCommandException e) {
+            this.state$.onNext(new StateEvent(command.errorCommand(), this.state));
+            return;
+        }
         if (this.middleware.check(command.name())) {
             Tuple<C, State> resultMiddleware = this.middleware.run(resultReducer, command);
             state = resultMiddleware.snd();
