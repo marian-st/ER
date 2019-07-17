@@ -14,11 +14,12 @@ public class InterfaceTest extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/HPDefault.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
         Scene scene = new Scene(root, 1120, 760);
 
         primaryStage.setTitle("ER - @UserName");
         primaryStage.setScene(scene);
+        primaryStage.sizeToScene();
         primaryStage.show();
     }
 }
