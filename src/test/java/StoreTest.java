@@ -34,7 +34,7 @@ public class StoreTest {
                 })
                 .with("LOAD")
                 .with("ADD_PATIENT");
-    private Middleware<StringCommand> middleware = new MiddlewareString(Sistema.monitoringStage)
+    private Middleware<StringCommand> middleware = new MiddlewareString(Sistema.getInstance().getMonitoringStage())
                 .with("LOGIN", (c, s, m) -> {
                     User u = (User) c.getArg();
                     if (s.getUserCheck().equals(u)) {

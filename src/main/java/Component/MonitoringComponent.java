@@ -1,5 +1,6 @@
 package Component;
 
+import InterfaceController.MonitoringController;
 import State.Command;
 import State.StateEvent;
 import State.Store;
@@ -12,9 +13,9 @@ public class MonitoringComponent<C extends Command> extends Component {
     public static final String monitoringTitle = "ER - Monitoring";
 
     public MonitoringComponent() {
-        //LoginController logctl = new LoginController(sys.getStore(), sys.getStore().getEventStream());
+        MonitoringController logctl = new MonitoringController(sys.getStore(), sys.getStore().getEventStream());
         loader = new FXMLLoader(getClass().getResource("/Monitoring.fxml"));
-        //loader.setController(logctl);
+        loader.setController(logctl);
     }
 
     public MonitoringComponent(Store<C> store) {

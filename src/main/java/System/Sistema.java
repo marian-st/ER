@@ -28,7 +28,7 @@ public class Sistema {
     private static Sistema s;
     private Store<StringCommand> store;
     private InterfacesController controller;
-    public static Stage monitoringStage = null;
+    private Stage monitoringStage = null;
     public static Sistema getInstance() {
         if (s == null)
             s = new Sistema();
@@ -151,5 +151,9 @@ public class Sistema {
 
     public Pane getInterface(String s) {
         return this.controller.getInterface(s);
+    }
+
+    public Stage getMonitoringStage() {
+        return monitoringStage;
     }
 }
