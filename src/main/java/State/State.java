@@ -95,4 +95,10 @@ public class State implements Serializable {
         this.monitorings.add(monitoring);
     }
 
+    @Override
+    public boolean equals(Object oth) {
+        return (oth instanceof State) && ((State) oth).getPatients().equals(this.patients)
+                && ((State) oth).getMonitorings().equals(this.monitorings)
+                && ((State) oth).getUser().equals(this.user);
+    }
 }

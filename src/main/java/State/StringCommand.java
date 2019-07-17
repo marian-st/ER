@@ -6,6 +6,7 @@ public class StringCommand implements Command {
     private final String s;
     private final UUID u;
     private final Object obj;
+    private static final StringCommand err = new StringCommand("NON_EXISTENT_COMMAND", UUID.randomUUID());
     public StringCommand(String s, UUID u, Object obj) {
         this.s = s;
         this.u = u;
@@ -28,6 +29,11 @@ public class StringCommand implements Command {
     @Override
     public Object getArg() {
         return obj;
+    }
+
+    @Override
+    public StringCommand errorCommand() {
+        return err;
     }
 
     public String toString() {

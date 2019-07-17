@@ -37,8 +37,16 @@ public class ReducerString implements Reducer<StringCommand> {
     }
 
     @Override
-    public State run(State state, StringCommand s) {
+    public State run(State state, StringCommand s) throws NonExistentCommandException {
         BiFunction<StringCommand, State, State> fun = this.commands.get(s.name());
-        return fun.apply(s, state);
+        try {
+            return fun.apply(s, state);
+        } catch (NullPointerException e) {
+            throw new NonExistentCommandException();
+        }
+    }
+
+    public class NonExistentCommandException extends Exception {
+
     }
 }
