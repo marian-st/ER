@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.Light.Distant?>
@@ -20,14 +21,15 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1200.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" text="Login" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -52,13 +54,13 @@
                     </columns>
                   </TableView>
                   <Label layoutX="43.0" layoutY="133.0" style="-fx-font-size: 40;" text="150" />
-                  <Label layoutX="248.0" layoutY="133.0" style="-fx-font-size: 40;" text="32" />
+                  <Label layoutX="249.0" layoutY="133.0" style="-fx-font-size: 40;" text="32" />
                   <Label layoutX="397.0" layoutY="133.0" style="-fx-font-size: 40;" text="150" />
                   <Label layoutX="521.0" layoutY="133.0" style="-fx-font-size: 40;" text="150" />
                   <Label layoutX="112.0" layoutY="141.0" text="bpm" />
-                  <Label layoutX="300.0" layoutY="141.0" prefHeight="21.0" prefWidth="17.0" text="°C" />
-                  <Label layoutX="465.0" layoutY="141.0" text="mmHg" />
-                  <Label layoutX="590.0" layoutY="141.0" text="mmHg" />
+                  <Label layoutX="301.0" layoutY="141.0" prefHeight="21.0" prefWidth="17.0" text="°C" />
+                  <Label layoutX="465.0" layoutY="141.0" style="-fx-font-size: 13;" text="mmHg" />
+                  <Label layoutX="590.0" layoutY="141.0" style="-fx-font-size: 13;" text="mmHg" />
                </children>
             </AnchorPane>
             <VBox prefHeight="200.0" prefWidth="550.0">
@@ -71,7 +73,7 @@
                         <NumberAxis side="LEFT" tickLabelFill="WHITE" />
                      </yAxis>
                      <effect>
-                        <Lighting diffuseConstant="0.75" specularConstant="0.0" specularExponent="40.0" surfaceScale="0.0">
+                        <Lighting diffuseConstant="1.23" specularConstant="0.0" specularExponent="40.0" surfaceScale="0.0">
                            <bumpInput>
                               <Shadow />
                            </bumpInput>
@@ -89,7 +91,7 @@
                         <NumberAxis side="LEFT" tickLabelFill="WHITE" />
                      </yAxis>
                      <effect>
-                        <Lighting diffuseConstant="0.75" specularConstant="0.0" specularExponent="40.0" surfaceScale="0.0">
+                        <Lighting diffuseConstant="1.23" specularConstant="0.0" specularExponent="40.0" surfaceScale="0.0">
                            <bumpInput>
                               <Shadow />
                            </bumpInput>
@@ -117,7 +119,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" style="-fx-font-size: 18;" text="Letto 1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 3" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="200.0" text="Letto 4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />

@@ -20,14 +20,14 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Monitoring" onAction="#startMonitoring"/>
+                        <MenuItem mnemonicParsing="false" onAction="#startMonitoring" text="Monitoring" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Help" />
+                        <MenuItem mnemonicParsing="false" text="About" />
                     </items>
                 </Menu>
             </menus>
@@ -51,7 +51,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="467.0" layoutY="70.0" mnemonicParsing="false" prefHeight="121.0" prefWidth="103.0" style="-fx-border-color: yellow; -fx-font-size: 20;" text="Show&#10;Live" textAlignment="CENTER" onAction="#startMonitoring"/>
+            <Button layoutX="467.0" layoutY="70.0" mnemonicParsing="false" onAction="#startMonitoring" prefHeight="121.0" prefWidth="103.0" style="-fx-border-color: yellow; -fx-font-size: 20;" text="Show&#10;Live" textAlignment="CENTER" />
          </children>
          <opaqueInsets>
             <Insets />
