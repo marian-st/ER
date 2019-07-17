@@ -93,8 +93,8 @@ public class Sistema {
                     Patient patient = (Patient) c.getArg();
                     s.addPatient(patient);
                     DatabaseService.addEntry(patient);
-                    return new Tuple<>(new StringCommand("ADDED_PATIENT"), s);
-                }).with("SHOW_MONITORING", (c,s,m) -> {
+                    return new Tuple<>(new StringCommand("ADDED_PATIENT"), s)
+                    }).with("SHOW_MONITORING", (c,s,m) -> {
                     if (monitoringStage == null) {
                         monitoringStage = new Stage();
                         monitoringStage.getIcons().add(new Image("/logo.png"));
