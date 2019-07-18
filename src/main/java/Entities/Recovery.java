@@ -4,6 +4,7 @@ import Generator.BPGenerator;
 import Generator.HeartRateGenerator;
 import Generator.TemperatureGenerator;
 import Generator.Value;
+import Main.Tuple;
 
 
 import javax.persistence.*;
@@ -93,7 +94,13 @@ public class Recovery implements Entry{
             Monitoring nm = new Monitoring();
             nm.setDate(new Date());
             if (value == Value.BP) {
-                Main.Tuple<Integer, Integer> ints = this.bpGenerator.getValue();
+                Tuple<Integer, Integer> ints = this.bpGenerator.getValue();
+
+                if(ints.fst() < 60 || ints.fst() > 95)
+                    throw new IllegalArgumentException("Diastolic OUT: " + ints.fst());
+                if(ints.snd() < 90 || ints.fst() > 150)
+                    throw new IllegalArgumentException("Systolic OUT: " + ints.snd());
+
                 nm.setDiastolicPressure(ints.fst());
                 nm.setSystolicPressure(ints.snd());
                 nm.setHeartRate(last.getHeartRate());
@@ -101,17 +108,25 @@ public class Recovery implements Entry{
             }
             else if (value == Value.HEART_RATE) {
                 nm.setHeartRate(this.heartRateGenerator.getValue());
+
+                if(nm.getHeartRate() < 60 || nm.getHeartRate() > 100)
+                    throw new IllegalArgumentException("Heart Rate OUT: " + nm.getHeartRate());
+
                 nm.setDiastolicPressure(last.getDiastolicPressure());
                 nm.setSystolicPressure(last.getSystolicPressure());
                 nm.setTemperature(last.getTemperature());
             }
             else {
                 nm.setTemperature(this.temperatureGenerator.getValue());
+
+                if(nm.getTemperature() < 36 || nm.getTemperature() > 37.5)
+                    throw new IllegalArgumentException("Temperature OUT: " + nm.getTemperature());
+
                 nm.setDiastolicPressure(last.getDiastolicPressure());
                 nm.setSystolicPressure(last.getSystolicPressure());
                 nm.setHeartRate(last.getHeartRate());
             }
-        this.addToMonitorings(nm);
+        this.addToMonitorings(nm); //TODO: ? non manca di mandare i dati al db e allo stato per aggiornare l'interfaccia?
         }
 
     }

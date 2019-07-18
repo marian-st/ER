@@ -1,6 +1,7 @@
 package Entities;
 
 import javax.persistence.*;
+import java.io.*;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -117,12 +118,25 @@ public class Monitoring implements Entry {
     }
 
     public String toString() {
-        String s = String.format("{%s, %d, %d, %d, %fd", this.date, this.diastolicPressure, this.systolicPressure ,
-                this.heartRate, this.temperature);
+        try (Writer writer = new BufferedWriter(new FileWriter("Monitoring", true))) {
 
-        if (recovery != null) s += ", " + this.recovery.getId();
-        s += "}";
+            String s = String.format("{%s, %d, %d, %d, %fd", this.date, this.diastolicPressure, this.systolicPressure ,
+                    this.heartRate, this.temperature);
 
-        return s;
+            if (recovery != null) s += ", " + this.recovery.getId();
+            s += "}";
+
+            writer.write(s + "\n");
+
+            return s;
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            System.out.println("Problema di I/O");
+        }
+
+        return null;
     }
 }
