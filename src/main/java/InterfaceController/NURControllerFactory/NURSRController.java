@@ -190,4 +190,9 @@ public class NURSRController implements NURController {
     @FXML protected void close() {
         sys.endSystem();
     }
+
+    @FXML protected void showSupport() {
+        store.update(new StringCommand("ERROR", "Per supporto contattare i Main Developers\nPiccoli Elia, Marian Statache & Edoardo Zorzi." +
+                "\nJava is the best programming language."));
+    }
 }
